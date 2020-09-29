@@ -1,4 +1,4 @@
-package model;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -10,18 +10,20 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Coordinate;
+
 //Test
 
 /* Para realizar los test se sugiere usar métodos de la librería de junit como:
- * assertEquals, assertNotEquals, assertSame; assertNotSame, assertTrue; assertFalse
- */
+* assertEquals, assertNotEquals, assertSame; assertNotSame, assertTrue; assertFalse
+*/
 public class aluTests {
 	
-    List vcoordinates = new ArrayList<int[]>();
-    int []vcoor= {0,0,-70,-2,20}; //Para crear Coordinates
-    final int DIM = vcoor.length;
-    List<Coordinate> lcoor;
-    
+  List vcoordinates = new ArrayList<int[]>();
+  int []vcoor= {0,0,-70,-2,20}; //Para crear Coordinates
+  final int DIM = vcoor.length;
+  List<Coordinate> lcoor;
+  
 	@Before
 	public void setUp() throws Exception {
 		lcoor = new ArrayList<Coordinate>();
