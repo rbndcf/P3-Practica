@@ -1,4 +1,4 @@
-package tests;
+package aluTests;
 
 import static org.junit.Assert.*;
 
