@@ -40,5 +40,12 @@ public class MainP1 {
 	                v2.add(new Coordinate(i, i));
 	                System.out.println(v2.get(i));
 	    }
+	    
+	    // Añadido por Alumno:
+	    System.out.println("=====================");
+	    Coordinate a1 = new Coordinate(3,4);
+	    Coordinate a2 = a1.copy();
+	    System.out.println("Coordinate Original: " + a1);
+	    System.out.println("Coordinate Copia: " + a2);
 	}
 }

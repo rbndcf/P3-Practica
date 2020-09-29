@@ -98,6 +98,10 @@ public class Coordinate {
                 
    		return new_c;
 	}
+	
+	public Coordinate copy(){
+		return new Coordinate(this);
+	}
 
 	/**
 	 * @return las coordenadas del objeto Coordinate en formato (X, Y)
