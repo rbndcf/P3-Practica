@@ -185,7 +185,7 @@ public class aluTests {
 		
 		
 		/* Sigue comprobando lo siguiente:
-		 *  1. equals() devuelve false cuando el valor de alguno de los componentes de los 
+		 *  1. equals() devuelve false cuando el valor de alguno de los componentes de los  
 		 *     Coordinate es distinto
 		 *  2. equals() devuelve true cuando se compara un objeto Coordinate consigo mismo
 		 *  3. equals() devuelve true cuando comparo dos objetos Coordinate distintos
