@@ -17,21 +17,20 @@ import model.Coordinate;
 /* Para realizar los test se sugiere usar métodos de la librería de junit como:
 * assertEquals, assertNotEquals, assertSame; assertNotSame, assertTrue; assertFalse
 */
-public class aluTests {
+public class aluTestsCoordinate {
 	
-  List vcoordinates = new ArrayList<int[]>();
-  int []vcoor= {0,0,-70,-2,20}; //Para crear Coordinates
-  final int DIM = vcoor.length;
-  List<Coordinate> lcoor;
+	List vcoordinates = new ArrayList<int[]>();
+	int []vcoor= {0,0,-70,-2,20}; //Para crear Coordinates
+	final int DIM = vcoor.length;
+	List<Coordinate> lcoor;
   
 	@Before
 	public void setUp() throws Exception {
+		// SetUp Coordinates
 		lcoor = new ArrayList<Coordinate>();
 		//Se crean las Coordinates (0,0),(0,-70), (-70,-2),(-2,20);
-		for (int i=0; i<DIM-1; i++) {
+		for (int i=0; i<DIM-1; i++)
 			lcoor.add(new Coordinate(vcoor[i],vcoor[i+1]));
-		}
-		
 	}
 
 	/* Se comprueba que cuando dos Coordinate son iguales, el resultado del hash ha 
