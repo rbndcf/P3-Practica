@@ -192,5 +192,14 @@ public class aluTests {
 		 *     y los valores de sus componentes respectivos son iguales.
 		 */
 	}
+	
+	/*Creamos una Coordinate, y la copiamos en otra Coordinate*/
+	public void testCopy() {
+		Coordinate c1 = new Coordinate(1,1);
+		
+		Coordinate c2 = c1.copy();
+		
+		assertEquals(c1, c2);
+	}
 
 }

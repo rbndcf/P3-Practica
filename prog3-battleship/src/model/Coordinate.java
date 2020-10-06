@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @author Rubén Del Castillo Fuentes 48786827D
@@ -99,10 +99,31 @@ public class Coordinate {
    		return new_c;
 	}
 	
+	/**
+	 * @return copia del Coordinate
+	 * Devuelve la copia del coordinate que ha llamado a la función copy()
+	 */
 	public Coordinate copy(){
 		return new Coordinate(this);
 	}
 
+	/**
+	 * @return
+	 */
+	public Set<Coordinate> adjacentCoordinates(){
+		Set<Coordinate> adjCoords = new HashSet<Coordinate>();
+		
+		for(int i = -1 ; i < 2 ; i++) {
+			for(int j = -1 ; j < 2 ; j++) {
+				if(i != 0 && j !=0) {
+					adjCoords.add(new Coordinate(this.get(0) + i, this.get(1) + j));
+				}
+			}
+		}
+		
+		return adjCoords;
+	}
+	
 	/**
 	 * @return las coordenadas del objeto Coordinate en formato (X, Y)
 	 * Coge las dos coordenadas del objeto Coordinate y las devuelve en forma de String con formato (X, Y)
