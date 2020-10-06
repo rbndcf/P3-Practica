@@ -3,12 +3,12 @@ package model;
 import java.util.*;
 
 public class Board {
-	public final char HIT_SYMBOL;
-	public final char WATER_SYMBOL;
-	public final char NOTSEEN_SYMBOL;
+	public static final char HIT_SYMBOL;
+	public static final char WATER_SYMBOL;
+	public static final char NOTSEEN_SYMBOL;
 	
-	private final int MAX_BOARD_SIZE;
-	private final int MIN_BOARD_SIZE;
+	private static final int MAX_BOARD_SIZE;
+	private static final int MIN_BOARD_SIZE;
 	private int size;
 	private int numCrafts;
 	private int destroyedCrafts;
