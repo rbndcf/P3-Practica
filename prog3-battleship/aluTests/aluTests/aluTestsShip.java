@@ -142,7 +142,6 @@ public class aluTestsShip {
 		}
 	}
 
-	//TODO testGetAbsolutePositionsNorth
 	/* Comprueba que las posiciones absolutas que devuelve el método 
 	 * getAbsolutePositions(Coordinate) de un barco con orientación NORTH 
 	 * a partir de una Coordinate son correctas. Ten en cuenta que el 
@@ -153,15 +152,23 @@ public class aluTestsShip {
 	public void testGetAbsolutePositionsNorth() {
 		
 		Coordinate c1 = new Coordinate(13,27);
+		
+		goleta.setPosition(new Coordinate(10,24));
+		
 		Set<Coordinate> pos = goleta.getAbsolutePositions(c1);
 		
 		assertTrue(pos.contains(new Coordinate(15, 28)));
 		assertTrue(pos.contains(new Coordinate(15, 29)));
 		assertTrue(pos.contains(new Coordinate(15, 30)));
+		
+		
+		Set<Coordinate> pos2 = goleta.getAbsolutePositions();
+		
+		assertTrue(pos2.contains(new Coordinate(12, 25)));
+		assertTrue(pos2.contains(new Coordinate(12, 26)));
+		assertTrue(pos2.contains(new Coordinate(12, 27)));
 	}
 	
-	
-
 	/* Se dispara a un Ship que todavía no ha sido posicionado. Se comprueba que
 	 * hit devuelve false
 	 */

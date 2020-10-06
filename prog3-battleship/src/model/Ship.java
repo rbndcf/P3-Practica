@@ -143,7 +143,22 @@ public class Ship {
 	}
 	
 	public Set<Coordinate> getAbsolutePositions(){
+		Coordinate c = this.getPosition();
 		
+		Set<Coordinate> absPositions = new HashSet<Coordinate>();
+		
+		for(int i = 0 ; i < shape[or.ordinal()].length ; i++) {
+			if(shape[or.ordinal()][i] == CRAFT_VALUE || shape[or.ordinal()][i] == HIT_VALUE) {
+				int insideShapeX = i % 5;
+				int insideShapeY = i / 5;
+				
+				absPositions.add(new Coordinate(insideShapeX + c.get(0), insideShapeY + c.get(1)));
+				
+				System.out.println(insideShapeX + " " + insideShapeY);
+			}
+		}
+		
+		return absPositions;
 	}
 	
 	public boolean hit(Coordinate c) {
