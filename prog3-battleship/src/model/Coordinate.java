@@ -108,19 +108,17 @@ public class Coordinate {
 	}
 
 	/**
-	 * @return
+	 * @return Set de Coordinate
+	 * Devuelve todas las Coordinate adyacentes de la Coordinate que llama a la función adjacentCoordinates()
 	 */
 	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> adjCoords = new HashSet<Coordinate>();
 		
-		for(int i = -1 ; i < 2 ; i++) {
-			for(int j = -1 ; j < 2 ; j++) {
-				if(i != 0 && j !=0) {
+		for(int i = -1 ; i < 2 ; i++) 
+			for(int j = -1 ; j < 2 ; j++) 
+				if(i != 0 || j != 0) 
 					adjCoords.add(new Coordinate(this.get(0) + i, this.get(1) + j));
-				}
-			}
-		}
-		
+				
 		return adjCoords;
 	}
 	

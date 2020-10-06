@@ -152,7 +152,6 @@ public class aluTests {
 		}
 	}
 
-	
 	/* Se comprueba, para el método toString(), que las Coordinate creadas en el setUp() 
 	 * tienen el formato correcto.
 	 */
@@ -194,6 +193,7 @@ public class aluTests {
 	}
 	
 	/*Creamos una Coordinate, y la copiamos en otra Coordinate*/
+	@Test
 	public void testCopy() {
 		Coordinate c1 = new Coordinate(1,1);
 		
@@ -202,4 +202,24 @@ public class aluTests {
 		assertEquals(c1, c2);
 	}
 
+	/* Creamos una coordenada y comprobamos que adjacentCoordinates devuelve todas las coordenadas
+	 * adjacentes, en este caso al punto (1, 1)
+	 */
+	@Test
+	public void testAdjacentCoordinates() {
+		Coordinate c1 = new Coordinate(1,1);
+		
+		Set<Coordinate> adjacentToC1 = c1.adjacentCoordinates();
+
+		assertTrue(adjacentToC1.contains(new Coordinate(0,0)));
+		assertTrue(adjacentToC1.contains(new Coordinate(0,1)));
+		assertTrue(adjacentToC1.contains(new Coordinate(0,2)));
+		assertTrue(adjacentToC1.contains(new Coordinate(1,0)));
+		assertTrue(adjacentToC1.contains(new Coordinate(1,2)));
+		assertTrue(adjacentToC1.contains(new Coordinate(2,0)));
+		assertTrue(adjacentToC1.contains(new Coordinate(2,1)));
+		assertTrue(adjacentToC1.contains(new Coordinate(2,2)));
+		
+		assertFalse(adjacentToC1.contains(new Coordinate(1,1)));
+	}
 }
