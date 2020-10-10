@@ -2,8 +2,7 @@ package aluTests;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -178,16 +177,42 @@ public class aluTestsShip {
 		assertFalse(goleta.hit(c1));
 	}
 	
-	//TODO testHitWater
 	/* Posiciona un Ship en una Coordinate y realiza disparos al agua.
 	 * Comprueba que hit devuelve siempre false
 	 */
 	@Test
 	public void testHitWater() {
-		fail ("Realiza el test HitWater");
+		goleta.setPosition(new Coordinate(0,0));
+		
+		assertFalse(goleta.hit(new Coordinate(0,0)));
+		assertFalse(goleta.hit(new Coordinate(0,1)));
+		assertFalse(goleta.hit(new Coordinate(0,2)));
+		assertFalse(goleta.hit(new Coordinate(0,3)));
+		assertFalse(goleta.hit(new Coordinate(0,4)));
+
+		assertFalse(goleta.hit(new Coordinate(1,0)));
+		assertFalse(goleta.hit(new Coordinate(1,1)));
+		assertFalse(goleta.hit(new Coordinate(1,2)));
+		assertFalse(goleta.hit(new Coordinate(1,3)));
+		assertFalse(goleta.hit(new Coordinate(1,4)));
+
+		assertFalse(goleta.hit(new Coordinate(2,0)));
+		assertFalse(goleta.hit(new Coordinate(2,4)));
+
+		assertFalse(goleta.hit(new Coordinate(3,0)));
+		assertFalse(goleta.hit(new Coordinate(3,1)));
+		assertFalse(goleta.hit(new Coordinate(3,2)));
+		assertFalse(goleta.hit(new Coordinate(3,3)));
+		assertFalse(goleta.hit(new Coordinate(3,4)));
+
+		assertFalse(goleta.hit(new Coordinate(4,0)));
+		assertFalse(goleta.hit(new Coordinate(4,1)));
+		assertFalse(goleta.hit(new Coordinate(4,2)));
+		assertFalse(goleta.hit(new Coordinate(4,3)));
+		assertFalse(goleta.hit(new Coordinate(4,4)));
+		
 	}
 	
-	//TODO testHitShip
 	/* Posiciona un Ship en una Coordinate, y realiza los primeros disparos a 
 	 * las posiciones del Ship y comprueba que hit devuelve true. 
 	 * Vuelve a disparar a las mismas posiciones y comprueba que hit ahora 
@@ -195,10 +220,17 @@ public class aluTestsShip {
 	 */
 	@Test
 	public void testHitShip() {
-		fail ("Realiza el test HitShip");
+		goleta.setPosition(new Coordinate(0,0));
+
+		assertTrue(goleta.hit(new Coordinate(2,1)));
+		assertTrue(goleta.hit(new Coordinate(2,2)));
+		assertTrue(goleta.hit(new Coordinate(2,3)));
+
+		assertFalse(goleta.hit(new Coordinate(2,1)));
+		assertFalse(goleta.hit(new Coordinate(2,2)));
+		assertFalse(goleta.hit(new Coordinate(2,3)));
 	}
 
-	
 	//TODO testIsShotDown2
 	/* Comprueba que:
 	 * 1- isShotDown() devuelve false tras realizar disparos a todas las posiciones del
@@ -220,7 +252,12 @@ public class aluTestsShip {
 	 */
 	@Test
 	public void testIsHit() {
-		fail ("Realiza el test IsHit");
+		Set<Coordinate> Coords = new HashSet<Coordinate>();
+		Coords = galeon.getAbsolutePositions();
+		
+		for (Coordinate Coord : Coords) {
+			  //System.out.println(Coord);
+			}
 	}
 
 	/* Se comprueba que las salidas de los distintos Ships en distintas orientaciones

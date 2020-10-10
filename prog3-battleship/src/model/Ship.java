@@ -7,7 +7,9 @@ import model.Orientation;
 /**
  * @author Rubén Del Castillo Fuentes 48786827D
  * 
- * Esta clase la utilizaremos para 
+ * Esta clase la utilizaremos para controlar los valores de cada barco, crearlos, posicionarlos, saber su posición
+ * y su estado (No hit, hit o shot down), saber su orientación y su forma (shape), además de poder obtener cada 
+ * uno de sus elementos como symbol, name, posición, etc.
  */
 
 public class Ship {
@@ -130,18 +132,20 @@ public class Ship {
 		
 		for(int i = 0 ; i < shape[or.ordinal()].length ; i++) {
 			if(shape[or.ordinal()][i] == CRAFT_VALUE || shape[or.ordinal()][i] == HIT_VALUE) {
-				int insideShapeX = i % 5;
-				int insideShapeY = i / 5;
+				int insideShapeX = i % BOUNDING_SQUARE_SIZE;
+				int insideShapeY = i / BOUNDING_SQUARE_SIZE;
 				
 				absPositions.add(new Coordinate(insideShapeX + c.get(0), insideShapeY + c.get(1)));
-				
-				System.out.println(insideShapeX + " " + insideShapeY);
 			}
 		}
 		
 		return absPositions;
 	}
 	
+	/**
+	 * @return Set de Coordinates
+	 * Utiliza las coordenadas del Ship y devuelve su posición sobre el tablero respecto de esas coordenadas
+	 */
 	public Set<Coordinate> getAbsolutePositions(){
 		Coordinate c = this.getPosition();
 		
@@ -149,20 +153,44 @@ public class Ship {
 		
 		for(int i = 0 ; i < shape[or.ordinal()].length ; i++) {
 			if(shape[or.ordinal()][i] == CRAFT_VALUE || shape[or.ordinal()][i] == HIT_VALUE) {
-				int insideShapeX = i % 5;
-				int insideShapeY = i / 5;
+				int insideShapeX = i % BOUNDING_SQUARE_SIZE;
+				int insideShapeY = i / BOUNDING_SQUARE_SIZE;
 				
 				absPositions.add(new Coordinate(insideShapeX + c.get(0), insideShapeY + c.get(1)));
-				
-				System.out.println(insideShapeX + " " + insideShapeY);
 			}
 		}
 		
 		return absPositions;
 	}
 	
+	/**
+	 * @param c Coordenada absoluta
+	 * @return true si es hit, false si no
+	 * Recibe una coordenada absoluta, si en ella se encuentra un barco que no ha sido alcanzado antes en esa posicion, 
+	 * actualiza su estado y devuelve true, si ya fue alcanzado o no hay barco devuelve false.
+	 */
 	public boolean hit(Coordinate c) {
+		if(this.getPosition() == null)
+			return false;
 		
+		Set<Coordinate> Coords = new HashSet<Coordinate>();
+		Coords = this.getAbsolutePositions();
+		
+		if(Coords.contains(c)) {
+			Coordinate c1 = this.getPosition();		
+			int i = c.get(0) - c1.get(0);
+			int j = c.get(1) - c1.get(1);
+			int pos = j * BOUNDING_SQUARE_SIZE + i;
+			
+			if(shape[or.ordinal()][pos] == CRAFT_VALUE) {
+				shape[or.ordinal()][pos] = HIT_VALUE;
+				return true;
+			}
+			
+			else return false;	
+		}
+		
+		else return false;
 	}
 	
 	public boolean isShotDown() {
