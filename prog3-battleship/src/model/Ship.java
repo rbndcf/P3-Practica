@@ -2,8 +2,6 @@ package model;
 
 import java.util.*;
 
-import model.Orientation;
-
 /**
  * @author Rubén Del Castillo Fuentes 48786827D
  * 
@@ -67,10 +65,8 @@ public class Ship {
 	 * null si no se le ha asignado posición
 	 */
 	public Coordinate getPosition() {
-		if(pos == null)
-			return null;
-		else
-			return new Coordinate(pos);
+		if(pos == null) return null;
+		else return new Coordinate(pos);
 	}
 	
 	/**
@@ -193,15 +189,72 @@ public class Ship {
 		else return false;
 	}
 	
+	/**
+	 * @return estado del barco
+	 * Si el barco ha sido destruido, devuelve true, si no ha sido disparado en todas sus posiciones devuelve false
+	 */
 	public boolean isShotDown() {
+		boolean check = true;
 		
+		for(int i = 0 ; i < 25 ; i++)
+			if(shape[or.ordinal()][i] == CRAFT_VALUE)
+				check = false;
+		
+		return check;
 	}
 	
+	/**
+	 * @param c Coordenada que queremos comprobar
+	 * @return Estado de la coordenada
+	 * Comprueba si un barco en esa coordenada ha sido alcanzado, si ha sido alcanzado devuelve true y si no devuelve false
+	 */
 	public boolean isHit(Coordinate c) {
+		if(this.getPosition() == null)
+			return false;
 		
+		Coordinate c1 = this.getPosition();
+		
+		int i = c.get(0) - c1.get(0);
+		int j = c.get(1) - c1.get(1);
+		int pos = j * BOUNDING_SQUARE_SIZE + i;
+		
+		if(shape[or.ordinal()][pos] == HIT_VALUE) return true;
+		else return false;
 	}
 	
 	public String toString() {
+		StringBuilder sb = new StringBuilder();
 		
+		sb.append(name + " (" + or + ")");
+		
+		for(int i = 0 ; i < (BOUNDING_SQUARE_SIZE + 2) ; i++) {
+			sb.append("\n");
+			
+			for(int j = 0 ; j < (BOUNDING_SQUARE_SIZE + 2) ; j++) {
+				if(i == 0 || i == 6) {
+					if(j == 0)
+						sb.append(" ");
+					else if(j != 6)
+						sb.append("-");
+				}
+				
+				else if(j == 0 || j == 6)
+					sb.append("|");
+				
+				else {
+					int pos = (i - 1) * BOUNDING_SQUARE_SIZE + (j - 1);
+					if(shape[or.ordinal()][pos] == 0)
+						sb.append(" ");
+					
+					else if(shape[or.ordinal()][pos] == CRAFT_VALUE)
+						sb.append(symbol);
+					
+					else if(shape[or.ordinal()][pos] == HIT_VALUE)
+						sb.append(Board.HIT_SYMBOL);
+				}
+			}
+		}
+		
+		return sb.toString();
 	}
 }
