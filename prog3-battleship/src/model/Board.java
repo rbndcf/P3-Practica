@@ -51,6 +51,13 @@ public class Board {
 		else return true;
 	}
 	
+	/**
+	 * @param ship que se añade 
+	 * @param position donde se añade su shape
+	 * @return true si se añade faslse si no
+	 * Recibe un Ship y un Coordinate, si cumple los requisitos se añade el Ship en dicha Coordinate y devuelve true, si no lo
+	 * cumple devuelve false y no se añade
+	 */
 	public boolean addShip(Ship ship, Coordinate position) {
 		boolean check = true;
 		
@@ -83,6 +90,11 @@ public class Board {
 		else return false;
 	}
 	
+	/**
+	 * @param c Coordenada del barco
+	 * @return el Ship
+	 * Devuelve el Ship que se encuentra en la Coordinate que recibe
+	 */
 	public Ship getShip(Coordinate c) {
 		return board.get(c);
 	}
@@ -99,6 +111,13 @@ public class Board {
 		
 	}
 	
+	/**
+	 * @param ship Barco del que queremos el neighborhood
+	 * @param position Posición del barco
+	 * @return Coordenadas vecinas
+	 * Recibe el barco del cual quiere saberse el neighborhood y la Coordinate en la cual se encuentra, y devuelve todas las coordenadas
+	 * vecinas al barco, eliminando las del propio barco
+	 */
 	public Set<Coordinate> getNeighborhood(Ship ship, Coordinate position){
 		Set<Coordinate> s1 = new HashSet<Coordinate>();
 		Set<Coordinate> c1 = new HashSet<Coordinate>();
@@ -120,6 +139,11 @@ public class Board {
 		return s1;
 	}
 	
+	/**
+	 * @param s1 Barco del que queremos el neighborhood
+	 * @return neighborhood
+	 * Recibe un barco sin Coordiangte y llama a neighborhood con el mismo barco pero usando como posición la del propio barco
+	 */
 	public Set<Coordinate> getNeighborhood(Ship s1){
 		Set<Coordinate> c = this.getNeighborhood(s1, s1.getPosition());
 		
