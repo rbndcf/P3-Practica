@@ -222,6 +222,10 @@ public class Ship {
 		else return false;
 	}
 	
+	/**
+	 * @return cadena de texto
+	 * Devuelve una cadena con el nombre, la orientación, y la representacion "grafica" del barco que llama a toString()
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
