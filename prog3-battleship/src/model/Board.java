@@ -10,8 +10,8 @@ public class Board {
 	private static final int MAX_BOARD_SIZE = 20;
 	private static final int MIN_BOARD_SIZE = 5;
 	private int size;
-	private int numCrafts;
-	private int destroyedCrafts;
+	private int numCrafts = 0;
+	private int destroyedCrafts = 0;
 	
 	private Map<Coordinate, Ship> board = new HashMap<Coordinate, Ship>();
 	private Set<Coordinate> seen = new HashSet<Coordinate>();
@@ -55,17 +55,25 @@ public class Board {
 		boolean check = true;
 		
 		for(Coordinate c1 : ship.getAbsolutePositions(position)) {
-			System.out.println(c1.get(0) + " " + c1.get(1));
-			
 			if(c1.get(0) < 0 || c1.get(0) >= size || c1.get(1) < 0 || c1.get(1) >= size) {
-				System.out.println("Entroo");
+				System.err.println();
 				check = false;	
 			}
+			
+			else if(board.containsKey(c1)) {
+				System.err.println();
+				check = false;
+			}
+			
+			else
+				for(Coordinate c : this.getNeighborhood(ship, position))
+					if(board.containsKey(c) && board.get(c) != ship)
+						check = false;
 		}
 		
-		System.out.println(check);
-		
 		if(check) {
+			ship.setPosition(position);
+			
 			for(Coordinate c1 : ship.getAbsolutePositions(position))
 				board.put(c1, ship);
 			
@@ -73,17 +81,6 @@ public class Board {
 		}
 		
 		else return false;
-		
-		/*if(position.get(0) < 0 || (position.get(0) + 4) > size || position.get(1) < 0 || (position.get(1) + 4) > size) {
-			System.err.println();
-			return false;
-		}
-		else {
-			for(Coordinate c1 : ship.getAbsolutePositions(position))
-				board.put(c1, ship);
-
-			return true;
-		}*/
 	}
 	
 	public Ship getShip(Coordinate c) {
@@ -103,11 +100,30 @@ public class Board {
 	}
 	
 	public Set<Coordinate> getNeighborhood(Ship ship, Coordinate position){
+		Set<Coordinate> s1 = new HashSet<Coordinate>();
+		Set<Coordinate> c1 = new HashSet<Coordinate>();
 		
+		c1 = ship.getAbsolutePositions(position);
+		
+		for(Coordinate c : c1)
+			for(int i = -1 ; i < 2 ; i++) 
+				for(int j = -1 ; j < 2 ; j++) {
+					Coordinate c2 = new Coordinate(c.get(0) + i, c.get(1) + j);
+					
+					if(!s1.contains(c2) && c2.get(0) >= 0 && c2.get(0) < size && c2.get(1) >= 0 && c2.get(1) < size)
+						s1.add(c2);
+				}
+		
+		for(Coordinate c : c1)
+			s1.remove(c);
+		
+		return s1;
 	}
 	
 	public Set<Coordinate> getNeighborhood(Ship s1){
+		Set<Coordinate> c = this.getNeighborhood(s1, s1.getPosition());
 		
+		return c;
 	}
 	
 	public String show(boolean unveil) {

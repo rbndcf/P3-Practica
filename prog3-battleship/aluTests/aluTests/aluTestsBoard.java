@@ -140,13 +140,13 @@ public class aluTestsBoard {
 		assertFalse(board.addShip(goleta, new Coordinate(3,8)));
 	}
 	
-	//TODO testAddShipNextOther
 	/* Posiciona un Ship junto a otro y comprueba que addShip devuelve
 	 * false y que además no se ha posicionado el Ship en el Board
 	 */
 	@Test
 	public void testAddShipNextOther() {
-		fail("Realiza el test testAddShipNextOther()");
+		assertTrue(board.addShip(galeon, new Coordinate(0,1)));
+		assertFalse(board.addShip(goleta, new Coordinate(1,0))); 
 	}
 	
 	/* Se posiciona un Ship en una Coordinate.
@@ -158,7 +158,9 @@ public class aluTestsBoard {
 		assertTrue(board.addShip(fragata, new Coordinate(3,1)));
 		
 		assertNull(board.getShip(new Coordinate(0,0)));
-		assertNotNull(board.getShip(new Coordinate(3,1))); 
+		assertNotNull(board.getShip(new Coordinate(4,3))); 
+		assertNotNull(board.getShip(new Coordinate(5,3)));
+		assertNotNull(board.getShip(new Coordinate(6,3)));
 	}
 	
 	
@@ -239,9 +241,19 @@ public class aluTestsBoard {
 					assertTrue("x,y = "+i+","+j,neighborhood.contains(new Coordinate(i,j)));	
 			}
 		}
+		
+		board.addShip(fragata, new Coordinate(5,1));
+		Set<Coordinate> neighborhood2 = board.getNeighborhood(fragata, new Coordinate(3,1));
+  		for (int i=5; i<10; i++) {
+			for (int j=2; j<4; j++) {
+				if ((j==3) && (i>=6)&&(i<=8))
+					assertFalse("x,y = "+i+","+j,neighborhood2.contains(new Coordinate(i-2,j)));
+				else 
+					assertTrue("x,y = "+i+","+j,neighborhood2.contains(new Coordinate(i-2,j)));	
+			}
+		}
 	}
 	
-	//TODO testGetNeighborhoodShipOutOfBounds
 	/* Comprueba:
 	 * 1- getNeighborhood(Ship) para un Ship que no se ha puesto en el Board 
 	 *    debe devolver un Set vacío.
@@ -252,7 +264,11 @@ public class aluTestsBoard {
 	 */
 	@Test
 	public void testGetNeighborhoodShipOutOfBounds() {
-		fail ("Realiza el test testGetNeighborhoodShipOutOfBounds() ");
+		assertTrue(board.addShip(fragata, new Coordinate(6,7)));
+		
+		Set<Coordinate> nb = board.getNeighborhood(fragata);
+		System.out.println(board.getSize());
+		assertEquals(5, nb.size());
 	}
 	
 	
