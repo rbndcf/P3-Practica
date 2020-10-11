@@ -143,20 +143,12 @@ public class Ship {
 	 * Utiliza las coordenadas del Ship y devuelve su posición sobre el tablero respecto de esas coordenadas
 	 */
 	public Set<Coordinate> getAbsolutePositions(){
-		Coordinate c = this.getPosition();
+		Set<Coordinate> c = new HashSet<Coordinate>();
+		Coordinate c1 = this.getPosition();
 		
-		Set<Coordinate> absPositions = new HashSet<Coordinate>();
+		c = this.getAbsolutePositions(c1);
 		
-		for(int i = 0 ; i < shape[or.ordinal()].length ; i++) {
-			if(shape[or.ordinal()][i] == CRAFT_VALUE || shape[or.ordinal()][i] == HIT_VALUE) {
-				int insideShapeX = i % BOUNDING_SQUARE_SIZE;
-				int insideShapeY = i / BOUNDING_SQUARE_SIZE;
-				
-				absPositions.add(new Coordinate(insideShapeX + c.get(0), insideShapeY + c.get(1)));
-			}
-		}
-		
-		return absPositions;
+		return c;
 	}
 	
 	/**
