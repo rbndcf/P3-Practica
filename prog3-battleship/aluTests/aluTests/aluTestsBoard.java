@@ -312,10 +312,8 @@ public class aluTestsBoard {
 		assertTrue(board.addShip(fragata, new Coordinate(6,7)));
 		
 		Set<Coordinate> nb = board.getNeighborhood(fragata);
-		System.out.println(board.getSize());
 		assertEquals(5, nb.size());
 	}
-	
 	
 	/* Se crea un tablero de tamaño 5 sin Ships. Se comprueba que lo devuelto
 	 * por show(true) y show(false) es correcto.
@@ -350,18 +348,18 @@ public class aluTestsBoard {
 
 	}	
 	
-	
-	//TODO testToString1
 	/* Añade los 4 Ships del setUp() en el Board y comprueba toString() con
 	 * la salida correcta.
 	 */
 	@Test
 	public void testToString1() {
-		fail("Añade los 4 Ships en el Board");
+		assertTrue(board.addShip(bergantin, new Coordinate(0,0)));
+		assertTrue(board.addShip(fragata, new Coordinate(5,0)));
+		assertTrue(board.addShip(galeon, new Coordinate(0,5)));
+		assertTrue(board.addShip(goleta, new Coordinate(5,5)));
 		assertEquals("Board 10; crafts: 4; destroyed: 0",board.toString());
 	}
 	
-	//TODO testToString2
     /* Se toma el ejemplo del test testAreAllCraftsDestroyed().
      * 1- Destruye el galeón y comprueba que la salida que debe dar es correcta.
      * 2- Realiza disparos sobre la fragata comprobando que las salidas que debe
@@ -369,7 +367,14 @@ public class aluTestsBoard {
     */
 	@Test
 	public void testToString2() {		
-		fail ("Realiza el test testToString2()");
+		board.addShip(galeon, new Coordinate(0,1));
+
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(2,2)));
+		assertEquals("Board 10; crafts: 1; destroyed: 0",board.toString());
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(2,3)));
+		assertEquals("Board 10; crafts: 1; destroyed: 0",board.toString());
+		assertEquals(CellStatus.DESTROYED, board.hit(new Coordinate(2,4)));
+		assertEquals("Board 10; crafts: 1; destroyed: 1",board.toString());
 	}
 
 }
