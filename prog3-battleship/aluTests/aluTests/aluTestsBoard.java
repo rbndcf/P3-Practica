@@ -12,6 +12,7 @@ import model.Coordinate;
 import model.Ship; 
 import model.Orientation;
 import model.Board;
+import model.CellStatus;
 
 public class aluTestsBoard {
 
@@ -163,7 +164,6 @@ public class aluTestsBoard {
 		assertNotNull(board.getShip(new Coordinate(6,3)));
 	}
 	
-	
     /* Se comprueba isSeen antes y después de disparar al agua
      * en un Board sin Ships */
 	@Test
@@ -176,7 +176,6 @@ public class aluTestsBoard {
 			}	
 	}
 
-	//TODO testIsSeen2
   /* Posiciona un Ship en el Board y comprueba isSeen 
    * antes y después de disparar a las distintas partes del Ship.
    * Cuando el Ship se ha hundido entonces comprueba que las
@@ -184,10 +183,21 @@ public class aluTestsBoard {
    * vistas */
 	@Test
 	public void testIsSeen2() {
-		fail ("Realiza el test testIsSeen2()");
+		assertTrue(board.addShip(goleta, new Coordinate(0,0)));
+
+		assertFalse(board.isSeen(new Coordinate(2,1)));
+		assertFalse(board.isSeen(new Coordinate(2,2)));
+		assertFalse(board.isSeen(new Coordinate(2,3)));
+
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(2,1)));
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(2,2)));
+		assertEquals(CellStatus.DESTROYED, board.hit(new Coordinate(2,3)));
+		
+		for(int i = 1 ; i < 4 ; i++)
+			for(int j = 0 ; j < 5 ; j++)
+				assertTrue(board.isSeen(new Coordinate(i,j)));
 	}
 
-	//TODO testHit
 	/* Coloca un Ship en el Board en una Coordinate. Comprueba que:
 	 * 1- al disparar (hit) sobre las posiciones alrededor del Ship el 
 	 *    resultado es WATER.
@@ -199,10 +209,29 @@ public class aluTestsBoard {
 	 */
 	@Test
 	public void testHit() {
-		fail("Realiza el test testHit()");
+		assertTrue(board.addShip(fragata, new Coordinate(0,0)));
+
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(0,1)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(1,1)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(2,1)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(3,1)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(4,1)));
+
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(0,2)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(4,2)));
+
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(0,3)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(1,3)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(2,3)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(3,3)));
+		assertEquals(CellStatus.WATER, board.hit(new Coordinate(4,3)));
+
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(1,2)));
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(2,2)));
+		
+		assertEquals(CellStatus.DESTROYED, board.hit(new Coordinate(3,2)));
 	}
 
-	//TODO testAreAllCraftsDestroyed
 	/* Comprueba que:
 	 * 1- en un Board sin Ships, areAllCraftsDestroyed devuelve true.
 	 * 2- al posicionar dos Ships en el Board, tras cada posicionamiento,
@@ -217,14 +246,30 @@ public class aluTestsBoard {
 	@Test
 	public void testAreAllCraftsDestroyed() {
 		assertTrue("numCrafts=destroyedCrafts=0",board.areAllCraftsDestroyed());
+		
 		board.addShip(galeon, new Coordinate(0,1));
 		assertFalse("numCrafts=1; destroyedCrafts=0",board.areAllCraftsDestroyed());
 		board.addShip(fragata, new Coordinate(3,1));
 		assertFalse("numCrafts=2; destroyedCrafts=0",board.areAllCraftsDestroyed());
-		fail ("Termina las pruebas 3, 4 y 5");
+
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(2,2)));
+		assertFalse("numCrafts=2; destroyedCrafts=0", board.areAllCraftsDestroyed());
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(2,3)));
+		assertFalse("numCrafts=2; destroyedCrafts=0", board.areAllCraftsDestroyed());
+		assertEquals(CellStatus.DESTROYED, board.hit(new Coordinate(2,4)));
+		assertFalse("numCrafts=2; destroyedCrafts=1", board.areAllCraftsDestroyed());
+
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(4,3)));
+		assertFalse("numCrafts=2; destroyedCrafts=1", board.areAllCraftsDestroyed());
+		assertEquals(CellStatus.HIT, board.hit(new Coordinate(5,3)));
+		assertFalse("numCrafts=2; destroyedCrafts=1", board.areAllCraftsDestroyed());
+		assertEquals(CellStatus.DESTROYED, board.hit(new Coordinate(6,3)));
+		assertTrue("numCrafts=2; destroyedCrafts=2", board.areAllCraftsDestroyed());
+		
+		board.addShip(bergantin, new Coordinate(4,4));
+		assertFalse("numCrafts=3; destroyedCrafts=2", board.areAllCraftsDestroyed());
 	}
 
-	
 	/* Se comprueba getNeighborhood(Ship) donde el Ship y todas sus 
 	 * Coordinate vecinas están dentro de Board.
 	 */
@@ -285,7 +330,6 @@ public class aluTestsBoard {
 		assertEquals(sboardEmpty,showShips);
 	}
 	
-	//TODO testShowBoardWithShips
 	/* Se crea un tablero de tamaño 5.
 	 * 1- Se añaden los 4 ships en las posiciones indicadas en la variable estática 'sboard'
 	 *    definida en setUp().
@@ -295,9 +339,14 @@ public class aluTestsBoard {
 	@Test
 	public void testShowBoardWithShips() {
 		board = new Board(5);
+		
 		board.addShip(galeon, new Coordinate(-2,-1));
 		board.addShip(fragata, new Coordinate(1,-2));
-		fail ("Sigue añadiendo la goleta y el bergantín en sus posiciones y haz las comprobaciones indicadas");
+		board.addShip(goleta,  new Coordinate(2,1));
+		board.addShip(bergantin, new Coordinate(-1,2));
+		
+		assertEquals(sboardHide1, board.show(false));
+		assertEquals(sboard, board.show(true));
 
 	}	
 	

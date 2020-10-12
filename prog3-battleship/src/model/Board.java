@@ -10,8 +10,8 @@ public class Board {
 	private static final int MAX_BOARD_SIZE = 20;
 	private static final int MIN_BOARD_SIZE = 5;
 	private int size;
-	private int numCrafts = 0;
-	private int destroyedCrafts = 0;
+	private int numCrafts;
+	private int destroyedCrafts;
 	
 	private Map<Coordinate, Ship> board = new HashMap<Coordinate, Ship>();
 	private Set<Coordinate> seen = new HashSet<Coordinate>();
@@ -80,6 +80,7 @@ public class Board {
 		
 		if(check) {
 			ship.setPosition(position);
+			numCrafts++;
 			
 			for(Coordinate c1 : ship.getAbsolutePositions(position))
 				board.put(c1, ship);
@@ -99,16 +100,60 @@ public class Board {
 		return board.get(c);
 	}
 	
+	/**
+	 * @param c Coordenada que queremos comprobar
+	 * @return Return si se ha visto
+	 * Recibe una coordenada y devuelve true si ha sido vista por el adversario o false si no ha sido vista
+	 */
 	public boolean isSeen(Coordinate c) {
-		
+		if(seen.contains(c)) return true;
+		else return false;
 	}
 	
+	/**
+	 * @param c Coordenada a la que se dispara
+	 * @return Estado del sitio
+	 * Se dispara a 1 coordenada, si no hay ningún barco se devuelve WATER, si hay un barco se devuelve HIT, y si era la
+	 * ultima casilla sin alcanzar del barco se devuelve DESTROYED
+	 */
 	public CellStatus hit(Coordinate c) {
+		if(c.get(0) < 0 || c.get(0) >= size || c.get(1) < 0 || c.get(1) >= size) {
+			System.err.println();
+			return CellStatus.WATER;
+		}
 		
+		else if(board.containsKey(c)) {
+			seen.add(c);
+			
+			if(!board.get(c).isHit(c))
+				board.get(c).hit(c);
+			
+			if(board.get(c).isShotDown()) {
+				destroyedCrafts++;
+				for(Coordinate c1 : this.getNeighborhood(board.get(c)))
+					if(!seen.contains(c1))
+						seen.add(c1);
+				
+				return CellStatus.DESTROYED;
+			}
+			else return CellStatus.HIT;
+		}
+		
+		else {
+			seen.add(c);
+			return CellStatus.WATER;
+		}
 	}
 	
+	/**
+	 * @return Estado de los barcos
+	 * Si todos los barcos han sido destruidos devuelve true, en caso contrario devuelve false
+	 */
 	public boolean areAllCraftsDestroyed() {
-		
+		if(numCrafts == destroyedCrafts)
+			return true;
+		else
+			return false;
 	}
 	
 	/**
@@ -150,8 +195,45 @@ public class Board {
 		return c;
 	}
 	
+	/**
+	 * @param unveil Modo de vision
+	 * @return El tablero de forma "grafica"
+	 * Recibe el parametro que indica si se ve como el dueño o el adversario, y segun ese parametro se muestran
+	 * todas las posiciones del board o solo las que ha visto el adversario y tapando las que no ha visto con
+	 * NOTSEEN_SYMBOL que equivale a "?"
+	 */
 	public String show(boolean unveil) {
+		StringBuilder sb = new StringBuilder();
 		
+		for(int i = 0 ; i < size ; i++) {
+			for(int j = 0 ; j < size ; j++) {
+				if(this.isSeen(new Coordinate(j,i))) {
+					if(board.containsKey(new Coordinate(j,i))) {
+						Ship s1 = board.get(new Coordinate(j,i));
+						sb.append(s1.getSymbol());
+					}
+					else
+						sb.append(WATER_SYMBOL);	
+				}
+		
+				else if(unveil) {
+					if(board.containsKey(new Coordinate(j,i))) {
+						Ship s1 = board.get(new Coordinate(j,i));
+						sb.append(s1.getSymbol());
+					}
+					else
+						sb.append(WATER_SYMBOL);
+				}
+		
+				else
+					sb.append(NOTSEEN_SYMBOL);
+			}
+			if(i != size - 1)
+				sb.append("\n");	
+		}
+			
+		
+		return sb.toString();
 	}
 	
 	public String toString() {
