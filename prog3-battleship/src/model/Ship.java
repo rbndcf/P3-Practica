@@ -140,7 +140,8 @@ public class Ship {
 	
 	/**
 	 * @return Set de Coordinates
-	 * Utiliza las coordenadas del Ship y devuelve su posición sobre el tablero respecto de esas coordenadas
+	 * Utiliza la coordenada del Ship y llama a getAbsolutePositions con dicha Coordenada y devuelve la posición sobre el tablero 
+	 * respecto de esas coordenadas
 	 */
 	public Set<Coordinate> getAbsolutePositions(){
 		Set<Coordinate> c = new HashSet<Coordinate>();
