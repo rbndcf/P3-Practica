@@ -166,10 +166,7 @@ public class Ship {
 		Coords = this.getAbsolutePositions();
 		
 		if(Coords.contains(c)) {
-			Coordinate c1 = this.getPosition();		
-			int i = c.get(0) - c1.get(0);
-			int j = c.get(1) - c1.get(1);
-			int pos = j * BOUNDING_SQUARE_SIZE + i;
+			int pos = this.getShapeIndex(new Coordinate(c.get(0) - this.getPosition().get(0), c.get(1) - this.getPosition().get(1)));
 			
 			if(shape[or.ordinal()][pos] == CRAFT_VALUE) {
 				shape[or.ordinal()][pos] = HIT_VALUE;
@@ -221,25 +218,27 @@ public class Ship {
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		int BOUNDING_SQUARE_SIZE_toString = BOUNDING_SQUARE_SIZE + 2;
 		
 		sb.append(name + " (" + or + ")");
 		
-		for(int i = 0 ; i < (BOUNDING_SQUARE_SIZE + 2) ; i++) {
+		for(int i = 0 ; i < (BOUNDING_SQUARE_SIZE_toString) ; i++) {
 			sb.append("\n");
 			
-			for(int j = 0 ; j < (BOUNDING_SQUARE_SIZE + 2) ; j++) {
-				if(i == 0 || i == 6) {
+			for(int j = 0 ; j < (BOUNDING_SQUARE_SIZE_toString) ; j++) {
+				if(i == 0 || i == BOUNDING_SQUARE_SIZE_toString - 1) {
 					if(j == 0)
 						sb.append(" ");
-					else if(j != 6)
+					else if(j != BOUNDING_SQUARE_SIZE_toString - 1)
 						sb.append("-");
 				}
 				
-				else if(j == 0 || j == 6)
+				else if(j == 0 || j == BOUNDING_SQUARE_SIZE_toString - 1)
 					sb.append("|");
 				
 				else {
-					int pos = (i - 1) * BOUNDING_SQUARE_SIZE + (j - 1);
+					int pos = this.getShapeIndex(new Coordinate(j-1, i-1));
+					
 					if(shape[or.ordinal()][pos] == 0)
 						sb.append(" ");
 					
