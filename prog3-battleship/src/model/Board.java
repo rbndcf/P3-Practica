@@ -84,11 +84,9 @@ public class Board {
 			
 			for(Coordinate c1 : ship.getAbsolutePositions(position))
 				board.put(c1, ship);
-			
-			return true;
 		}
 		
-		else return false;
+		return check;
 	}
 	
 	/**
@@ -164,7 +162,27 @@ public class Board {
 	 * vecinas al barco, eliminando las del propio barco
 	 */
 	public Set<Coordinate> getNeighborhood(Ship ship, Coordinate position){
-		Set<Coordinate> s1 = new HashSet<Coordinate>();
+		Set<Coordinate> s = new HashSet<Coordinate>();
+		Set<Coordinate> c = new HashSet<Coordinate>();
+		
+		c = ship.getAbsolutePositions(position);
+		
+		for(Coordinate c1 : c) {
+			Set<Coordinate> c2 = new HashSet<Coordinate>();
+			c2 = c1.adjacentCoordinates();
+			
+			for(Coordinate c3 : c2)
+				if(!s.contains(c3) && c3.get(0) >= 0 && c3.get(0) < size && c3.get(1) >= 0 && c3.get(1) < size)
+					s.add(c3);
+		}
+		
+		for(Coordinate c1 : c)
+			s.remove(c1);
+			
+		return s;
+		
+		// Esto lo tenía hecho sin acordarme del adjacentCoordinates()
+		/*Set<Coordinate> s1 = new HashSet<Coordinate>();
 		Set<Coordinate> c1 = new HashSet<Coordinate>();
 		
 		c1 = ship.getAbsolutePositions(position);
@@ -181,7 +199,7 @@ public class Board {
 		for(Coordinate c : c1)
 			s1.remove(c);
 		
-		return s1;
+		return s1;*/
 	}
 	
 	/**
