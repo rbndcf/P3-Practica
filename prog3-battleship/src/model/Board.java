@@ -2,7 +2,28 @@ package model;
 
 import java.util.*;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ * 
+ * Esta clase la utilizaremos para controlar el tablero de juego de nuestro Battleship. Aqui tendremos el tamaño del tablero, los simbolos que representan el
+ * Show(), las casillas que hemos descubierto, y los barcos que hay en el tablero con cada posicion que ocupan, además de poder añadir barcos y sus coordenadas 
+ * al tablero, saber el numero de barcos que se han añadido y cuantos se han destruido.
+ */
 public class Board {
+	
+	
+	/**
+	 * @param HIT_SYMBOL simbolo cuando se ha dado a un barco
+	 * @param WATER_SYMBOL simbolo del agua
+	 * @param NOTSEEN_SYMBOL simbolo cuando no se ha visto una posicion
+	 * @param MAX_BOARD_SIZE tamaño maximo del board
+	 * @param MIN_BOARD_SIZE tamaño minimo del board
+	 * @param size tamaño del board
+	 * @param numCrafts numero de Ships en el board
+	 * @param destroyedCrafts numero de Ships destruidos
+	 * @param board mapa donde se almacenan todos los barcos y sus coordenadas absolutas que hay en el board
+	 * @param seen set de coordenadas que han sido disparadas o de alrededor en un barco destruido
+	 */
 	public static final char HIT_SYMBOL = '•';
 	public static final char WATER_SYMBOL = ' ';
 	public static final char NOTSEEN_SYMBOL = '?';
@@ -26,11 +47,11 @@ public class Board {
 			System.err.println();
 		}
 		
-		else {
+		else
 			this.size = size;
-			numCrafts = 0;
-			destroyedCrafts = 0;	
-		}
+		
+		numCrafts = 0;
+		destroyedCrafts = 0;	
 	}
 	
 	/**
@@ -148,10 +169,8 @@ public class Board {
 	 * Si todos los barcos han sido destruidos devuelve true, en caso contrario devuelve false
 	 */
 	public boolean areAllCraftsDestroyed() {
-		if(numCrafts == destroyedCrafts)
-			return true;
-		else
-			return false;
+		if(numCrafts == destroyedCrafts) return true;
+		else return false;
 	}
 	
 	/**
@@ -180,26 +199,6 @@ public class Board {
 			s.remove(c1);
 			
 		return s;
-		
-		// Esto lo tenía hecho sin acordarme del adjacentCoordinates()
-		/*Set<Coordinate> s1 = new HashSet<Coordinate>();
-		Set<Coordinate> c1 = new HashSet<Coordinate>();
-		
-		c1 = ship.getAbsolutePositions(position);
-		
-		for(Coordinate c : c1)
-			for(int i = -1 ; i < 2 ; i++) 
-				for(int j = -1 ; j < 2 ; j++) {
-					Coordinate c2 = new Coordinate(c.get(0) + i, c.get(1) + j);
-					
-					if(!s1.contains(c2) && c2.get(0) >= 0 && c2.get(0) < size && c2.get(1) >= 0 && c2.get(1) < size)
-						s1.add(c2);
-				}
-		
-		for(Coordinate c : c1)
-			s1.remove(c);
-		
-		return s1;*/
 	}
 	
 	/**
@@ -208,9 +207,7 @@ public class Board {
 	 * Recibe un barco sin Coordiangte y llama a neighborhood con el mismo barco pero usando como posición la del propio barco
 	 */
 	public Set<Coordinate> getNeighborhood(Ship s1){
-		Set<Coordinate> c = this.getNeighborhood(s1, s1.getPosition());
-		
-		return c;
+		return this.getNeighborhood(s1, s1.getPosition());
 	}
 	
 	/**
@@ -249,7 +246,6 @@ public class Board {
 			if(i != size - 1)
 				sb.append("\n");	
 		}
-			
 		
 		return sb.toString();
 	}
