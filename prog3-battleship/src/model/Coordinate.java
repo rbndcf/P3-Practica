@@ -12,7 +12,6 @@ import java.util.*;
 
 public class Coordinate {
 
-	
 	/**
 	 * @param components variable en la que guardaremos las coordenadas
 	 */
