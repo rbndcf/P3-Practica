@@ -273,8 +273,6 @@ public class Board {
 	 * Devuelve una cadena con el tamaño del board, el numero de barcos y el numero de barcos destruidos
 	 */
 	public String toString() {
-		String sb = "Board " + size + "; crafts: " + numCrafts + "; destroyed: " + destroyedCrafts;
-		
-		return sb;
+		return "Board " + size + "; crafts: " + numCrafts + "; destroyed: " + destroyedCrafts;
 	}
 }
