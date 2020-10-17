@@ -44,7 +44,7 @@ public class Board {
 	public Board(int size) {
 		if(size < MIN_BOARD_SIZE || size > MAX_BOARD_SIZE) {
 			this.size = MIN_BOARD_SIZE;
-			System.err.println();
+			System.err.println("Error in Board.Board, size " + size + " is out of max or min size");
 		}
 		
 		else
@@ -84,19 +84,28 @@ public class Board {
 		
 		for(Coordinate c1 : ship.getAbsolutePositions(position)) {
 			if(c1.get(0) < 0 || c1.get(0) >= size || c1.get(1) < 0 || c1.get(1) >= size) {
-				System.err.println();
+				System.err.println("Error in Board.addShip, position " + c1.toString() + " is out of the board");
 				check = false;	
 			}
 			
 			else if(board.containsKey(c1)) {
-				System.err.println();
+				System.err.println("Error in Board.addShip, position " + c1.toString() + " is already occupied");
 				check = false;
 			}
 			
-			else
+			else {
 				for(Coordinate c : this.getNeighborhood(ship, position))
-					if(board.containsKey(c) && board.get(c) != ship)
+					if(board.containsKey(c) && board.get(c) != ship) {
+						System.err.println("Error in Board.addShip, position " + c.toString() + " is next to another ship");
 						check = false;
+						break;
+					}
+				
+				//if(!check)
+					//System.err.println("Error in Board.addShip, position " + position.toString() + " is next to another ship");
+			}
+			if(!check)
+				break;
 		}
 		
 		if(check) {
@@ -137,7 +146,7 @@ public class Board {
 	 */
 	public CellStatus hit(Coordinate c) {
 		if(c.get(0) < 0 || c.get(0) >= size || c.get(1) < 0 || c.get(1) >= size) {
-			System.err.println();
+			System.err.println("Error in Board.hit, position " + c.toString() + "is out of the Board");
 			return CellStatus.WATER;
 		}
 		
@@ -222,29 +231,38 @@ public class Board {
 		
 		for(int i = 0 ; i < size ; i++) {
 			for(int j = 0 ; j < size ; j++) {
-				if(this.isSeen(new Coordinate(j,i))) {
-					if(board.containsKey(new Coordinate(j,i))) {
-						Ship s1 = board.get(new Coordinate(j,i));
-						sb.append(s1.getSymbol());
+				if(unveil) {
+					if(board.containsKey(new Coordinate(j, i))) {
+						if(board.get(new Coordinate(j, i)).isHit(new Coordinate(j, i)))
+							sb.append(HIT_SYMBOL);
+							
+						else
+							sb.append(board.get(new Coordinate(j, i)).getSymbol());
 					}
-					else
-						sb.append(WATER_SYMBOL);	
-				}
-		
-				else if(unveil) {
-					if(board.containsKey(new Coordinate(j,i))) {
-						Ship s1 = board.get(new Coordinate(j,i));
-						sb.append(s1.getSymbol());
-					}
+					
 					else
 						sb.append(WATER_SYMBOL);
 				}
-		
-				else
-					sb.append(NOTSEEN_SYMBOL);
+				
+				else {
+					if(seen.contains(new Coordinate(j, i))) {
+						if(board.containsKey(new Coordinate(j, i)) && board.get(new Coordinate(j, i)).isShotDown())
+							sb.append(board.get(new Coordinate(j, i)).getSymbol());
+						
+						else if(board.containsKey(new Coordinate(j, i)))
+							sb.append(HIT_SYMBOL);
+						
+						else
+							sb.append(WATER_SYMBOL);
+					}
+					
+					else
+						sb.append(NOTSEEN_SYMBOL);
+				}
 			}
-			if(i != size - 1)
-				sb.append("\n");	
+			
+			if(i < (size - 1))
+				sb.append("\n");
 		}
 		
 		return sb.toString();
