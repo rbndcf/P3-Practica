@@ -9,9 +9,18 @@ import java.util.*;
  * y su estado (No hit, hit o shot down), saber su orientación y su forma (shape), además de poder obtener cada 
  * uno de sus elementos como symbol, name, posición, etc.
  */
-
 public class Ship {
 	
+	/**
+	 * @param BOUNDING_SQUARE_SIZE tamaño de la caja de colisiones del ship
+	 * @param HIT_VALUE valor cuando el ship es alcanzado
+	 * @param CRAFT_VALUE valor cuando el ship no es alcanzado
+	 * @param symbol simbolo del barco
+	 * @param name nombre del barco
+	 * @param shape distintas formas que puede tener el barco
+	 * @param or orientación del barco
+	 * @param pos posición del barco
+	 */
 	private static final int BOUNDING_SQUARE_SIZE = 5;
 	private static final int HIT_VALUE = -1;
 	private static final int CRAFT_VALUE = 1;
@@ -71,7 +80,7 @@ public class Ship {
 	
 	/**
 	 * @param position del Ship
-	 * Posicion en la que esta el barco que llama a setPosition()
+	 * Se establece la posicion en la que esta el barco que llama a setPosition()
 	 */
 	public void setPosition(Coordinate position) {
 		pos = position;
@@ -79,6 +88,7 @@ public class Ship {
 	
 	/**
 	 * @return el nombre del Ship
+	 * Devuelve el nombre del Ship que llama a getName()
 	 */
 	public String getName() {
 		return name;
@@ -144,12 +154,7 @@ public class Ship {
 	 * respecto de esas coordenadas
 	 */
 	public Set<Coordinate> getAbsolutePositions(){
-		Set<Coordinate> c = new HashSet<Coordinate>();
-		Coordinate c1 = this.getPosition();
-		
-		c = this.getAbsolutePositions(c1);
-		
-		return c;
+		return this.getAbsolutePositions(new Coordinate(this.getPosition()));
 	}
 	
 	/**
@@ -202,11 +207,7 @@ public class Ship {
 		if(this.getPosition() == null)
 			return false;
 		
-		Coordinate c1 = this.getPosition();
-		
-		int i = c.get(0) - c1.get(0);
-		int j = c.get(1) - c1.get(1);
-		int pos = j * BOUNDING_SQUARE_SIZE + i;
+		int pos = (c.get(1) - this.getPosition().get(1)) * BOUNDING_SQUARE_SIZE + (c.get(0) - this.getPosition().get(0));
 		
 		if(shape[or.ordinal()][pos] == HIT_VALUE) return true;
 		else return false;
