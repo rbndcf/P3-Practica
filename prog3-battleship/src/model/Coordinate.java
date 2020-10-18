@@ -76,7 +76,7 @@ public class Coordinate {
 	 * Recibe un Coordinate, y lo suma al objeto Coordinate que llama a la función add();
 	 */
 	public Coordinate add(Coordinate c){
-		Coordinate new_c = new Coordinate(this);
+		Coordinate new_c = this.copy();
 
 		for(int i = 0 ; i < new_c.components.length ; i++)
 			new_c.set(i, new_c.get(i) + c.get(i));
@@ -90,7 +90,7 @@ public class Coordinate {
 	 * Recibe un Coordinate, y se lo resta al objeto Coordinate que llama a la función subtract();
 	 */
 	public Coordinate subtract(Coordinate c){
-		Coordinate new_c = new Coordinate(this); 
+		Coordinate new_c = this.copy(); 
         
    		for(int i = 0 ; i < new_c.components.length ; i++)
       		new_c.set(i, new_c.get(i) - c.get(i));
