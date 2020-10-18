@@ -231,13 +231,15 @@ public class Board {
 		
 		for(int i = 0 ; i < size ; i++) {
 			for(int j = 0 ; j < size ; j++) {
+				Coordinate c = new Coordinate(j, i);
+				
 				if(unveil) {
-					if(board.containsKey(new Coordinate(j, i))) {
-						if(board.get(new Coordinate(j, i)).isHit(new Coordinate(j, i)))
+					if(board.containsKey(c)) {
+						if(board.get(c).isHit(c))
 							sb.append(HIT_SYMBOL);
 							
 						else
-							sb.append(board.get(new Coordinate(j, i)).getSymbol());
+							sb.append(board.get(c).getSymbol());
 					}
 					
 					else
@@ -245,11 +247,11 @@ public class Board {
 				}
 				
 				else {
-					if(seen.contains(new Coordinate(j, i))) {
-						if(board.containsKey(new Coordinate(j, i)) && board.get(new Coordinate(j, i)).isShotDown())
-							sb.append(board.get(new Coordinate(j, i)).getSymbol());
+					if(seen.contains(c)) {
+						if(board.containsKey(c) && board.get(c).isShotDown())
+							sb.append(board.get(c).getSymbol());
 						
-						else if(board.containsKey(new Coordinate(j, i)))
+						else if(board.containsKey(c))
 							sb.append(HIT_SYMBOL);
 						
 						else
