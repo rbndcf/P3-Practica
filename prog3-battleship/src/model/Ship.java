@@ -89,7 +89,7 @@ public class Ship {
 	 */
 	public Coordinate getPosition() {
 		if(pos == null) return null;
-		else return new Coordinate(pos);
+		else return pos.copy();
 	}
 	
 	/**
