@@ -1,5 +1,27 @@
 package model;
-//Prueba desde Ubuntu 2
+
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ * Aqui controlamos todas las posibles orientaciones que puede tener un barco
+ */
 public enum Orientation {
-	NORTH, EAST, SOUTH, WEST;
+	/**
+	 * Orientación Norte
+	 */
+	NORTH, 
+	
+	/**
+	 * Orientación Este
+	 */
+	EAST, 
+	
+	/**
+	 * Orientqación Sur
+	 */
+	SOUTH, 
+	
+	/**
+	 * Orientación Oeste
+	 */
+	WEST;
 }
