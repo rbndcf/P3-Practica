@@ -14,27 +14,45 @@ public class Board {
 	
 	/**
 	 * @param HIT_SYMBOL simbolo cuando se ha dado a un barco
-	 * @param WATER_SYMBOL simbolo del agua
-	 * @param NOTSEEN_SYMBOL simbolo cuando no se ha visto una posicion
-	 * @param MAX_BOARD_SIZE tamaño maximo del board
-	 * @param MIN_BOARD_SIZE tamaño minimo del board
-	 * @param size tamaño del board
-	 * @param numCrafts numero de Ships en el board
-	 * @param destroyedCrafts numero de Ships destruidos
-	 * @param board mapa donde se almacenan todos los barcos y sus coordenadas absolutas que hay en el board
-	 * @param seen set de coordenadas que han sido disparadas o de alrededor en un barco destruido
 	 */
 	public static final char HIT_SYMBOL = '•';
+	/**
+	 * @param WATER_SYMBOL simbolo del agua
+	 */
 	public static final char WATER_SYMBOL = ' ';
+	/**
+	 * @param NOTSEEN_SYMBOL simbolo cuando no se ha visto una posicion
+	 */
 	public static final char NOTSEEN_SYMBOL = '?';
 	
+	/**
+	 * @param MAX_BOARD_SIZE tamaño maximo del board
+	 */
 	private static final int MAX_BOARD_SIZE = 20;
+	/**
+	 * @param MIN_BOARD_SIZE tamaño minimo del board
+	 */
 	private static final int MIN_BOARD_SIZE = 5;
+	/**
+	 * @param size tamaño del board
+	 */
 	private int size;
+	/**
+	 * @param numCrafts numero de Ships en el board
+	 */
 	private int numCrafts;
+	/**
+	 * @param destroyedCrafts numero de Ships destruidos
+	 */
 	private int destroyedCrafts;
 	
+	/**
+	 * @param board mapa donde se almacenan todos los barcos y sus coordenadas absolutas que hay en el board
+	 */
 	private Map<Coordinate, Ship> board = new HashMap<Coordinate, Ship>();
+	/**
+	 * @param seen set de coordenadas que han sido disparadas o de alrededor en un barco destruido
+	 */
 	private Set<Coordinate> seen = new HashSet<Coordinate>();
 	
 	/**
@@ -153,8 +171,12 @@ public class Board {
 		else if(board.containsKey(c)) {
 			seen.add(c);
 			
-			if(!board.get(c).isHit(c))
+			if(board.get(c).isHit(c))
+				return CellStatus.WATER;
+				
+			else
 				board.get(c).hit(c);
+			
 			
 			if(board.get(c).isShotDown()) {
 				destroyedCrafts++;
