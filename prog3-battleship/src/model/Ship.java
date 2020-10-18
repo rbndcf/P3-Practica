@@ -13,20 +13,28 @@ public class Ship {
 	
 	/**
 	 * @param BOUNDING_SQUARE_SIZE tamaño de la caja de colisiones del ship
-	 * @param HIT_VALUE valor cuando el ship es alcanzado
-	 * @param CRAFT_VALUE valor cuando el ship no es alcanzado
-	 * @param symbol simbolo del barco
-	 * @param name nombre del barco
-	 * @param shape distintas formas que puede tener el barco
-	 * @param or orientación del barco
-	 * @param pos posición del barco
 	 */
 	private static final int BOUNDING_SQUARE_SIZE = 5;
+	/**
+	 * @param HIT_VALUE valor cuando el ship es alcanzado
+	 */
 	private static final int HIT_VALUE = -1;
+	/**
+	 * @param CRAFT_VALUE valor cuando el ship no es alcanzado
+	 */
 	private static final int CRAFT_VALUE = 1;
+	/**
+	 * @param symbol simbolo del barco
+	 */
 	private char symbol;
+	/**
+	 * @param name nombre del barco
+	 */
 	private String name;
 	
+	/**
+	 * @param shape distintas formas que puede tener el barco
+	 */
 	private int shape[][] = new int[][] {
           { 0, 0, 0, 0, 0,               // NORTH    ·····
             0, 0, 1, 0, 0,               //          ··#··
@@ -53,7 +61,13 @@ public class Ship {
             0, 0, 0, 0, 0}				 //          ·····
 	}; 
 	
+	/**
+	 * @param or orientación del barco
+	 */
 	private Orientation or;
+	/**
+	 * @param pos posición del barco
+	 */
 	private Coordinate pos;            
 	
 	/**
