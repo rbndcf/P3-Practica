@@ -97,7 +97,7 @@ public class Ship {
 	 * Se establece la posicion en la que esta el barco que llama a setPosition()
 	 */
 	public void setPosition(Coordinate position) {
-		pos = position;
+		pos = new Coordinate(position);
 	}
 	
 	/**
