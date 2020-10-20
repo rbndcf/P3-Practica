@@ -1,4 +1,4 @@
-package aluTests;
+package model;
 
 import static org.junit.Assert.*;
 
@@ -7,10 +7,6 @@ import java.util.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import model.Coordinate; 
-import model.Ship; 
-import model.Orientation;
 
 public class aluTestsShip {
 	final static int BOUNDING_SQUARE_SIZE = 5;

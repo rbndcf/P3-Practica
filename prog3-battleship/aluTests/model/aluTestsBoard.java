@@ -1,4 +1,4 @@
-package aluTests;
+package model;
 
 import static org.junit.Assert.*;
 
@@ -7,12 +7,6 @@ import java.util.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import model.Coordinate; 
-import model.Ship; 
-import model.Orientation;
-import model.Board;
-import model.CellStatus;
 
 public class aluTestsBoard {
 
