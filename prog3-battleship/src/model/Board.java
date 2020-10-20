@@ -169,7 +169,7 @@ public class Board {
 		}
 		
 		else if(board.containsKey(c)) {
-			seen.add(c);
+			seen.add(new Coordinate(c));
 			
 			if(board.get(c).isHit(c))
 				return CellStatus.WATER;
@@ -182,7 +182,7 @@ public class Board {
 				destroyedCrafts++;
 				for(Coordinate c1 : this.getNeighborhood(board.get(c)))
 					if(!seen.contains(c1))
-						seen.add(c1);
+						seen.add(new Coordinate(c1));
 				
 				return CellStatus.DESTROYED;
 			}
@@ -190,7 +190,7 @@ public class Board {
 		}
 		
 		else {
-			seen.add(c);
+			seen.add(new Coordinate(c));
 			return CellStatus.WATER;
 		}
 	}
@@ -217,6 +217,9 @@ public class Board {
 		
 		c = ship.getAbsolutePositions(position);
 		
+		if(c == null)
+			return s;
+		
 		for(Coordinate c1 : c) {
 			Set<Coordinate> c2 = new HashSet<Coordinate>();
 			c2 = c1.adjacentCoordinates();
@@ -238,7 +241,8 @@ public class Board {
 	 * Recibe un barco sin Coordiangte y llama a neighborhood con el mismo barco pero usando como posición la del propio barco
 	 */
 	public Set<Coordinate> getNeighborhood(Ship s1){
-		return this.getNeighborhood(s1, s1.getPosition());
+		if(s1.getPosition() == null) return new HashSet<Coordinate>();
+		else return this.getNeighborhood(s1, s1.getPosition());
 	}
 	
 	/**
