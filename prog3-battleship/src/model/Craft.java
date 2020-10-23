@@ -9,7 +9,7 @@ import java.util.*;
  * y su estado (No hit, hit o shot down), saber su orientación y su forma (shape), además de poder obtener cada 
  * uno de sus elementos como symbol, name, posición, etc.
  */
-public class Ship {
+public class Craft {
 	
 	/**
 	 * @param BOUNDING_SQUARE_SIZE tamaño de la caja de colisiones del ship
@@ -76,7 +76,7 @@ public class Ship {
 	 * @param n Nombre
 	 * Constructor por parámetros
 	 */
-	public Ship(Orientation o, char s, String n) {
+	public Craft(Orientation o, char s, String n) {
 		name = n;
 		symbol = s;
 		or = o;

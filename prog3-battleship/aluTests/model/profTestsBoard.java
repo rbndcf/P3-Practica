@@ -23,7 +23,7 @@ public class profTestsBoard {
 	static final int  MIN_BOARD_SIZE = 5;
 	final static int DIM = 10;
 	Board board;
-	Ship fragata, galeon, bergantin, goleta;
+	Craft fragata, galeon, bergantin, goleta;
 	static String sboardEmpty,sboard, sboardHide1, sboardHits1,
 				sboardHits2,sboardHits3, sboardHide2; //= new String();
 	@BeforeClass
@@ -66,10 +66,10 @@ public class profTestsBoard {
 
 	@Before
 	public void setUp() throws Exception {
-		fragata = new Ship(Orientation.WEST,'F',"Barbanegra");
-		galeon = new Ship(Orientation.SOUTH,'A',"Francis Drake");
-		bergantin = new Ship(Orientation.EAST,'B',"Benito Soto");
-		goleta = new Ship(Orientation.NORTH,'G',"Hook");
+		fragata = new Craft(Orientation.WEST,'F',"Barbanegra");
+		galeon = new Craft(Orientation.SOUTH,'A',"Francis Drake");
+		bergantin = new Craft(Orientation.EAST,'B',"Benito Soto");
+		goleta = new Craft(Orientation.NORTH,'G',"Hook");
 		board = new Board(DIM);
 		
 	}
@@ -106,119 +106,119 @@ public class profTestsBoard {
 		
 	}
 
-	/* Posicionamientos correctos entre Ships. Se comprueba que ha posicionado
-	 * los Ships en el Board.
+	/* Posicionamientos correctos entre Crafts. Se comprueba que ha posicionado
+	 * los Crafts en el Board.
 	 */
 	@Test
-	public void testAddShipsOk() {
-		assertTrue(board.addShip(galeon, new Coordinate(0,1)));
+	public void testAddCraftsOk() {
+		assertTrue(board.addCraft(galeon, new Coordinate(0,1)));
 		for (int i=2; i<5; i++)	
-			assertNotNull("x,y = 2,"+i,board.getShip(new Coordinate(2,i)));
-		assertTrue(board.addShip(fragata, new Coordinate(5,1)));
+			assertNotNull("x,y = 2,"+i,board.getCraft(new Coordinate(2,i)));
+		assertTrue(board.addCraft(fragata, new Coordinate(5,1)));
 		for (int i=6; i<9; i++)	
-			assertNotNull("x,y = "+i+"3",board.getShip(new Coordinate(i,3)));
-		assertTrue(board.addShip(goleta, new Coordinate(0,5)));
+			assertNotNull("x,y = "+i+"3",board.getCraft(new Coordinate(i,3)));
+		assertTrue(board.addCraft(goleta, new Coordinate(0,5)));
 		for (int i=6; i<9; i++)	
-			assertNotNull("x,y = 2,"+i,board.getShip(new Coordinate(2,i)));
-		assertTrue(board.addShip(bergantin, new Coordinate(4,3)));
+			assertNotNull("x,y = 2,"+i,board.getCraft(new Coordinate(2,i)));
+		assertTrue(board.addCraft(bergantin, new Coordinate(4,3)));
 		for (int i=5; i<8; i++)	
-			assertNotNull("x,y = "+i+"5",board.getShip(new Coordinate(i,5)));
+			assertNotNull("x,y = "+i+"5",board.getCraft(new Coordinate(i,5)));
 	}
 
-	/* Posicionamiento correcto Ships en los límites del Board. Se comprueba que 
-	 * ha posicionado los Ships en el Board.
+	/* Posicionamiento correcto Crafts en los límites del Board. Se comprueba que 
+	 * ha posicionado los Crafts en el Board.
 	 * 
 	 */
 	@Test
-	public void testAddShipsOkLimits() {
-		assertTrue(board.addShip(galeon, new Coordinate(-2,-1)));
+	public void testAddCraftsOkLimits() {
+		assertTrue(board.addCraft(galeon, new Coordinate(-2,-1)));
 		for (int i=0; i<3; i++)	
-			assertNotNull("x,y = 0,"+i,board.getShip(new Coordinate(0,i)));
-		assertTrue(board.addShip(fragata, new Coordinate(-1,7)));
+			assertNotNull("x,y = 0,"+i,board.getCraft(new Coordinate(0,i)));
+		assertTrue(board.addCraft(fragata, new Coordinate(-1,7)));
 		for (int i=0; i<3; i++)	
-			assertNotNull("x,y = "+i+"9",board.getShip(new Coordinate(i,9)));
-		assertTrue(board.addShip(goleta, new Coordinate(7,6)));
+			assertNotNull("x,y = "+i+"9",board.getCraft(new Coordinate(i,9)));
+		assertTrue(board.addCraft(goleta, new Coordinate(7,6)));
 		for (int i=7; i<10; i++) 
-			assertNotNull("x,y = 9,"+i,board.getShip(new Coordinate(9,i)));
-		assertTrue(board.addShip(bergantin, new Coordinate(6,-2)));
+			assertNotNull("x,y = 9,"+i,board.getCraft(new Coordinate(9,i)));
+		assertTrue(board.addCraft(bergantin, new Coordinate(6,-2)));
 		for (int i=7; i<10; i++) 
-			assertNotNull("x,y = "+i+"0",board.getShip(new Coordinate(i,0)));
+			assertNotNull("x,y = "+i+"0",board.getCraft(new Coordinate(i,0)));
 	}
 	
-	/* Posicionamiento Ships fuera del tablero. Se comprueba, además, que no añade
-	 * Ship
+	/* Posicionamiento Crafts fuera del tablero. Se comprueba, además, que no añade
+	 * Craft
 	 */
 	@Test
-	public void testAddShipsOutOfBoard() {
-		assertFalse(board.addShip(galeon, new Coordinate(0,7)));
+	public void testAddCraftsOutOfBoard() {
+		assertFalse(board.addCraft(galeon, new Coordinate(0,7)));
 		for (int i=8; i<11; i++) 
-			assertNull("x,y = 2,"+i,board.getShip(new Coordinate(2,i)));
-		assertFalse(board.addShip(fragata, new Coordinate(7,3)));
+			assertNull("x,y = 2,"+i,board.getCraft(new Coordinate(2,i)));
+		assertFalse(board.addCraft(fragata, new Coordinate(7,3)));
 		for (int i=8; i<11; i++) 
-			assertNull("x,y = "+i+"5",board.getShip(new Coordinate(i,5)));		
-		assertFalse(board.addShip(goleta, new Coordinate(-2,-2)));
+			assertNull("x,y = "+i+"5",board.getCraft(new Coordinate(i,5)));		
+		assertFalse(board.addCraft(goleta, new Coordinate(-2,-2)));
 		for (int i=-1; i<2; i++) 
-			assertNull("x,y = 0,"+i,board.getShip(new Coordinate(0,i)));
-		assertFalse(board.addShip(bergantin, new Coordinate(-2,7)));
+			assertNull("x,y = 0,"+i,board.getCraft(new Coordinate(0,i)));
+		assertFalse(board.addCraft(bergantin, new Coordinate(-2,7)));
 		for (int i=8; i<11; i++) 
-			assertNull("x,y = "+i+"0",board.getShip(new Coordinate(i,0)));
+			assertNull("x,y = "+i+"0",board.getCraft(new Coordinate(i,0)));
 	}
 	
-	/* Posicionamiento incorrecto Ship por proximidad con otro. Se comprueba, además, que 
-	 * no añade Ship
+	/* Posicionamiento incorrecto Craft por proximidad con otro. Se comprueba, además, que 
+	 * no añade Craft
 	 */
 	@Test
-	public void testAddShipNextOther() {
-		assertTrue(board.addShip(galeon, new Coordinate(0,1)));
-		assertFalse(board.addShip(fragata, new Coordinate(2,0)));
+	public void testAddCraftNextOther() {
+		assertTrue(board.addCraft(galeon, new Coordinate(0,1)));
+		assertFalse(board.addCraft(fragata, new Coordinate(2,0)));
 		for (int i=3; i<6; i++) 
-			assertNull("x,y = "+i+"2",board.getShip(new Coordinate(i,2)));
+			assertNull("x,y = "+i+"2",board.getCraft(new Coordinate(i,2)));
 	}
 	
-	/* Posicionamiento incorrecto Ship por solapamento con otro. Se comprueba, además, que 
-	 * no añade Ship
+	/* Posicionamiento incorrecto Craft por solapamento con otro. Se comprueba, además, que 
+	 * no añade Craft
 	 */
 	@Test
-	public void testAddShipOcuppied() {
-		assertTrue(board.addShip(galeon, new Coordinate(0,1)));
-		assertFalse(board.addShip(fragata, new Coordinate(1,0)));
+	public void testAddCraftOcuppied() {
+		assertTrue(board.addCraft(galeon, new Coordinate(0,1)));
+		assertFalse(board.addCraft(fragata, new Coordinate(1,0)));
 		for (int i=3; i<5; i++) 
-			assertNull("x,y = "+i+"2",board.getShip(new Coordinate(i,2)));
+			assertNull("x,y = "+i+"2",board.getCraft(new Coordinate(i,2)));
 	}
 	
-	/* Se posiciona un Ship en una Coordinate.
-	 * 1- Se prueba getShip en una Coordinate que no contiene al Ship
-	 * 2- Se prueba getShip en todas las posiciones que ocupa el Ship
+	/* Se posiciona un Craft en una Coordinate.
+	 * 1- Se prueba getCraft en una Coordinate que no contiene al Craft
+	 * 2- Se prueba getCraft en todas las posiciones que ocupa el Craft
 	 */
 	@Test
-	public void testGetShip() {
-		assertTrue(board.addShip(fragata, new Coordinate(3,1)));
+	public void testGetCraft() {
+		assertTrue(board.addCraft(fragata, new Coordinate(3,1)));
 		Coordinate c = new Coordinate(2,3);
-		assertNull(board.getShip(c));
+		assertNull(board.getCraft(c));
 		for (int i=4; i<7; i++) {
 			c.set(0, i);
-		    assertNotNull(board.getShip(c));
+		    assertNotNull(board.getCraft(c));
 		}
 	}
 	
 	
-	/* Se posiciona un Ship en una Coordinate y se comprueba la agregación
-	 * entre Board y Ship. 
+	/* Se posiciona un Craft en una Coordinate y se comprueba la agregación
+	 * entre Board y Craft. 
 	 */
 	@Test
-	public void testAgregacionBoardShip() {
-	    board.addShip(fragata, new Coordinate(3,1));
+	public void testAgregacionBoardCraft() {
+	    board.addCraft(fragata, new Coordinate(3,1));
 		Coordinate c = new Coordinate(0,3);
 		for (int i=4; i<7; i++) {
 			c.set(0, i);
-		    assertSame(fragata,board.getShip(c));
+		    assertSame(fragata,board.getCraft(c));
 		}
 	}
 	
 	
 	
     /* Se comprueba isSeen antes y después de disparar al agua
-     * en un Board sin Ships */
+     * en un Board sin Crafts */
 	@Test
 	public void testIsSeen1() {
 
@@ -231,14 +231,14 @@ public class profTestsBoard {
 				
 	}
 
-  /* Se posiciona un Ship en el Board y se comprueba isSeen 
-   * antes y después de disparar a las distintas partes del Ship.
-   * Cuando el Ship se ha hundido se comprueba que las
-   * Coordinates vecinas del Ship también se han marcado como
+  /* Se posiciona un Craft en el Board y se comprueba isSeen 
+   * antes y después de disparar a las distintas partes del Craft.
+   * Cuando el Craft se ha hundido se comprueba que las
+   * Coordinates vecinas del Craft también se han marcado como
    * vistas */
 	@Test
 	public void testIsSeen2() {
-		board.addShip(galeon, new Coordinate(0,1));
+		board.addCraft(galeon, new Coordinate(0,1));
 		for (int i=2; i<5; i++) {
 				assertFalse("x,y = 2,"+i,board.isSeen(new Coordinate(2,i)));
 				board.hit(new Coordinate(2,i));
@@ -250,7 +250,7 @@ public class profTestsBoard {
 			}
 	}
 
-	/* Se posiciona un Ship en el Board, se dispara a las distintas partes del Ship.
+	/* Se posiciona un Craft en el Board, se dispara a las distintas partes del Craft.
 	 * Las coordenadas se guardan en un ArrayList. Se obtiene por reflexión el atributo
 	 * privado 'seen'. Se comprueba que las coordenadas almacenadas en el ArrayList tienen
 	 * las mismas direcciones que las correspondientes en 'seen'.
@@ -258,10 +258,10 @@ public class profTestsBoard {
 	    @SuppressWarnings("unchecked")
 		@Test
 		public void testCompositionBoardCoordinate() throws Exception {
-			board.addShip(galeon, new Coordinate(0,1));
+			board.addCraft(galeon, new Coordinate(0,1));
 			List<Coordinate> listHits=new ArrayList<Coordinate>();  //Para los disparos 
 			Coordinate c;
-			//Se dispara al ship
+			//Se dispara al Craft
 			for (int i=2; i<5; i++) {
 					c=new Coordinate(2,i);
 					listHits.add(c);
@@ -276,18 +276,18 @@ public class profTestsBoard {
 		}
 	
 	
-	/* Se coloca un Ship en el Board en una Coordinate. Se comprueba que:
-	 * 1- al disparar (hit) sobre las posiciones alrededor del Ship el 
+	/* Se coloca un Craft en el Board en una Coordinate. Se comprueba que:
+	 * 1- al disparar (hit) sobre las posiciones alrededor del Craft el 
 	 *    resultado es WATER.
-	 * 2- al disparar (hit) sobre las posiciones del Ship, excepto la última,
+	 * 2- al disparar (hit) sobre las posiciones del Craft, excepto la última,
 	 *    el resultado es HIT.
-	 * 3- al disparar (hit) sobre la última posición del Ship, el resultado 
+	 * 3- al disparar (hit) sobre la última posición del Craft, el resultado 
 	 *    es DESTROYED
 	 * 
 	 */
 	@Test
 	public void testHit() {
-		board.addShip(galeon, new Coordinate(5,5));
+		board.addCraft(galeon, new Coordinate(5,5));
 		for (int i=5; i<board.getSize(); i++) 
 		  for (int j=5; j<board.getSize(); j++) {
 		     if ( (i!=7) || (j<6) ||(j>8) ){
@@ -303,24 +303,24 @@ public class profTestsBoard {
 	}
 
 	/* Se comprueba que:
-	 * 1- en un Board sin Ships, areAllCraftsDestroyed devuelve true.
-	 * 2- al posicionar dos Ships en el Board, tras cada posicionamiento,
+	 * 1- en un Board sin Crafts, areAllCraftsDestroyed devuelve true.
+	 * 2- al posicionar dos Crafts en el Board, tras cada posicionamiento,
 	 *    areAllCraftsDestroyed devuelve false.
-	 * 3- tras cada disparo sobre el primer Ship, areAllCraftsDestroyed devuelve
+	 * 3- tras cada disparo sobre el primer Craft, areAllCraftsDestroyed devuelve
 	 *    false.
-	 * 4- tras cada disparo sobre el segundo Ship, areAllCraftsDestroyed devuelve
+	 * 4- tras cada disparo sobre el segundo Craft, areAllCraftsDestroyed devuelve
 	 *    false, excepto tras el último disparo que debe devolver true.
-	 * 5- si añadimos un nuevo Ship, entonces areAllCraftsDestroyed debe devolver
+	 * 5- si añadimos un nuevo Craft, entonces areAllCraftsDestroyed debe devolver
 	 *    false.
 	 */
 	@Test
 	public void testAreAllCraftsDestroyed() {
 		assertTrue("numCrafts=destroyedCrafts=0",board.areAllCraftsDestroyed());
-		board.addShip(galeon, new Coordinate(0,1));
+		board.addCraft(galeon, new Coordinate(0,1));
 		assertFalse("numCrafts=1; destroyedCrafts=0",board.areAllCraftsDestroyed());
-		board.addShip(fragata, new Coordinate(3,1));
+		board.addCraft(fragata, new Coordinate(3,1));
 		assertFalse("numCrafts=2; destroyedCrafts=0",board.areAllCraftsDestroyed());
-		//Destruimos el Ship galeon
+		//Destruimos el Craft galeon
 		for (int i=2; i<5; i++) {
 			board.hit(new Coordinate(2,i));
 			assertFalse(board.areAllCraftsDestroyed());
@@ -331,20 +331,20 @@ public class profTestsBoard {
 		}
 		board.hit(new Coordinate(6,3));
 		assertTrue("numCrafts=destroyedCrafts=2",board.areAllCraftsDestroyed());
-		board.addShip(galeon, new Coordinate(0,5));
+		board.addCraft(galeon, new Coordinate(0,5));
 		assertFalse("numCrafts=3; destroyedCrafts=2",board.areAllCraftsDestroyed());
 	}
 
 	/* Se comprueba:
-	 * 1- getNeighborhood(Ship) para un Ship que no se ha puesto en el Board 
+	 * 1- getNeighborhood(Craft) para un Craft que no se ha puesto en el Board 
 	 *    debe devolver un Set vacío.
 	 * 
-	 * 2- getNeighborhood(Ship, Coordinate) donde el Ship sale de los límites
+	 * 2- getNeighborhood(Craft, Coordinate) donde el Craft sale de los límites
 	 *    del Board. El conjunto de Coordinate vecinas solo recoge aquellas
 	 *    que están dentro del Board
 	 */
 	@Test
-	public void testGetNeighborhoodShipOutOfBounds() {
+	public void testGetNeighborhoodCraftOutOfBounds() {
 		Set<Coordinate> neighborhood = board.getNeighborhood(galeon);
 		assertTrue(neighborhood.isEmpty());
 		neighborhood = board.getNeighborhood(galeon,new Coordinate(0,7));
@@ -359,12 +359,12 @@ public class profTestsBoard {
 		}
 	}
 
-	/* Se comprueba getNeighborhood(Ship) donde el Ship y todas sus 
+	/* Se comprueba getNeighborhood(Craft) donde el Craft y todas sus 
 	 * Coordinate vecinas están dentro de Board.
 	 */
 	@Test
-	public void testGetNeighborhoodShipCompletelyIn1() {
-		board.addShip(fragata, new Coordinate(5,1));
+	public void testGetNeighborhoodCraftCompletelyIn1() {
+		board.addCraft(fragata, new Coordinate(5,1));
 		Set<Coordinate> neighborhood = board.getNeighborhood(fragata);
 		assertEquals(12,neighborhood.size());
 		for (int i=5; i<10; i++) {
@@ -377,12 +377,12 @@ public class profTestsBoard {
 		}
 	}
 	
-	/* Se añade un Ship en un límite del tablero. Se comprueba que getNeighborhood(Ship) recoge
+	/* Se añade un Craft en un límite del tablero. Se comprueba que getNeighborhood(Craft) recoge
 	 * solo aquellas posiciones vecinas que están dentro del Board.
 	 */
 	@Test
-	public void testGetNeighborhoodShipCompletelyIn2() {
-		board.addShip(fragata, new Coordinate(6,-2));
+	public void testGetNeighborhoodCraftCompletelyIn2() {
+		board.addCraft(fragata, new Coordinate(6,-2));
 		Set<Coordinate> neighborhood = board.getNeighborhood(fragata);
 		assertEquals(5,neighborhood.size());
 		for (int i=6; i<10; i++) {
@@ -395,14 +395,14 @@ public class profTestsBoard {
 		}
 	}
 	/* Se comprueba que:
-	 * 1- getNeighborhood(Ship, Coordinate) devuleve un Set vacío de Coordinates cuando el
-	 *    Ship y sus vecinas están todas fuera del Board
-	 * 2- getNeighborhood(Ship, Coordinate) devuelve sólo aquellas Coordinates vecinas que
-	 *    están dentro del Board para un Ship completamente fuera del Board.
+	 * 1- getNeighborhood(Craft, Coordinate) devuleve un Set vacío de Coordinates cuando el
+	 *    Craft y sus vecinas están todas fuera del Board
+	 * 2- getNeighborhood(Craft, Coordinate) devuelve sólo aquellas Coordinates vecinas que
+	 *    están dentro del Board para un Craft completamente fuera del Board.
 	 * 
 	 */
 	@Test
-	public void testGetNeighborhoodShipCompletelyOutOfBounds() {
+	public void testGetNeighborhoodCraftCompletelyOutOfBounds() {
 		Set<Coordinate> neighborhood = board.getNeighborhood(galeon,new Coordinate(0,10));
 		assertTrue(neighborhood.isEmpty());
 		neighborhood = board.getNeighborhood(galeon,new Coordinate(0,9));
@@ -416,20 +416,20 @@ public class profTestsBoard {
 		}
 	}
 	
-	/* Se crea un tablero de tamaño 5 sin Ships. Se comprueba que lo devuelto
+	/* Se crea un tablero de tamaño 5 sin Crafts. Se comprueba que lo devuelto
 	 * por show(true) y show(false) es correcto.
 	 * 
 	 */
 	@Test
 	public void testShowBoardEmty() {
 		board = new Board(5);
-		String hideShips = board.show(false);
-		assertEquals(sboardHide1,hideShips);
-		String showShips = board.show(true);
-		assertEquals(sboardEmpty,showShips);
+		String hideCrafts = board.show(false);
+		assertEquals(sboardHide1,hideCrafts);
+		String showCrafts = board.show(true);
+		assertEquals(sboardEmpty,showCrafts);
 	}
 	
-	/* Se crea un tablero de tamaño 5. Se añaden los 4 ships en las posiciones indicadas
+	/* Se crea un tablero de tamaño 5. Se añaden los 4 Crafts en las posiciones indicadas
 	 * en la variable estática 'sboard' definida en setUp().
 	 * Se comprueba que show(false) devuelve lo mismo que la variable estática sboardHide1
 	 * y que show(true) lo mismo que el contenido de la variable estática 'sboard' 
@@ -437,48 +437,48 @@ public class profTestsBoard {
 	 * 
 	 */
 	@Test
-	public void testShowBoardWithShips() {
+	public void testShowBoardWithCrafts() {
 		board = new Board(5);
-		board.addShip(galeon, new Coordinate(-2,-1));
-		board.addShip(fragata, new Coordinate(1,-2));
-		board.addShip(goleta, new Coordinate(2,1));
-		board.addShip(bergantin, new Coordinate(-1,2));
-		String hideShips = board.show(false);
-		assertEquals(sboardHide1,hideShips);
+		board.addCraft(galeon, new Coordinate(-2,-1));
+		board.addCraft(fragata, new Coordinate(1,-2));
+		board.addCraft(goleta, new Coordinate(2,1));
+		board.addCraft(bergantin, new Coordinate(-1,2));
+		String hideCrafts = board.show(false);
+		assertEquals(sboardHide1,hideCrafts);
 		
-		String showShips = board.show(true);
-		assertEquals(sboard,showShips);
+		String showCrafts = board.show(true);
+		assertEquals(sboard,showCrafts);
 	}	
 	
-	/*Se crea un Board de tamaño 5. Sobre él se posicionan los 4 Ships del
+	/*Se crea un Board de tamaño 5. Sobre él se posicionan los 4 Crafts del
 	 * setUp() en las posiciones indicadas en la varable estática String 
 	 * "sboard". Se dispara sobre las posiciones del 'galeon' hundiéndolo.
 	 * El método show(true) debe devolver lo mismo que el String 'sboardHits1'
-	 * Se dispara sobre posiciones de los Ships 'goleta' y 'fragata' sin 
+	 * Se dispara sobre posiciones de los Crafts 'goleta' y 'fragata' sin 
 	 * hundirlos y se comprueba show(true) con 'sboardHits2'
 	 * Se dispara sobre el bergantín y varios disparos al agua. Se comprueba
 	 * show(true) con 'sboardHits3'.
 	 * Por último comparamos show(false) con 'sboardHide2'
 	 */
 	@Test
-	public void testShowBoardWithShipsAndHits() {
+	public void testShowBoardWithCraftsAndHits() {
 		board = new Board(5);
-		board.addShip(galeon, new Coordinate(-2,-1));
-		board.addShip(fragata, new Coordinate(1,-2));
-		board.addShip(goleta, new Coordinate(2,1));
-		board.addShip(bergantin, new Coordinate(-1,2));
+		board.addCraft(galeon, new Coordinate(-2,-1));
+		board.addCraft(fragata, new Coordinate(1,-2));
+		board.addCraft(goleta, new Coordinate(2,1));
+		board.addCraft(bergantin, new Coordinate(-1,2));
 		//Se dispara sobre el galeón, hundiéndolo
 		board.hit(new Coordinate(0,0));
 		board.hit(new Coordinate(0,1));
 		board.hit(new Coordinate(0,2));
-		String showShips = board.show(true);
-		assertEquals(sboardHits1,showShips);
+		String showCrafts = board.show(true);
+		assertEquals(sboardHits1,showCrafts);
 		//Se dispara sobre la goleta y la fragata sin hundirlos
 		board.hit(new Coordinate(4,0));
 		board.hit(new Coordinate(4,3));
 		board.hit(new Coordinate(4,4));
-		showShips = board.show(true);
-		assertEquals(sboardHits2,showShips);
+		showCrafts = board.show(true);
+		assertEquals(sboardHits2,showCrafts);
 		
 		//Se dispara sobre el bergantín
 		board.hit(new Coordinate(1,4));
@@ -486,22 +486,22 @@ public class profTestsBoard {
 		board.hit(new Coordinate(2,2));
 		board.hit(new Coordinate(2,3));
 		board.hit(new Coordinate(4,1));
-		showShips = board.show(true);
-		assertEquals(sboardHits3,showShips);
+		showCrafts = board.show(true);
+		assertEquals(sboardHits3,showCrafts);
 		
-		showShips = board.show(false);
-		assertEquals(sboardHide2,showShips);
+		showCrafts = board.show(false);
+		assertEquals(sboardHide2,showCrafts);
 	}
 
-	/* Se añaden los 4 Ships del setUp() y se comprueba toString() con
+	/* Se añaden los 4 Crafts del setUp() y se comprueba toString() con
 	 * la salida correcta.
 	 */
 	@Test
 	public void testToString1() {
-		board.addShip(galeon, new Coordinate(0,1));
-		board.addShip(fragata, new Coordinate(5,1));
-		board.addShip(goleta, new Coordinate(0,5));
-		board.addShip(bergantin, new Coordinate(4,3));
+		board.addCraft(galeon, new Coordinate(0,1));
+		board.addCraft(fragata, new Coordinate(5,1));
+		board.addCraft(goleta, new Coordinate(0,5));
+		board.addCraft(bergantin, new Coordinate(4,3));
 		assertEquals("Board 10; crafts: 4; destroyed: 0",board.toString());
 	}
 	
@@ -510,9 +510,9 @@ public class profTestsBoard {
      */
 	@Test
 	public void testToString2() {		
-		board.addShip(galeon, new Coordinate(0,1));	
-		board.addShip(fragata, new Coordinate(3,1));	
-		//Destruimos el Ship galeon
+		board.addCraft(galeon, new Coordinate(0,1));	
+		board.addCraft(fragata, new Coordinate(3,1));	
+		//Destruimos el Craft galeon
 		for (int i=2; i<5; i++) {
 			board.hit(new Coordinate(2,i));
 		}
@@ -524,7 +524,7 @@ public class profTestsBoard {
 		
 		board.hit(new Coordinate(6,3));
 		assertEquals("Board 10; crafts: 2; destroyed: 2",board.toString());
-		board.addShip(galeon, new Coordinate(0,5));
+		board.addCraft(galeon, new Coordinate(0,5));
 		assertEquals("Board 10; crafts: 3; destroyed: 2",board.toString());
 	}
 

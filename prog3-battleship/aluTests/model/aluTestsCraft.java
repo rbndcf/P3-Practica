@@ -8,11 +8,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class aluTestsShip {
+public class aluTestsCraft {
 	final static int BOUNDING_SQUARE_SIZE = 5;
 	static ArrayList<Coordinate> north, east, south, west;
     static String sNorth, sEast, sSouth, sWest;
-	Ship bergantin, goleta, fragata, galeon;
+	Craft bergantin, goleta, fragata, galeon;
     final static int shape[][] = new int[][] {
 	      { 0, 0, 0, 0, 0,
 	    	0, 0, 1, 0, 0,	
@@ -38,7 +38,7 @@ public class aluTestsShip {
 		    
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		    //Coordinates relativas de las distintas orientaciones de un Ship
+		    //Coordinates relativas de las distintas orientaciones de un Craft
 			north = new ArrayList<Coordinate>();
 			east = new ArrayList<Coordinate>();
 			south = new ArrayList<Coordinate>();
@@ -58,16 +58,16 @@ public class aluTestsShip {
 	
 	@Before
 	public void setUp() throws Exception {
-		bergantin = new Ship(Orientation.EAST,'B',"Bergantín");
-		goleta = new Ship(Orientation.NORTH,'G',"Goleta");
-		fragata = new Ship(Orientation.WEST,'F',"Fragata");
-		galeon = new Ship(Orientation.SOUTH,'A',"Galeón");
+		bergantin = new Craft(Orientation.EAST,'B',"Bergantín");
+		goleta = new Craft(Orientation.NORTH,'G',"Goleta");
+		fragata = new Craft(Orientation.WEST,'F',"Fragata");
+		galeon = new Craft(Orientation.SOUTH,'A',"Galeón");
 	}
 
-	/* Comprueba que la posición inicial de un Ship es null.
+	/* Comprueba que la posición inicial de un Craft es null.
 	 * Comprueba también que getPosition hace copia defensiva. Para ello:
-	 * 1- Posiciona el Ship en una Coordinate concreta. 
-	 * 2- Comprueba que la posición del Ship y la Coordinate son iguales, pero no
+	 * 1- Posiciona el Craft en una Coordinate concreta. 
+	 * 2- Comprueba que la posición del Craft y la Coordinate son iguales, pero no
 	 *    tienen la misma referencia.
 	 */
 	@Test
@@ -164,16 +164,16 @@ public class aluTestsShip {
 		assertTrue(pos2.contains(new Coordinate(12, 27)));
 	}
 	
-	/* Se dispara a un Ship que todavía no ha sido posicionado. Se comprueba que
+	/* Se dispara a un Craft que todavía no ha sido posicionado. Se comprueba que
 	 * hit devuelve false
 	 */
 	@Test
-	public void testHitShipPositionNull() {
+	public void testHitCraftPositionNull() {
 		Coordinate c1 = new Coordinate(2,1);
 		assertFalse(goleta.hit(c1));
 	}
 	
-	/* Posiciona un Ship en una Coordinate y realiza disparos al agua.
+	/* Posiciona un Craft en una Coordinate y realiza disparos al agua.
 	 * Comprueba que hit devuelve siempre false
 	 */
 	@Test
@@ -209,13 +209,13 @@ public class aluTestsShip {
 		
 	}
 	
-	/* Posiciona un Ship en una Coordinate, y realiza los primeros disparos a 
-	 * las posiciones del Ship y comprueba que hit devuelve true. 
+	/* Posiciona un Craft en una Coordinate, y realiza los primeros disparos a 
+	 * las posiciones del Craft y comprueba que hit devuelve true. 
 	 * Vuelve a disparar a las mismas posiciones y comprueba que hit ahora 
 	 * devuelve false.
 	 */
 	@Test
-	public void testHitShip() {
+	public void testHitCraft() {
 		goleta.setPosition(new Coordinate(0,0));
 
 		assertTrue(goleta.hit(new Coordinate(2,1)));
@@ -229,7 +229,7 @@ public class aluTestsShip {
 
 	/* Comprueba que:
 	 * 1- isShotDown() devuelve false tras realizar disparos a todas las posiciones del
-	 *    Ship excepto una. 
+	 *    Craft excepto una. 
 	 * 2- isShotDown() devuelve true tras disparar a la única posición no dañada.
 	 */
 	@Test
@@ -247,8 +247,8 @@ public class aluTestsShip {
 	}
 
 	/* Comprueba que:	
-	 * 1- isHit sobre las Coordinates de un Ship devuelve false.
-	 * 2- isHit sobre las Coordinates de un Ship devuelve true después 
+	 * 1- isHit sobre las Coordinates de un Craft devuelve false.
+	 * 2- isHit sobre las Coordinates de un Craft devuelve true después 
 	 *    de disparar sobre ellas (hit) 
 	 *     
 	 */
@@ -269,7 +269,7 @@ public class aluTestsShip {
 		assertTrue(goleta.isHit(new Coordinate(2,1)));
 	}
 
-	/* Se comprueba que las salidas de los distintos Ships en distintas orientaciones
+	/* Se comprueba que las salidas de los distintos Crafts en distintas orientaciones
 	 * son correctas
 	 */
 	@Test

@@ -15,11 +15,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class profTestsShip {
+public class profTestsCraft {
 	final static int BOUNDING_SQUARE_SIZE = 5;
 	static ArrayList<Coordinate> north, east, south, west;
     static String sNorth, sEast, sSouth, sWest;
-	Ship bergantin, goleta, fragata, galeon;
+	Craft bergantin, goleta, fragata, galeon;
     final int shape[][] = new int[][] {
 	      { 0, 0, 0, 0, 0,
 	    	0, 0, 1, 0, 0,	
@@ -66,24 +66,24 @@ public class profTestsShip {
 		    
 	@Before
 	public void setUp() throws Exception {
-		bergantin = new Ship(Orientation.EAST,'B',"Bergantín");
-		goleta = new Ship(Orientation.NORTH,'G',"Goleta");
-		fragata = new Ship(Orientation.WEST,'F',"Fragata");
-		galeon = new Ship(Orientation.SOUTH,'A',"Galeón");
+		bergantin = new Craft(Orientation.EAST,'B',"Bergantín");
+		goleta = new Craft(Orientation.NORTH,'G',"Goleta");
+		fragata = new Craft(Orientation.WEST,'F',"Fragata");
+		galeon = new Craft(Orientation.SOUTH,'A',"Galeón");
 	}
 
 
-	/* Se comprueba la composición entre Ship y Coordinate. Para ello se
-	 * crea un objeto Coordinate, posicionamos un Ship a esa Coordinate.
-	 * Comprobamos que esa Coordinate y la posición del Ship son iguales.
+	/* Se comprueba la composición entre Craft y Coordinate. Para ello se
+	 * crea un objeto Coordinate, posicionamos un Craft a esa Coordinate.
+	 * Comprobamos que esa Coordinate y la posición del Craft son iguales.
 	 * Modificamos la Coordinate y comprobamos que ésta y la posición del
-	 * Ship ya no son iguales 
+	 * Craft ya no son iguales 
 	 */
 	@Test
 	public void testSetPosition() {
 		Coordinate pos = new Coordinate(7,4);
 	     
-		//Comprobamos la composición entre Ship y Coordinate
+		//Comprobamos la composición entre Craft y Coordinate
 		bergantin.setPosition(pos);
 		assertEquals (pos, bergantin.getPosition());
 		pos.set(0, -2);
@@ -100,16 +100,16 @@ public class profTestsShip {
 		assertNotEquals(pos, bergantin.getPosition());
 	}
 
-	/* Se comprueba que la posición inicial de un Ship es null.
+	/* Se comprueba que la posición inicial de un Craft es null.
 	 * Comprobamos que getPosition hace copia defensiva: Para ello
-	 * se posiciona el Ship en una Coordinate concreta. Se comprueba 
-	 * que la posición del Ship y la Coordinate son iguales, pero no
+	 * se posiciona el Craft en una Coordinate concreta. Se comprueba 
+	 * que la posición del Craft y la Coordinate son iguales, pero no
 	 * tienen la misma referencia.
 	 */
 	@Test
 	public void testGetPosition() {
 		Coordinate pos = bergantin.getPosition();
-		//Inicialmente la position del ship debe ser null 
+		//Inicialmente la position del Craft debe ser null 
 		assertNull(pos);
 		
 		//Comprobamos que getPosition hace copia defensiva
@@ -231,29 +231,29 @@ public class profTestsShip {
 		}
 	}
 
-	/* Se posiciona varios Ship en una Coordinate.
+	/* Se posiciona varios Craft en una Coordinate.
 	 * Se comprueba que sus posiciones absolutas son correctas.
 	 */
 	@Test
-	public void testGetAbsolutePositionsShips() {
+	public void testGetAbsolutePositionsCrafts() {
 		
 		Coordinate c1 = new Coordinate(119,-123);
-		getAbsolutePositionsShip(c1,goleta,north);
-		getAbsolutePositionsShip(c1,galeon,south);
-		getAbsolutePositionsShip(c1,fragata,west);
-		getAbsolutePositionsShip(c1,bergantin,east);
+		getAbsolutePositionsCraft(c1,goleta,north);
+		getAbsolutePositionsCraft(c1,galeon,south);
+		getAbsolutePositionsCraft(c1,fragata,west);
+		getAbsolutePositionsCraft(c1,bergantin,east);
 	}
 	
-	/* Se dispara a un Ship que todavía no ha sido posicionado. Se comprueba que
+	/* Se dispara a un Craft que todavía no ha sido posicionado. Se comprueba que
 	 * hit devuelve false
 	 */
 	@Test
-	public void testHitShipPositionNull() {
+	public void testHitCraftPositionNull() {
 		Coordinate c1 = new Coordinate(2,1);
 		assertFalse(goleta.hit(c1));  
 	}
 	
-	/* Se posiciona un Ship en una Coordinate y se realizan disparos al agua.
+	/* Se posiciona un Craft en una Coordinate y se realizan disparos al agua.
 	 * Se comprueba que hit devuelve siempre false
 	 */
 	@Test
@@ -268,12 +268,12 @@ public class profTestsShip {
 		}
 	}
 	
-	/* Se posiciona un Ship en una Coordinate, y se realizan primeros disparos a 
-	 * las posiciones del Ship y se comprueba que hit devuelve true. Se vuelve a 
+	/* Se posiciona un Craft en una Coordinate, y se realizan primeros disparos a 
+	 * las posiciones del Craft y se comprueba que hit devuelve true. Se vuelve a 
 	 * disparar a las mismas posiciones y se comprueba que hit ahora devuelve false.
 	 */
 	@Test
-	public void testHitShip() {
+	public void testHitCraft() {
 		Coordinate c1 = new Coordinate(2,1);
 		goleta.setPosition(c1);
 		for (int j=2; j<5; j++) {
@@ -283,8 +283,8 @@ public class profTestsShip {
 	}
 
 	/* Se comprueba que:
-	 * 1- isShotDown() a un Ship sin posicionar devuelve false.
-	 * 2- isShotDown() devuelve false tras posicionar un Ship en una Coordinate.
+	 * 1- isShotDown() a un Craft sin posicionar devuelve false.
+	 * 2- isShotDown() devuelve false tras posicionar un Craft en una Coordinate.
 	 * */
 	@Test
 	public void testIsShotDown1() {
@@ -296,7 +296,7 @@ public class profTestsShip {
 	
 	/* Se comprueba que:
 	 * 1- isShotDown() devuelve false tras realizar disparos a todas las posiciones del
-	 *    Ship excepto una. 
+	 *    Craft excepto una. 
 	 * 2- isShotDown() devuelve true tras disparar a la única posición no dañada.
 	 * 
 	 */
@@ -313,23 +313,23 @@ public class profTestsShip {
 	}
 
 	/* Se comprueba que:
-	 * 1- isHit en un Ship no posicionado devuelve false.
+	 * 1- isHit en un Craft no posicionado devuelve false.
 	 * 2- isHit sobre una Coordinate en una posición fuera
-	 *    de un Ship ya posicionado, devuelve false.
+	 *    de un Craft ya posicionado, devuelve false.
 	 */
 	@Test
 	public void testIsHit1() {
 		Coordinate c = new Coordinate(2,1);
-		//Ship no posicionado
+		//Craft no posicionado
 		assertFalse(bergantin.isHit(c));
 		bergantin.setPosition(c);
-		//Ship posicionado. Coordinate c en agua
+		//Craft posicionado. Coordinate c en agua
 		assertFalse(bergantin.isHit(c));
 	}
 	
 	/* Se comprueba que:	
-	 * 1- isHit sobre las Coordinates de un Ship devuelve false.
-	 * 2- isHit sobre las Coordinates de un Ship devuelve true después 
+	 * 1- isHit sobre las Coordinates de un Craft devuelve false.
+	 * 2- isHit sobre las Coordinates de un Craft devuelve true después 
 	 *    de disparar sobre ellas (hit) 
 	 *     
 	 */
@@ -337,7 +337,7 @@ public class profTestsShip {
 	public void testIsHit() {
 		Coordinate c = new Coordinate(2,1);
 		bergantin.setPosition(c);
-		//Preguntamos en ship antes de disparar y despues de disparar
+		//Preguntamos en Craft antes de disparar y despues de disparar
 		for (int j=3; j<6; j++) {
 		   c = new Coordinate(j,3);
 		   assertFalse(bergantin.isHit(c));
@@ -346,7 +346,7 @@ public class profTestsShip {
 		}
 	}
 
-	/* Se comprueba que las salidas de los distintos Ships en distintas orientaciones
+	/* Se comprueba que las salidas de los distintos Crafts en distintas orientaciones
 	 * son correctas
 	 */
 	@Test
@@ -360,9 +360,9 @@ public class profTestsShip {
 	
 	//FUNCIONES DE APOYO
 	
-	void getAbsolutePositionsShip (Coordinate cpos, Ship ship, List<Coordinate> orient ) {
-	   ship.setPosition(cpos);
-	   Set<Coordinate> pos = ship.getAbsolutePositions();
+	void getAbsolutePositionsCraft (Coordinate cpos, Craft Craft, List<Coordinate> orient ) {
+	   Craft.setPosition(cpos);
+	   Set<Coordinate> pos = Craft.getAbsolutePositions();
 	   for (Coordinate c: orient)
 		  assertTrue("Valores Absolutos posiciones c1+"+c, pos.contains(c.add(cpos)));
 	}

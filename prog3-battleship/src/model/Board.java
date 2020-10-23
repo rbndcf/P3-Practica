@@ -38,18 +38,18 @@ public class Board {
 	 */
 	private int size;
 	/**
-	 * @param numCrafts numero de Ships en el board
+	 * @param numCrafts numero de Crafts en el board
 	 */
 	private int numCrafts;
 	/**
-	 * @param destroyedCrafts numero de Ships destruidos
+	 * @param destroyedCrafts numero de Crafts destruidos
 	 */
 	private int destroyedCrafts;
 	
 	/**
 	 * @param board mapa donde se almacenan todos los barcos y sus coordenadas absolutas que hay en el board
 	 */
-	private Map<Coordinate, Ship> board = new HashMap<Coordinate, Ship>();
+	private Map<Coordinate, Craft> board = new HashMap<Coordinate, Craft>();
 	/**
 	 * @param seen set de coordenadas que han sido disparadas o de alrededor en un barco destruido
 	 */
@@ -91,47 +91,44 @@ public class Board {
 	}
 	
 	/**
-	 * @param ship que se añade 
+	 * @param Craft que se añade 
 	 * @param position donde se añade su shape
 	 * @return true si se añade faslse si no
-	 * Recibe un Ship y un Coordinate, si cumple los requisitos se añade el Ship en dicha Coordinate y devuelve true, si no lo
+	 * Recibe un Craft y un Coordinate, si cumple los requisitos se añade el Craft en dicha Coordinate y devuelve true, si no lo
 	 * cumple devuelve false y no se añade
 	 */
-	public boolean addShip(Ship ship, Coordinate position) {
+	public boolean addCraft(Craft craft, Coordinate position) {
 		boolean check = true;
 		
-		for(Coordinate c1 : ship.getAbsolutePositions(position)) {
+		for(Coordinate c1 : craft.getAbsolutePositions(position)) {
 			if(c1.get(0) < 0 || c1.get(0) >= size || c1.get(1) < 0 || c1.get(1) >= size) {
-				System.err.println("Error in Board.addShip, position " + c1.toString() + " is out of the board");
+				System.err.println("Error in Board.addCraft, position " + c1.toString() + " is out of the board");
 				check = false;	
 			}
 			
 			else if(board.containsKey(c1)) {
-				System.err.println("Error in Board.addShip, position " + c1.toString() + " is already occupied");
+				System.err.println("Error in Board.addCraft, position " + c1.toString() + " is already occupied");
 				check = false;
 			}
 			
 			else {
-				for(Coordinate c : this.getNeighborhood(ship, position))
-					if(board.containsKey(c) && board.get(c) != ship) {
-						System.err.println("Error in Board.addShip, position " + c.toString() + " is next to another ship");
+				for(Coordinate c : this.getNeighborhood(craft, position))
+					if(board.containsKey(c) && board.get(c) != craft) {
+						System.err.println("Error in Board.addCraft, position " + c.toString() + " is next to another craft");
 						check = false;
 						break;
 					}
-				
-				//if(!check)
-					//System.err.println("Error in Board.addShip, position " + position.toString() + " is next to another ship");
 			}
 			if(!check)
 				break;
 		}
 		
 		if(check) {
-			ship.setPosition(position);
+			craft.setPosition(position);
 			numCrafts++;
 			
-			for(Coordinate c1 : ship.getAbsolutePositions(position))
-				board.put(c1, ship);
+			for(Coordinate c1 : craft.getAbsolutePositions(position))
+				board.put(c1, craft);
 		}
 		
 		return check;
@@ -139,10 +136,10 @@ public class Board {
 	
 	/**
 	 * @param c Coordenada del barco
-	 * @return el Ship
-	 * Devuelve el Ship que se encuentra en la Coordinate que recibe
+	 * @return el Craft
+	 * Devuelve el Craft que se encuentra en la Coordinate que recibe
 	 */
-	public Ship getShip(Coordinate c) {
+	public Craft getCraft(Coordinate c) {
 		return board.get(c);
 	}
 	
@@ -205,17 +202,17 @@ public class Board {
 	}
 	
 	/**
-	 * @param ship Barco del que queremos el neighborhood
+	 * @param craft Barco del que queremos el neighborhood
 	 * @param position Posición del barco
 	 * @return Coordenadas vecinas
 	 * Recibe el barco del cual quiere saberse el neighborhood y la Coordinate en la cual se encuentra, y devuelve todas las coordenadas
 	 * vecinas al barco, eliminando las del propio barco
 	 */
-	public Set<Coordinate> getNeighborhood(Ship ship, Coordinate position){
+	public Set<Coordinate> getNeighborhood(Craft craft, Coordinate position){
 		Set<Coordinate> s = new HashSet<Coordinate>();
 		Set<Coordinate> c = new HashSet<Coordinate>();
 		
-		c = ship.getAbsolutePositions(position);
+		c = craft.getAbsolutePositions(position);
 		
 		if(c == null)
 			return s;
@@ -240,7 +237,7 @@ public class Board {
 	 * @return neighborhood
 	 * Recibe un barco sin Coordiangte y llama a neighborhood con el mismo barco pero usando como posición la del propio barco
 	 */
-	public Set<Coordinate> getNeighborhood(Ship s1){
+	public Set<Coordinate> getNeighborhood(Craft s1){
 		if(s1.getPosition() == null) return new HashSet<Coordinate>();
 		else return this.getNeighborhood(s1, s1.getPosition());
 	}

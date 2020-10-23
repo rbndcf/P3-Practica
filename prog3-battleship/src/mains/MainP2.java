@@ -3,7 +3,7 @@ package mains;
 import model.Board;
 import model.Coordinate;
 import model.Orientation;
-import model.Ship;
+import model.Craft;
 
 public class MainP2 {
 
@@ -21,13 +21,13 @@ public class MainP2 {
 		
 		
 		Board b = new Board(10);
-		Ship portaaviones = new Ship(Orientation.EAST,'P',"Dijkstra");
-		Ship submarino = new Ship(Orientation.NORTH,'s',"Boole");
-		Ship destructor = new Ship(Orientation.EAST,'d',"Knuth");
+		Craft portaaviones = new Craft(Orientation.EAST,'P',"Dijkstra");
+		Craft submarino = new Craft(Orientation.NORTH,'s',"Boole");
+		Craft destructor = new Craft(Orientation.EAST,'d',"Knuth");
 		
-		b.addShip(portaaviones,new Coordinate(0,0));
-		b.addShip(submarino,new Coordinate(5,5));
-		b.addShip(destructor,new Coordinate(2,3));
+		b.addCraft(portaaviones,new Coordinate(0,0));
+		b.addCraft(submarino,new Coordinate(5,5));
+		b.addCraft(destructor,new Coordinate(2,3));
 		
 		System.out.println(b);
 		System.out.println(portaaviones);

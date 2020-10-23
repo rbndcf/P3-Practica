@@ -3,39 +3,39 @@ package mains;
 import model.Board;
 import model.Coordinate;
 import model.Orientation;
-import model.Ship;
+import model.Craft;
 
 public class MainP2_v2 {
 
 	public static void main(String[] args) {
 				
 		Board bplayer1 = new Board(10);
-		Ship s1p1 = new Ship(Orientation.EAST,'P',"Dijkstra");
-		Ship s2p1 = new Ship(Orientation.NORTH,'s',"Boole");
-		Ship s3p1 = new Ship(Orientation.EAST,'d',"Knuth");
-		bplayer1.addShip(s1p1,new Coordinate(0,0));
-		bplayer1.addShip(s2p1,new Coordinate(5,-1));
-		bplayer1.addShip(s3p1,new Coordinate(2,3));
+		Craft s1p1 = new Craft(Orientation.EAST,'P',"Dijkstra");
+		Craft s2p1 = new Craft(Orientation.NORTH,'s',"Boole");
+		Craft s3p1 = new Craft(Orientation.EAST,'d',"Knuth");
+		bplayer1.addCraft(s1p1,new Coordinate(0,0));
+		bplayer1.addCraft(s2p1,new Coordinate(5,-1));
+		bplayer1.addCraft(s3p1,new Coordinate(2,3));
 		
 		System.out.println("(1) Player 1:" + bplayer1);
 		System.out.println(bplayer1.show(true));
 		
 		Board bplayer2 = new Board(10);
-		Ship s1p2 = new Ship(Orientation.SOUTH,'X',"X-wing");
-		Ship s2p2 = new Ship(Orientation.WEST,'M',"Millenium Falcon");
-		Ship s3p2 = new Ship(Orientation.NORTH,'C',"Corellian cruiser");
-		bplayer2.addShip(s1p2,new Coordinate(0,0));
-		bplayer2.addShip(s2p2,new Coordinate(5,5));
-		bplayer2.addShip(s3p2,new Coordinate(1,1));
+		Craft s1p2 = new Craft(Orientation.SOUTH,'X',"X-wing");
+		Craft s2p2 = new Craft(Orientation.WEST,'M',"Millenium Falcon");
+		Craft s3p2 = new Craft(Orientation.NORTH,'C',"Corellian cruiser");
+		bplayer2.addCraft(s1p2,new Coordinate(0,0));
+		bplayer2.addCraft(s2p2,new Coordinate(5,5));
+		bplayer2.addCraft(s3p2,new Coordinate(1,1));
 
 		System.out.println("(1) Player 2:"+bplayer2);
 		System.out.println(bplayer2.show(true));
 		
-		bplayer2.addShip(s3p2,new Coordinate(0,2));
+		bplayer2.addCraft(s3p2,new Coordinate(0,2));
 		System.out.println("(2) Player 2:"+bplayer2);
 		System.out.println(bplayer2.show(true));
 		
-		bplayer2.addShip(s3p2,new Coordinate(9,0));
+		bplayer2.addCraft(s3p2,new Coordinate(9,0));
 		System.out.println("(3) Player 2:"+bplayer2);
 		System.out.println(bplayer2.show(true));
 		
