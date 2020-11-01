@@ -9,7 +9,7 @@ import java.util.*;
  * Show(), las casillas que hemos descubierto, y los barcos que hay en el tablero con cada posicion que ocupan, además de poder añadir barcos y sus coordenadas 
  * al tablero, saber el numero de barcos que se han añadido y cuantos se han destruido.
  */
-public class Board {
+public abstract class Board {
 	
 	
 	/**

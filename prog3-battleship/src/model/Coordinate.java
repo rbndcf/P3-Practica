@@ -10,7 +10,7 @@ import java.util.*;
  * ('y' o 'x') comparar si dos coordenadas son las mimsmas, sumar y restar coordenadas y obtener el hashCode.
  */
 
-public class Coordinate {
+public abstract class Coordinate {
 
 	/**
 	 * @param components variable en la que guardaremos las coordenadas

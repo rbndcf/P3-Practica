@@ -9,7 +9,7 @@ import java.util.*;
  * y su estado (No hit, hit o shot down), saber su orientación y su forma (shape), además de poder obtener cada 
  * uno de sus elementos como symbol, name, posición, etc.
  */
-public class Craft {
+public abstract class Craft {
 	
 	/**
 	 * @param BOUNDING_SQUARE_SIZE tamaño de la caja de colisiones del ship
