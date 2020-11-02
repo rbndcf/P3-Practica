@@ -3,6 +3,13 @@ package model.ship;
 import java.util.*;
 import model.*;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ * 
+ * Esta clase la utilizaremos para poder controlar las coordenadas de dos dimensiones que utilizaremos a lo largo de las practicas, además refinará
+ * la clase Coordinate.java en los constructores y las clases copy(), adjacentCoordinates() y toString() para las coordenadas en dos dimensiones, 
+ * que solo tengan las componentes x, y. 
+ */
 public class Coordinate2D extends Coordinate{
 	/**
 	 * @param x Coordenada X
@@ -36,17 +43,17 @@ public class Coordinate2D extends Coordinate{
 	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> coords = new HashSet<Coordinate>();
 		
-		for(int i = -1 ; i < 2 ; i++) 
-			for(int j = -1 ; j < 2 ; j++) 
-				if(i != 0 || j != 0) 
-					coords.add(CoordinateFactory.createCoordinate(i, j));
+		for(int x = -1 ; x < 2 ; x++) 
+			for(int y = -1 ; y < 2 ; y++) 
+				if(x != 0 || y != 0) 
+					coords.add(CoordinateFactory.createCoordinate(x, y));
 		
 		return coords;
 	}
 	
 	/**
 	 * @return las coordenadas del objeto Coordinate en formato (X, Y)
-	 * Coge las dos coordenadas del objeto Coordinate y las devuelve en forma de String con formato (X, Y)
+	 * Coge las dos coordenadas del objeto Coordinate2D y las devuelve en forma de String con formato (X, Y)
 	 */
 	public String toString(){
 		StringBuilder sb = new StringBuilder();

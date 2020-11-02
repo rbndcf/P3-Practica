@@ -9,33 +9,29 @@ import java.util.*;
  * que es un Battleship o Hundir la flota en español, se pueden crear nuevas coordenadas, modificar uno de sus parametros
  * ('y' o 'x') comparar si dos coordenadas son las mimsmas, sumar y restar coordenadas y obtener el hashCode.
  */
-
 public abstract class Coordinate {
-
 	/**
 	 * @param components variable en la que guardaremos las coordenadas
 	 */
 	private int[] components;
 
 	/**
-	 * @param x coordenada X
-	 * @param y coordenada Y
+	 * @param dim Dimensión de la Coordenada
+	 * @param coords Coordenadas
 	 * Constructor por parámetros
 	 */
-	public Coordinate(int x, int y){
-		components = new int[2];
-
-		components[0] = x;
-		components[1] = y;
+	protected Coordinate(int dim, int ... coords){
+		components = new int[dim];
+		
+		for(int i = 0 ; i < dim ; i++)
+			components[i] = coords[i];
 	}
 
 	/**
 	 * @param c Coordinate que se va a copiar
 	 * Constructor de copia
 	 */
-	public Coordinate(Coordinate c){
-		components = new int[2];
-		
+	protected Coordinate(Coordinate c){
 		for(int i = 0 ; i < components.length ; i++)
 			components[i] = c.components[i];
 	}
@@ -51,7 +47,7 @@ public abstract class Coordinate {
       		components[component] = value;
 
    		else
-      		System.err.println("Error in Coordinate.set, component " + component + " is out of range");
+      		throw new IllegalArgumentException();
 	}
 
 	/**
@@ -65,9 +61,7 @@ public abstract class Coordinate {
 			return(components[component]);
 
 		else
-			System.err.println("Error in Coordinate.get, component " + component + " is out of range");
-
-		return -1;
+			throw new IllegalArgumentException();
 	}
 
 	/**
@@ -76,9 +70,11 @@ public abstract class Coordinate {
 	 * Recibe un Coordinate, y lo suma al objeto Coordinate que llama a la función add();
 	 */
 	public Coordinate add(Coordinate c){
+		Objects.requireNonNull(c);
+		
 		Coordinate new_c = this.copy();
 
-		for(int i = 0 ; i < new_c.components.length ; i++)
+		for(int i = 0 ; i < new_c.components.length && i < c.components.length ; i++)
 			new_c.set(i, new_c.get(i) + c.get(i));
 		
 		return new_c;
@@ -90,9 +86,11 @@ public abstract class Coordinate {
 	 * Recibe un Coordinate, y se lo resta al objeto Coordinate que llama a la función subtract();
 	 */
 	public Coordinate subtract(Coordinate c){
-		Coordinate new_c = this.copy(); 
+		Objects.requireNonNull(c);
+		
+		Coordinate new_c = this.copy();
         
-   		for(int i = 0 ; i < new_c.components.length ; i++)
+   		for(int i = 0 ; i < new_c.components.length && i < c.components.length ; i++)
       		new_c.set(i, new_c.get(i) - c.get(i));
                 
    		return new_c;
@@ -102,45 +100,13 @@ public abstract class Coordinate {
 	 * @return copia del Coordinate
 	 * Devuelve la copia del coordinate que ha llamado a la función copy()
 	 */
-	public Coordinate copy(){
-		return new Coordinate(this);
-	}
+	public abstract Coordinate copy();
 
 	/**
 	 * @return Set de Coordinate
 	 * Devuelve todas las Coordinate adyacentes de la Coordinate que llama a la función adjacentCoordinates()
 	 */
-	public Set<Coordinate> adjacentCoordinates(){
-		Set<Coordinate> adjCoords = new HashSet<Coordinate>();
-		
-		for(int i = -1 ; i < 2 ; i++) 
-			for(int j = -1 ; j < 2 ; j++) 
-				if(i != 0 || j != 0) 
-					adjCoords.add(new Coordinate(this.get(0) + i, this.get(1) + j));
-				
-		return adjCoords;
-	}
-	
-	/**
-	 * @return las coordenadas del objeto Coordinate en formato (X, Y)
-	 * Coge las dos coordenadas del objeto Coordinate y las devuelve en forma de String con formato (X, Y)
-	 */
-	public String toString(){
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("(");
-
-		for(int i = 0 ; i < components.length ; i++){
-			sb.append(components[i]);
-
-			if(i < (components.length - 1))
-				sb.append(", ");
-		}
-
-		sb.append(")");
-
-		return sb.toString();
-	}
+	public abstract Set<Coordinate> adjacentCoordinates();
 
 	@Override
 	public int hashCode() {
