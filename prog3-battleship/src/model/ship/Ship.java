@@ -1,7 +1,5 @@
 package model.ship;
 
-import java.util.*;
-
 import model.*;
 
 /**
