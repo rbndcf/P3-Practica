@@ -2,7 +2,16 @@ package model.aircraft;
 
 import model.*;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ *
+ * Esta clase la utilizaremos para controlar el Aircraft Bomber
+ */
 public class Bomber extends Aircraft{
+	/**
+	 * @param o Orientación del Aircraft
+	 * Constructor por parámetros
+	 */
 	public Bomber(Orientation o) {
 		super(o, '⇶', "Bomber");
 		
