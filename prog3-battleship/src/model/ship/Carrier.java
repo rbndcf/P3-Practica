@@ -2,7 +2,16 @@ package model.ship;
 
 import model.*;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ *
+ * Esta clase la utilizaremos para controlar el Ship Carrier
+ */
 public class Carrier extends Ship{
+	/**
+	 * @param o Orientacion del Carrier
+	 * Constructor por parámetros
+	 */
 	public Carrier(Orientation o) {
 		super(o, '®', "Carrier");
 		
