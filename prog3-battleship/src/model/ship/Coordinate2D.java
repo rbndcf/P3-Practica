@@ -17,7 +17,9 @@ public class Coordinate2D extends Coordinate{
 	 * Constructor por parametros de Coordenadas 2D
 	 */
 	public Coordinate2D(int x, int y) {
-		super(2, x, y);
+		super(2);
+		this.set(0, x);
+		this.set(1, y);
 	}
 	
 	/**

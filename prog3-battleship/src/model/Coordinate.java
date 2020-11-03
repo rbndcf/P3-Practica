@@ -20,11 +20,8 @@ public abstract class Coordinate {
 	 * @param coords Coordenadas
 	 * Constructor por parámetros
 	 */
-	protected Coordinate(int dim, int ... coords){
+	protected Coordinate(int dim){
 		components = new int[dim];
-		
-		for(int i = 0 ; i < dim ; i++)
-			components[i] = coords[i];
 	}
 
 	/**

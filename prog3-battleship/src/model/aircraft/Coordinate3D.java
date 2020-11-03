@@ -18,7 +18,10 @@ public class Coordinate3D extends Coordinate{
 	 * Constructor por parámetros de coordenadas 3D
 	 */
 	public Coordinate3D(int x, int y, int z) {
-		super(3, x, y, z);
+		super(3);
+		this.set(0, x);
+		this.set(1, y);
+		this.set(2, z);
 	}
 	
 	/**
