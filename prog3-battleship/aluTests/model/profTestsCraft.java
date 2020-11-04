@@ -1,11 +1,7 @@
 package model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +11,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import model.exceptions.CoordinateAlreadyHitException;
+import model.ship.Coordinate2D;
+import model.ship.Cruiser;
+import model.ship.Ship;
+
 public class profTestsCraft {
 	final static int BOUNDING_SQUARE_SIZE = 5;
 	static ArrayList<Coordinate> north, east, south, west;
     static String sNorth, sEast, sSouth, sWest;
-	Craft bergantin, goleta, fragata, galeon;
-    final int shape[][] = new int[][] {
+	Ship bergantin, goleta, fragata, galeon;
+    final static int shape[][] = new int[][] {
 	      { 0, 0, 0, 0, 0,
 	    	0, 0, 1, 0, 0,	
 	    	0, 0, 1, 0, 0,	
@@ -50,15 +51,15 @@ public class profTestsCraft {
 			south = new ArrayList<Coordinate>();
 			west = new ArrayList<Coordinate>();
 			for (int i=1; i < 4; i++) {
-				north.add(new Coordinate(2,i));
-				east.add(new Coordinate(i,2));
-				south.add(new Coordinate(2,i));
-				west.add(new Coordinate(i,2));
+				north.add(new Coordinate2D(2,i));
+				east.add(new Coordinate2D(i,2));
+				south.add(new Coordinate2D(2,i));
+				west.add(new Coordinate2D(i,2));
 			}
-			 sEast = "Bergantín (EAST)\n -----\n|     |\n|     |\n| BBB |\n|     |\n|     |\n -----";
-			 sNorth ="Goleta (NORTH)\n -----\n|     |\n|  G  |\n|  G  |\n|  G  |\n|     |\n -----";
-			 sSouth ="Galeón (SOUTH)\n -----\n|     |\n|  A  |\n|  A  |\n|  A  |\n|     |\n -----";
-			 sWest = "Fragata (WEST)\n -----\n|     |\n|     |\n| FFF |\n|     |\n|     |\n -----";
+			 sEast = "Cruiser (EAST)\n -----\n|     |\n|     |\n| ØØØ |\n|     |\n|     |\n -----";
+			 sNorth ="Cruiser (NORTH)\n -----\n|     |\n|  Ø  |\n|  Ø  |\n|  Ø  |\n|     |\n -----";
+			 sSouth ="Cruiser (SOUTH)\n -----\n|     |\n|  Ø  |\n|  Ø  |\n|  Ø  |\n|     |\n -----";
+			 sWest = "Cruiser (WEST)\n -----\n|     |\n|     |\n| ØØØ |\n|     |\n|     |\n -----";
 	}	    
 		    
 		    
@@ -66,24 +67,24 @@ public class profTestsCraft {
 		    
 	@Before
 	public void setUp() throws Exception {
-		bergantin = new Craft(Orientation.EAST,'B',"Bergantín");
-		goleta = new Craft(Orientation.NORTH,'G',"Goleta");
-		fragata = new Craft(Orientation.WEST,'F',"Fragata");
-		galeon = new Craft(Orientation.SOUTH,'A',"Galeón");
+		bergantin = new Cruiser(Orientation.EAST);
+		goleta = new Cruiser(Orientation.NORTH);
+		fragata = new Cruiser(Orientation.WEST);
+		galeon = new Cruiser(Orientation.SOUTH);
 	}
 
 
-	/* Se comprueba la composición entre Craft y Coordinate. Para ello se
-	 * crea un objeto Coordinate, posicionamos un Craft a esa Coordinate.
-	 * Comprobamos que esa Coordinate y la posición del Craft son iguales.
+	/* Se comprueba la composición entre Ship y Coordinate. Para ello se
+	 * crea un objeto Coordinate, posicionamos un Ship a esa Coordinate.
+	 * Comprobamos que esa Coordinate y la posición del Ship son iguales.
 	 * Modificamos la Coordinate y comprobamos que ésta y la posición del
-	 * Craft ya no son iguales 
+	 * Ship ya no son iguales 
 	 */
 	@Test
 	public void testSetPosition() {
-		Coordinate pos = new Coordinate(7,4);
+		Coordinate pos = new Coordinate2D(7,4);
 	     
-		//Comprobamos la composición entre Craft y Coordinate
+		//Comprobamos la composición entre Ship y Coordinate
 		bergantin.setPosition(pos);
 		assertEquals (pos, bergantin.getPosition());
 		pos.set(0, -2);
@@ -92,7 +93,7 @@ public class profTestsCraft {
 		
 		
 		//Modificamos posición y comprobamos de nuevo
-		pos = new Coordinate(-17,-2);
+		pos = new Coordinate2D(-17,-2);
 		bergantin.setPosition(pos);	
 		assertEquals(pos, bergantin.getPosition());
 		pos.set(0, 12);
@@ -100,20 +101,20 @@ public class profTestsCraft {
 		assertNotEquals(pos, bergantin.getPosition());
 	}
 
-	/* Se comprueba que la posición inicial de un Craft es null.
+	/* Se comprueba que la posición inicial de un Ship es null.
 	 * Comprobamos que getPosition hace copia defensiva: Para ello
-	 * se posiciona el Craft en una Coordinate concreta. Se comprueba 
-	 * que la posición del Craft y la Coordinate son iguales, pero no
+	 * se posiciona el Ship en una Coordinate concreta. Se comprueba 
+	 * que la posición del Ship y la Coordinate son iguales, pero no
 	 * tienen la misma referencia.
 	 */
 	@Test
 	public void testGetPosition() {
 		Coordinate pos = bergantin.getPosition();
-		//Inicialmente la position del Craft debe ser null 
+		//Inicialmente la position del ship debe ser null 
 		assertNull(pos);
 		
 		//Comprobamos que getPosition hace copia defensiva
-		Coordinate pos1 = new Coordinate(7,4);
+		Coordinate pos1 = new Coordinate2D(7,4);
 		bergantin.setPosition(pos1);
 		Coordinate pos2 = bergantin.getPosition();
 		assertNotSame (pos1, pos2);
@@ -122,8 +123,8 @@ public class profTestsCraft {
 
 	@Test
 	public void testGetName() {
-		assertEquals ("Bergantín",bergantin.getName());
-		assertEquals ("Fragata",fragata.getName());
+		assertEquals ("Cruiser",bergantin.getName());
+		assertEquals ("Cruiser",fragata.getName());
 	}
 
 	@Test
@@ -136,10 +137,10 @@ public class profTestsCraft {
 
 	@Test
 	public void testGetSymbol() {
-		assertEquals ('B',bergantin.getSymbol());
-		assertEquals ('G',goleta.getSymbol());
-		assertEquals ('A',galeon.getSymbol());
-		assertEquals ('F',fragata.getSymbol());
+		assertEquals ('Ø',bergantin.getSymbol());
+		assertEquals ('Ø',goleta.getSymbol());
+		assertEquals ('Ø',galeon.getSymbol());
+		assertEquals ('Ø',fragata.getSymbol());
 	}
 
 	/* Se comprueba que la matriz shape del alumno es correcta */
@@ -161,7 +162,7 @@ public class profTestsCraft {
 		int x;
 		for (int i=0; i<BOUNDING_SQUARE_SIZE; i++)
 			for (int j=0; j<BOUNDING_SQUARE_SIZE; j++) {
-				c = new Coordinate(i,j);
+				c = new Coordinate2D(i,j);
 				x = goleta.getShapeIndex(c);
 				assertTrue ("0<="+x+"<=24", (0<=x) && (x<=24));
 				if ( (x==7)||(x==12)||(x==17) ) {
@@ -190,7 +191,7 @@ public class profTestsCraft {
 	@Test
 	public void testGetAbsolutePositionsNorth() {
 		
-		Coordinate c1 = new Coordinate(13,27);
+		Coordinate c1 = new Coordinate2D(13,27);
 		Set<Coordinate> pos = goleta.getAbsolutePositions(c1);
 		for (Coordinate c: north)
 			assertTrue("Valores Absolutos posiciones c1+"+c, pos.contains(c.add(c1)));
@@ -201,7 +202,7 @@ public class profTestsCraft {
 	 */
 	@Test
 	public void testGetAbsolutePositionsEast() {
-		Coordinate c1 = new Coordinate(0,0);
+		Coordinate c1 = new Coordinate2D(0,0);
 		Set<Coordinate> pos = bergantin.getAbsolutePositions(c1);
 		for (Coordinate c: east) {
 			assertTrue("Valores Absolutos posiciones East+c1", pos.contains(c.add(c1)));
@@ -213,7 +214,7 @@ public class profTestsCraft {
 	 */
 	@Test
 	public void testGetAbsolutePositionsSouth() {
-		Coordinate c1 = new Coordinate(300,700);
+		Coordinate c1 = new Coordinate2D(300,700);
 		Set<Coordinate> pos = galeon.getAbsolutePositions(c1);
 		for (Coordinate c: south)
 			assertTrue("Valores Absolutos posiciones South+c1", pos.contains(c.add(c1)));
@@ -224,71 +225,81 @@ public class profTestsCraft {
 	 */
 	@Test
 	public void testGetAbsolutePositionsWest() {
-		Coordinate c1 = new Coordinate(-11,-11);
+		Coordinate c1 = new Coordinate2D(-11,-11);
 		Set<Coordinate> pos = fragata.getAbsolutePositions(c1);
 		for (Coordinate c: east) {
 				assertTrue("Valores Absolutos posiciones East+c1", pos.contains(c.add(c1)));
 		}
 	}
 
-	/* Se posiciona varios Craft en una Coordinate.
+	/* Se posiciona varios Ship en una Coordinate.
 	 * Se comprueba que sus posiciones absolutas son correctas.
 	 */
 	@Test
-	public void testGetAbsolutePositionsCrafts() {
+	public void testGetAbsolutePositionsShips() {
 		
-		Coordinate c1 = new Coordinate(119,-123);
-		getAbsolutePositionsCraft(c1,goleta,north);
-		getAbsolutePositionsCraft(c1,galeon,south);
-		getAbsolutePositionsCraft(c1,fragata,west);
-		getAbsolutePositionsCraft(c1,bergantin,east);
+		Coordinate c1 = new Coordinate2D(119,-123);
+		getAbsolutePositionsShip(c1,goleta,north);
+		getAbsolutePositionsShip(c1,galeon,south);
+		getAbsolutePositionsShip(c1,fragata,west);
+		getAbsolutePositionsShip(c1,bergantin,east);
 	}
 	
-	/* Se dispara a un Craft que todavía no ha sido posicionado. Se comprueba que
+	/* Se dispara a un Ship que todavía no ha sido posicionado. Se comprueba que
 	 * hit devuelve false
 	 */
 	@Test
-	public void testHitCraftPositionNull() {
-		Coordinate c1 = new Coordinate(2,1);
-		assertFalse(goleta.hit(c1));  
+	public void testHitShipPositionNull() throws CoordinateAlreadyHitException {
+		Coordinate c1 = new Coordinate2D(2,1);
+		try {
+			assertFalse(goleta.hit(c1));
+			fail("Error: No lanzó NullPointerException");
+		} catch (NullPointerException e) {
+			
+		}
 	}
 	
-	/* Se posiciona un Craft en una Coordinate y se realizan disparos al agua.
+	/* Se posiciona un Ship en una Coordinate y se realizan disparos al agua.
 	 * Se comprueba que hit devuelve siempre false
 	 */
 	@Test
-	public void testHitWater() {
-		Coordinate c1 = new Coordinate(2,1);
+	public void testHitWater() throws CoordinateAlreadyHitException {
+		Coordinate c1 = new Coordinate2D(2,1);
 		goleta.setPosition(c1);
 		assertFalse(goleta.hit(c1));
 		for (int i=3; i<7; i++) {
 			for (int j=1; j<6; j++)
 			  if ( (i==4) && ((j<2)||(j>4)) ) 
-				  assertFalse(goleta.hit(new Coordinate(i,j)));
+				  assertFalse(goleta.hit(new Coordinate2D(i,j)));
 		}
 	}
 	
-	/* Se posiciona un Craft en una Coordinate, y se realizan primeros disparos a 
-	 * las posiciones del Craft y se comprueba que hit devuelve true. Se vuelve a 
+	/* Se posiciona un Ship en una Coordinate, y se realizan primeros disparos a 
+	 * las posiciones del Ship y se comprueba que hit devuelve true. Se vuelve a 
 	 * disparar a las mismas posiciones y se comprueba que hit ahora devuelve false.
 	 */
 	@Test
-	public void testHitCraft() {
-		Coordinate c1 = new Coordinate(2,1);
+	public void testHitShip() throws CoordinateAlreadyHitException {
+		Coordinate c1 = new Coordinate2D(2,1);
 		goleta.setPosition(c1);
 		for (int j=2; j<5; j++) {
-		   assertTrue(goleta.hit(new Coordinate(4,j)));
-		   assertFalse(goleta.hit(new Coordinate(4,j)));
+		   assertTrue(goleta.hit(new Coordinate2D(4,j))); 
+		   try {
+				assertFalse("Coordinate(4,"+j+")",goleta.hit(new Coordinate2D(4,j)));
+				fail ("Debió lanzar la excepción CoordinateAlreadyHitException");
+			   } catch (CoordinateAlreadyHitException e) {
+
+			   }
 		}
 	}
 
 	/* Se comprueba que:
-	 * 1- isShotDown() a un Craft sin posicionar devuelve false.
-	 * 2- isShotDown() devuelve false tras posicionar un Craft en una Coordinate.
+	 * 1- isShotDown() a un Ship sin posicionar devuelve false.
+	 * 2- isShotDown() devuelve false tras posicionar un Ship en una Coordinate.
 	 * */
 	@Test
 	public void testIsShotDown1() {
-		Coordinate c1 = new Coordinate(2,1);
+		Coordinate c1 = new Coordinate2D(2,1);
 		assertFalse(bergantin.isShotDown());
 		bergantin.setPosition(c1);
 		assertFalse(bergantin.isShotDown());  
@@ -296,16 +307,16 @@ public class profTestsCraft {
 	
 	/* Se comprueba que:
 	 * 1- isShotDown() devuelve false tras realizar disparos a todas las posiciones del
-	 *    Craft excepto una. 
+	 *    Ship excepto una. 
 	 * 2- isShotDown() devuelve true tras disparar a la única posición no dañada.
 	 * 
 	 */
 	@Test
-	public void testIsShotDown2() {
-		Coordinate c1 = new Coordinate(2,1);
+	public void testIsShotDown2() throws CoordinateAlreadyHitException {
+		Coordinate c1 = new Coordinate2D(2,1);
 		bergantin.setPosition(c1);
 		for (int j=3; j<6; j++) {
-		   bergantin.hit(new Coordinate(j,3));
+		   bergantin.hit(new Coordinate2D(j,3));
 		   if (j!=5) assertFalse(bergantin.isShotDown());
 		   else assertTrue(bergantin.isShotDown());
 		}
@@ -313,40 +324,44 @@ public class profTestsCraft {
 	}
 
 	/* Se comprueba que:
-	 * 1- isHit en un Craft no posicionado devuelve false.
+	 * 1- isHit en un Ship no posicionado devuelve false.
 	 * 2- isHit sobre una Coordinate en una posición fuera
-	 *    de un Craft ya posicionado, devuelve false.
+	 *    de un Ship ya posicionado, devuelve false.
 	 */
 	@Test
 	public void testIsHit1() {
-		Coordinate c = new Coordinate(2,1);
-		//Craft no posicionado
-		assertFalse(bergantin.isHit(c));
-		bergantin.setPosition(c);
-		//Craft posicionado. Coordinate c en agua
-		assertFalse(bergantin.isHit(c));
+		Coordinate c = new Coordinate2D(2,1);
+		//Ship no posicionado
+		try {
+		      bergantin.isHit(c) ;
+		      fail ("Debió lanzar NullPointerException");
+			} catch (NullPointerException e) {
+					bergantin.setPosition(c);
+					//Ship posicionado. Coordinate c en agua
+					assertFalse(bergantin.isHit(c));
+			} 
 	}
 	
 	/* Se comprueba que:	
-	 * 1- isHit sobre las Coordinates de un Craft devuelve false.
-	 * 2- isHit sobre las Coordinates de un Craft devuelve true después 
+	 * 1- isHit sobre las Coordinates de un Ship devuelve false.
+	 * 2- isHit sobre las Coordinates de un Ship devuelve true después 
 	 *    de disparar sobre ellas (hit) 
 	 *     
 	 */
 	@Test
-	public void testIsHit() {
-		Coordinate c = new Coordinate(2,1);
+	public void testIsHit() throws CoordinateAlreadyHitException {
+		Coordinate c = new Coordinate2D(2,1);
 		bergantin.setPosition(c);
-		//Preguntamos en Craft antes de disparar y despues de disparar
+		//Preguntamos en ship antes de disparar y despues de disparar
 		for (int j=3; j<6; j++) {
-		   c = new Coordinate(j,3);
+		   c = new Coordinate2D(j,3);
 		   assertFalse(bergantin.isHit(c));
 		   bergantin.hit(c);
 		   assertTrue(bergantin.isHit(c));
 		}
 	}
 
-	/* Se comprueba que las salidas de los distintos Crafts en distintas orientaciones
+	/* Se comprueba que las salidas de los distintos Ships en distintas orientaciones
 	 * son correctas
 	 */
 	@Test
@@ -360,9 +375,9 @@ public class profTestsCraft {
 	
 	//FUNCIONES DE APOYO
 	
-	void getAbsolutePositionsCraft (Coordinate cpos, Craft Craft, List<Coordinate> orient ) {
-	   Craft.setPosition(cpos);
-	   Set<Coordinate> pos = Craft.getAbsolutePositions();
+	void getAbsolutePositionsShip (Coordinate cpos, Ship ship, List<Coordinate> orient ) {
+	   ship.setPosition(cpos);
+	   Set<Coordinate> pos = ship.getAbsolutePositions();
 	   for (Coordinate c: orient)
 		  assertTrue("Valores Absolutos posiciones c1+"+c, pos.contains(c.add(cpos)));
 	}

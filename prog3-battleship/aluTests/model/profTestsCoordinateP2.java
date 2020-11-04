@@ -12,6 +12,8 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.ship.Coordinate2D;
+
 public class profTestsCoordinateP2 {
 	
     int []vcoor= {0,0,-70,-2,20}; //Para crear coordenadas
@@ -23,7 +25,7 @@ public class profTestsCoordinateP2 {
 		lcoor = new ArrayList<Coordinate>();
 		//Se crean las Coordinate (0,0),(0,-70), (-70,-2),(-2,20);
 		for (int i=0; i<DIM-1; i++) {
-			lcoor.add(new Coordinate(vcoor[i],vcoor[i+1]));
+			lcoor.add(new Coordinate2D(vcoor[i],vcoor[i+1]));
 		}
 		
 	}
@@ -52,16 +54,15 @@ public class profTestsCoordinateP2 {
 	 */
 	@Test
 	public void testAdjacentCoordinates() {
-		
-        Coordinate c = new Coordinate(-3,5);
+        Coordinate c = new Coordinate2D(-3,5);
 		Set<Coordinate> setcoord = c.adjacentCoordinates();
 		//Set<Coordinate> setcoord = new HashSet<Coordinate>();
 		for (int i=-1; i<2; i++) 
-			for (int j=-1; j<2; j++) 
-		      if ((i==0)&&(j==0))
-		    	  assertFalse(setcoord.contains(new Coordinate(c.get(0)+i,c.get(1)+j)));
-		      else
-		    	  assertTrue(setcoord.contains(new Coordinate(c.get(0)+i,c.get(1)+j)));
+			for (int j=-1; j<2; j++)
+				if ((i==0)&&(j==0))
+					assertFalse(setcoord.contains(new Coordinate2D(c.get(0)+i,c.get(1)+j)));
+				else
+					assertTrue(setcoord.contains(new Coordinate2D(c.get(0)+i,c.get(1)+j)));
 	}
 	
 	
