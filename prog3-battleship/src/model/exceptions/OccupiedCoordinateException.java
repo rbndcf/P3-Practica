@@ -9,12 +9,12 @@ import model.*;
  * previamente ocupada por otra nave
  */
 @SuppressWarnings("serial")
-public class OcupiedCoordinateException extends BattleshipException{
+public class OccupiedCoordinateException extends BattleshipException{
 	/**
 	 * @param c Coordenada que causa el problema
 	 * Recibe la coordenada que causa el problema y la guarda en BattleshipException
 	 */
-	public OcupiedCoordinateException(Coordinate c) {
+	public OccupiedCoordinateException(Coordinate c) {
 		super(c);
 	}
 	
