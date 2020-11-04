@@ -45,10 +45,10 @@ public class Coordinate2D extends Coordinate{
 	public Set<Coordinate> adjacentCoordinates(){
 		Set<Coordinate> coords = new HashSet<Coordinate>();
 		
-		for(int x = -1 ; x < 2 ; x++) 
-			for(int y = -1 ; y < 2 ; y++) 
+		for(int y = -1 ; y < 2 ; y++) 
+			for(int x = -1 ; x < 2 ; x++) 
 				if(x != 0 || y != 0) 
-					coords.add(CoordinateFactory.createCoordinate(x, y));
+					coords.add(CoordinateFactory.createCoordinate(this.get(0) + x, this.get(1) + y));
 		
 		return coords;
 	}
