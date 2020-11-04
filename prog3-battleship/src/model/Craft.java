@@ -150,8 +150,7 @@ public abstract class Craft {
 	 * actualiza su estado y devuelve true, si ya fue alcanzado o no hay barco devuelve false.
 	 */
 	public boolean hit(Coordinate c) throws CoordinateAlreadyHitException {
-		if(this.getPosition() == null)
-			return false;
+		Objects.requireNonNull(this.getPosition());
 		
 		Set<Coordinate> Coords = new HashSet<Coordinate>();
 		Coords = this.getAbsolutePositions();
@@ -193,8 +192,7 @@ public abstract class Craft {
 	 * Comprueba si un barco en esa coordenada ha sido alcanzado, si ha sido alcanzado devuelve true y si no devuelve false
 	 */
 	public boolean isHit(Coordinate c) {
-		if(this.getPosition() == null)
-			return false;
+		Objects.requireNonNull(c);
 		
 		int pos = (c.get(1) - this.getPosition().get(1)) * BOUNDING_SQUARE_SIZE + (c.get(0) - this.getPosition().get(0));
 		
