@@ -29,8 +29,9 @@ public abstract class Coordinate {
 	 * Constructor de copia
 	 */
 	protected Coordinate(Coordinate c){
-		for(int i = 0 ; i < components.length ; i++)
-			components[i] = c.components[i];
+		this.components = new int[(c.components.length)];
+		for(int i = 0 ; i < this.components.length ; i++)
+			this.components[i] = c.components[i];
 	}
 
 	/**
