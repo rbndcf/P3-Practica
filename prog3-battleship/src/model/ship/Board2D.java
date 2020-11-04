@@ -9,11 +9,11 @@ public class Board2D extends Board{
 	
 	@Override
 	public boolean checkCoordinate(Coordinate c) {
-		if(c instanceof Coordinate2D)
+		if(!(c instanceof Coordinate2D))
 			throw new IllegalArgumentException();
 		
-		if(c.get(0) < 0 || c.get(0) >= this.getSize() || c.get(1) < 0 || c.get(1) >= this.getSize()) return true;
-		else return false;
+		if(c.get(0) < 0 || c.get(0) >= this.getSize() || c.get(1) < 0 || c.get(1) >= this.getSize()) return false;
+		else return true;
 	}
 	
 	@Override
