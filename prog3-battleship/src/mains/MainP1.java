@@ -2,7 +2,8 @@ package mains;
 
 import java.util.ArrayList;
 
-import model.Coordinate;
+import model.ship.*;
+import model.*;
 
 public class MainP1 {
 

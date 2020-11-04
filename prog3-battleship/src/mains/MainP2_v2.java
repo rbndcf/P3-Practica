@@ -6,7 +6,6 @@ import model.Orientation;
 import model.Craft;
 
 public class MainP2_v2 {
-
 	public static void main(String[] args) {
 				
 		Board bplayer1 = new Board(10);

@@ -24,7 +24,6 @@ import model.ship.Destroyer;
 import model.ship.Ship;
 
 public class MainP3 {
-
 	private static void printAbsolutePositions(Craft crf, Coordinate pos) {
 		System.out.print("Absolute positions: ");
 		for (Coordinate c: crf.getAbsolutePositions(pos)) {
