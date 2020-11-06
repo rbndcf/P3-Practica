@@ -23,6 +23,6 @@ public class InvalidCoordinateException extends BattleshipException{
 	 * Devuelve el mensaje de la excepción que llama a getMessage() 
 	 */
 	public String getMessage() {
-		return "The coordinate " + this.coord.toString() + " is out of the Board";
+		return "Problem with coordinate " + this.coord.toString() + "; it is not valid";
 	}
 }
