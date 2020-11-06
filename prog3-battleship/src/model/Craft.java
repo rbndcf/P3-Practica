@@ -34,6 +34,7 @@ public abstract class Craft {
 	 * @param pos posición del barco
 	 */
 	private Coordinate pos;
+	
 	/**
 	 * @param shape distintas formas que puede tener el barco
 	 */
@@ -52,7 +53,7 @@ public abstract class Craft {
 	}
 
 	/**
-	 * @return null si no tiene posicion o Coordinate(pos) si tiene posicion
+	 * @return null si no tiene posicion o pos.copy() si tiene posicion
 	 * Devuelve la posición que tiene asignada el Ship que llama a getPosition() o
 	 * null si no se le ha asignado posición
 	 */
@@ -78,7 +79,7 @@ public abstract class Craft {
 	}
 
 	/**
-	 * @return orientacion
+	 * @return orientation
 	 * Devuelve la orientación del Ship que llama a getOrientation()
 	 */
 	public Orientation getOrientation() {
@@ -86,7 +87,7 @@ public abstract class Craft {
 	}
 
 	/**
-	 * @return simbolo
+	 * @return symbol
 	 * Devuelve el simbolo del Ship que llama a getSymbol()
 	 */
 	public char getSymbol() {
@@ -104,6 +105,7 @@ public abstract class Craft {
 	/**
 	 * @param c Coordenada que recibe
 	 * @return su ShapeIndex
+	 * @throws NullPointerException cuando la coordenada c es nula
 	 * Devuelve el ShapeIndex de la coordenada que recibe por parametros del Ship que llama a
 	 * la función getShapeIndex()
 	 */
@@ -116,6 +118,7 @@ public abstract class Craft {
 	/**
 	 * @param c Coordenada que recibe
 	 * @return Set de Coordinates
+	 * @throws NullPointerException si la coordenada c es nula
 	 * Recibe un Coordinate y devuelve la posición del Ship sobre el tablero respecto de esas coordenadas
 	 */
 	public Set<Coordinate> getAbsolutePositions(Coordinate c) {
@@ -140,17 +143,20 @@ public abstract class Craft {
 
 	/**
 	 * @return Set de Coordinates
+	 * @throws NullPointerException si el barco no ha sido posicionado
 	 * Utiliza la coordenada del Ship y llama a getAbsolutePositions con dicha Coordenada y devuelve la posición sobre el tablero 
 	 * respecto de esas coordenadas
 	 */
 	public Set<Coordinate> getAbsolutePositions() {
+		Objects.requireNonNull(this.getPosition());
 		return this.getAbsolutePositions(this.getPosition().copy());
 	}
 
 	/**
 	 * @param c Coordenada absoluta
 	 * @return true si es hit, false si no
-	 * @throws CoordinateAlreadyHitException 
+	 * @throws CoordinateAlreadyHitException si la posicion del barco ha sido disparada anteriormente
+	 * @throws NullPointerException si el barco no ha sido posicionado
 	 * Recibe una coordenada absoluta, si en ella se encuentra un barco que no ha sido alcanzado antes en esa posicion, 
 	 * actualiza su estado y devuelve true, si ya fue alcanzado o no hay barco devuelve false.
 	 */
@@ -194,6 +200,7 @@ public abstract class Craft {
 	/**
 	 * @param c Coordenada que queremos comprobar
 	 * @return Estado de la coordenada
+	 * @throws NullPointerException si la coordenada que recibe es nula
 	 * Comprueba si un barco en esa coordenada ha sido alcanzado, si ha sido alcanzado devuelve true y si no devuelve false
 	 */
 	public boolean isHit(Coordinate c) {
