@@ -23,6 +23,6 @@ public class NextToAnotherCraftException extends BattleshipException{
 	 * Devuelve el mensaje de la excepción que llama a getMessage() 
 	 */
 	public String getMessage() {
-		return "The coordinate " + this.coord.toString() + " is next to another craft";
+		return "Problem with coordinate " + this.coord.toString() + "; it is next to another craft";
 	}
 }
