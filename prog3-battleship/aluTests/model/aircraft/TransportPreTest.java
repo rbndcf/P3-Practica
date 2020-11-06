@@ -3,6 +3,7 @@ package model.aircraft;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,8 +12,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.Coordinate;
+import model.CoordinateFactory;
 import model.Orientation;
-import model.ship.Coordinate2D;
 
 public class TransportPreTest {
 	Aircraft transportN, transportE, transportS, transportW;
@@ -112,7 +113,10 @@ public class TransportPreTest {
 	 */
 	@Test
 	public void testGetOrientation() {
-		fail("Realiza el test");
+		assertEquals("Error 1 en testGetOrientation", Orientation.NORTH, transportN.getOrientation());
+		assertEquals("Error 2 en testGetOrientation", Orientation.EAST, transportE.getOrientation());
+		assertEquals("Error 3 en testGetOrientation", Orientation.SOUTH, transportS.getOrientation());
+		assertEquals("Error 4 en testGetOrientation", Orientation.WEST, transportW.getOrientation());
 	}
 
 	@Test
@@ -126,7 +130,30 @@ public class TransportPreTest {
 	 */
 	@Test
 	public void testGetAbsolutePositionsNorth() {
-		fail("Realiza el test");
+		Set<Coordinate> esperades00 = new HashSet<Coordinate> ();
+		
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {2, 0, 5}));
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {2, 1, 5}));
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {2, 2, 5}));
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {2, 3, 5}));
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {2, 4, 5}));
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {1, 2, 5}));	
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {3, 2, 5}));
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {0, 3, 5}));
+		esperades00.add(CoordinateFactory.createCoordinate(new int[] {4, 3, 5}));			
+		assertEquals("Error 1 en testGetAbsolutePositionNorth", esperades00, transportN.getAbsolutePositions(CoordinateFactory.createCoordinate(new int[] {0, 0, 5})));
+		
+		Set<Coordinate> esperades55 = new HashSet<Coordinate>();
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 5}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 6}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 7}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 8}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 9}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {6, 7}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {8, 7}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {5, 8}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {9, 8}));
+		assertEquals("Error 2 en testGetAbsolutePositionsNorth", esperades55, transportN.getAbsolutePositions(CoordinateFactory.createCoordinate(new int[] {5, 5})));
 	}
 		
 	//TODO
@@ -135,7 +162,10 @@ public class TransportPreTest {
 	 */
 	@Test
 	public void testToString() {
-		fail("Realiza el test");
+		assertEquals("E1 en testToString", sNorth, transportN.toString());
+		assertEquals("E2 en testToString", sEast, transportE.toString());
+		assertEquals("E3 en testToString", sSouth, transportS.toString());
+		assertEquals("E4 en testToString", sWest, transportW.toString());
 	}
 
 }
