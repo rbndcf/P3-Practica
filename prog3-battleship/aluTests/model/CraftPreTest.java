@@ -16,10 +16,22 @@ public class CraftPreTest {
 		bomber = new Bomber(Orientation.SOUTH);
 	}
 
-	//TODO 
 	/* Realiza los tests en los que se comprueba el lanzamiento de
 	 * la excepción NullPointerException en los métodos getShapeIndex,
 	 * getAbsolutePositions(Coordinate) y getAbsolutePositions
 	 */
-
+	@Test(expected=NullPointerException.class)
+	public void nullPointerExceptionGetShapeAbsoluteTest() {
+		try {
+			carrier.getAbsolutePositions(null);
+		}
+		catch(NullPointerException e1) {
+			try {
+				carrier.getAbsolutePositions();
+			}
+			catch(NullPointerException e2) {
+				carrier.getShapeIndex(null);
+			}
+		}
+	}
 }
