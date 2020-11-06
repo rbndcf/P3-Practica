@@ -64,6 +64,4 @@ public class profTestsCoordinateP2 {
 				else
 					assertTrue(setcoord.contains(new Coordinate2D(c.get(0)+i,c.get(1)+j)));
 	}
-	
-	
 }

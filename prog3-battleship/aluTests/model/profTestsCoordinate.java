@@ -133,8 +133,6 @@ public class profTestsCoordinate{
 		}
 	}
 
-	
-	
 	/* Se comprueba, para el método toString(), que las Coordinate creadas en el setUp() 
 	 * tienen el formato correcto.
 	 */
