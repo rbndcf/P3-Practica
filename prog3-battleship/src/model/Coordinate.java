@@ -41,7 +41,7 @@ public abstract class Coordinate {
 	 * el parámetro value
 	 */
 	protected void set(int component,int value){
-		if (component>=0 && component<components.length)
+		if (component>=0 && component < components.length)
       		components[component] = value;
 
    		else
@@ -55,7 +55,7 @@ public abstract class Coordinate {
 	 * rango, nos lo devuelve con el return
 	 */
 	public int get(int component){
-		if(component >= 0 & component < components.length)
+		if(component >= 0 && component < components.length)
 			return(components[component]);
 
 		else
