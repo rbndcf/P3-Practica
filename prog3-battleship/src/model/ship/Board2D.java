@@ -2,11 +2,26 @@ package model.ship;
 
 import model.*;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ *
+ * Esta clase la utilizaremos para controlar Boards de 2 dimensiones, además de su checkcoordinate y su show de 2 dimensiones
+ */
 public class Board2D extends Board{
+	/**
+	 * @param size del board
+	 * Constructor por parametros
+	 */
 	public Board2D(int size) {
 		super(size);
 	}
 	
+	/**
+	 * @param c Coordenada a checkear
+	 * @throws IllegalArgumentException cuando la coordenada c no es una coordenada 2D
+	 * @return true si esta dentro, false si no
+	 * Recibe una coordenada y devuelve true o false según esté dentro del board o no
+	 */
 	@Override
 	public boolean checkCoordinate(Coordinate c) {
 		if(!(c instanceof Coordinate2D))
@@ -16,6 +31,12 @@ public class Board2D extends Board{
 		else return true;
 	}
 	
+	/**
+	 * @param unveil
+	 * @return estado de la coordenada
+	 * Recibe si se quieren mostrar todas las casillas o no, en caso de que si se quieran ver se mostrarán todas las coordenadas del board, en caso
+	 * de que no se quieran ver todas solo se mostraran las casillas que hayan sido vistas anteriormente
+	 */
 	@Override
 	public String show(boolean unveil) {
 		StringBuilder sb = new StringBuilder();
