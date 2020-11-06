@@ -3,6 +3,7 @@ package model.ship;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -99,13 +100,15 @@ public class BattleshipPreTest {
 				assertEquals(shape[i][j],shapeAux[i][j]);
 	}
 
-	//TODO
 	/* Comprueba que las orientaciones de los Battleship creados en el setUp son 
 	 * correctas.
 	 */
 	@Test
 	public void testGetOrientation() {
-		fail ("Realiza el test");
+		assertEquals(Orientation.NORTH, battleshipN.getOrientation());
+		assertEquals(Orientation.EAST, battleshipE.getOrientation());
+		assertEquals(Orientation.SOUTH, battleshipS.getOrientation());
+		assertEquals(Orientation.WEST, battleshipW.getOrientation());
 	}
 
 	@Test
@@ -113,23 +116,29 @@ public class BattleshipPreTest {
 		assertEquals('O', battleshipN.getSymbol());
 	}
 
-	//TODO
 	/* Comprueba que las posiciones absolutas para la orientación NORTH a partir de
 	 * una Coordinate son correctas.
 	 */
 	@Test
 	public void testGetAbsolutePositionsNorth() {
-			
-		fail ("Realiza el test");
+		Set<Coordinate> absPos = new HashSet<Coordinate>();
+		absPos = battleshipN.getAbsolutePositions(new Coordinate2D(0,0));
+
+		assertTrue(absPos.contains(new Coordinate2D(2,1)));
+		assertTrue(absPos.contains(new Coordinate2D(2,2)));
+		assertTrue(absPos.contains(new Coordinate2D(2,3)));
+		assertTrue(absPos.contains(new Coordinate2D(2,4)));
 	}
 
-	//TODO
 	/* Comprueba que toString() para cada Battleship creado en el setUp coincide con 
 	 * los correspondientes String creados en setUpBeforeClass()
 	 */
 	@Test
 	public void testToString() {
-		fail ("Realiza el test");
+		assertEquals(battleshipN.toString(), sNorth);
+		assertEquals(battleshipE.toString(), sEast);
+		assertEquals(battleshipS.toString(), sSouth);
+		assertEquals(battleshipW.toString(), sWest);
 	}
 
 }
