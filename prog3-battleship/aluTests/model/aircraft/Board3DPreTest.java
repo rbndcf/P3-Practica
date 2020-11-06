@@ -540,5 +540,4 @@ public class Board3DPreTest {
 			board3D.hit(new Coordinate3D(4,i,4));
 		}
 	}
-	
 }
