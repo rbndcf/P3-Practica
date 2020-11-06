@@ -3,6 +3,7 @@ package model;
 import java.util.*;
 import model.exceptions.*;
 import model.ship.*;
+import model.aircraft.*;
 
 /**
  * @author Rubén Del Castillo Fuentes 48786827D
@@ -94,25 +95,17 @@ public abstract class Board {
 	 * @throws BattleshipException 
 	 */
 	public boolean addCraft(Craft craft, Coordinate position) throws InvalidCoordinateException, OccupiedCoordinateException, NextToAnotherCraftException {
-		for(Coordinate c1 : craft.getAbsolutePositions(position)) {
-			int max = 0;
+		for(Coordinate c1 : craft.getAbsolutePositions(position))
+			if(!this.checkCoordinate(c1))
+				throw new InvalidCoordinateException(c1);
+		
+		for(Coordinate c1 : craft.getAbsolutePositions(position))
+			if(board.containsKey(c1))
+				throw new OccupiedCoordinateException(c1);
 			
-			if(c1 instanceof Coordinate2D) max = 2;
-			else max = 3;
-			
-			for(int i = 0 ; i < max ; i++) {
-				if(c1.get(i) < 0 || c1.get(i) >= size)
-					throw new InvalidCoordinateException(c1);
-				
-				else if(board.containsKey(c1))
-					throw new OccupiedCoordinateException(c1);
-				
-				else
-					for(Coordinate c : this.getNeighborhood(craft, position))
-						if(board.containsKey(c) && board.get(c) != craft)
-							throw new NextToAnotherCraftException(c1);
-			}
-		}
+		for(Coordinate c : this.getNeighborhood(craft, position))
+			if(board.containsKey(c) && board.get(c) != craft)
+				throw new NextToAnotherCraftException(c);
 		
 		craft.setPosition(position);
 		numCrafts++;
@@ -149,45 +142,33 @@ public abstract class Board {
 	 * ultima casilla sin alcanzar del barco se devuelve DESTROYED
 	 */
 	public CellStatus hit(Coordinate c) throws InvalidCoordinateException, CoordinateAlreadyHitException{
-		int max = 0;
-		
-		if(c instanceof Coordinate2D) max = 2;
-		else max = 3;
-		
-		for(int i = 0 ; i < max ; i++)
-			if(c.get(i) < 0 || c.get(1) >= size)
-				throw new InvalidCoordinateException(c);
+		if(this.checkCoordinate(c)) {
+			seen.add(c);
 			
-		if(c.get(0) < 0 || c.get(0) >= size || c.get(1) < 0 || c.get(1) >= size) {
-			System.err.println("Error in Board.hit, position " + c.toString() + "is out of the Board");
-			return CellStatus.WATER;
-		}
-		
-		else if(board.containsKey(c)) {
-			seen.add(c.copy());
-			
-			if(board.get(c).isHit(c))
-				return CellStatus.WATER;
+			if(board.containsKey(c)) {
 				
-			else
-				board.get(c).hit(c);
-			
-			
-			if(board.get(c).isShotDown()) {
-				destroyedCrafts++;
-				for(Coordinate c1 : this.getNeighborhood(board.get(c)))
-					if(!seen.contains(c1))
-						seen.add(c1.copy());
+				if(board.get(c).isHit(c))
+					throw new CoordinateAlreadyHitException(c);
 				
-				return CellStatus.DESTROYED;
+				else {
+					board.get(c).hit(c);
+					
+					if(board.get(c).isShotDown()) {
+						destroyedCrafts++;
+						
+						for(Coordinate c1 : this.getNeighborhood(board.get(c)))
+							seen.add(c1);
+						
+						return CellStatus.DESTROYED;
+					}
+					return CellStatus.HIT;
+				}
 			}
-			else return CellStatus.HIT;
+			else 
+				return CellStatus.WATER;
 		}
-		
-		else {
-			seen.add(c.copy());
-			return CellStatus.WATER;
-		}
+		else
+			throw new InvalidCoordinateException(c);
 	}
 	
 	/**
@@ -219,9 +200,17 @@ public abstract class Board {
 			Set<Coordinate> c2 = new HashSet<Coordinate>();
 			c2 = c1.adjacentCoordinates();
 			
-			for(Coordinate c3 : c2)
-				if(!s.contains(c3) && c3.get(0) >= 0 && c3.get(0) < size && c3.get(1) >= 0 && c3.get(1) < size)
-					s.add(c3);
+			if(position instanceof Coordinate2D) {
+				for(Coordinate c3 : c2)
+					if(!s.contains(c3) && c3.get(0) >= 0 && c3.get(0) < size && c3.get(1) >= 0 && c3.get(1) < size)
+						s.add(c3);
+			}
+			
+			else if(position instanceof Coordinate3D) {
+				for(Coordinate c3 : c2)
+					if(!s.contains(c3) && c3.get(0) >= 0 && c3.get(0) < size && c3.get(1) >= 0 && c3.get(1) < size && c3.get(2) >= 0 && c3.get(2) < size)
+						s.add(c3);
+			}
 		}
 		
 		for(Coordinate c1 : c)
