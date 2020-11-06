@@ -3,6 +3,7 @@ package model.ship;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -103,7 +104,10 @@ public class CarrierPreTest {
 	 */
 	@Test
 	public void testGetOrientation() {
-		fail("Realiza el test");
+		assertEquals(Orientation.NORTH, carrierN.getOrientation());
+		assertEquals(Orientation.EAST, carrierE.getOrientation());
+		assertEquals(Orientation.SOUTH, carrierS.getOrientation());
+		assertEquals(Orientation.WEST, carrierW.getOrientation());
 	}
 
 	@Test
@@ -117,7 +121,14 @@ public class CarrierPreTest {
 	 */
 	@Test
 	public void testGetAbsolutePositionsNorth() {
-			fail("Realiza el test");
+		Set<Coordinate> absPos = new HashSet<Coordinate>();
+		absPos = carrierN.getAbsolutePositions(new Coordinate2D(0,0));
+
+		assertTrue(absPos.contains(new Coordinate2D(2,0)));
+		assertTrue(absPos.contains(new Coordinate2D(2,1)));
+		assertTrue(absPos.contains(new Coordinate2D(2,2)));
+		assertTrue(absPos.contains(new Coordinate2D(2,3)));
+		assertTrue(absPos.contains(new Coordinate2D(2,4)));
 	}
 		
 
@@ -127,7 +138,10 @@ public class CarrierPreTest {
 	 */
 	@Test
 	public void testToString() {
-		fail("Realiza el test");
+		assertEquals(carrierN.toString(), sNorth);
+		assertEquals(carrierE.toString(), sEast);
+		assertEquals(carrierS.toString(), sSouth);
+		assertEquals(carrierW.toString(), sWest);
 	}
 
 }
