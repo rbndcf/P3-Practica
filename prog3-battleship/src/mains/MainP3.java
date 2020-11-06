@@ -7,7 +7,6 @@ import model.Craft;
 import model.Orientation;
 import model.aircraft.Aircraft;
 import model.aircraft.Board3D;
-import model.aircraft.Bomber;
 import model.aircraft.Coordinate3D;
 import model.aircraft.Fighter;
 import model.aircraft.Transport;
