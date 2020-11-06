@@ -25,6 +25,9 @@ public abstract class Board {
 	 * @param NOTSEEN_SYMBOL simbolo cuando no se ha visto una posicion
 	 */
 	public static final char NOTSEEN_SYMBOL = '?';
+	/**
+	 * @param Board_SEPARATOR separador para el show 
+	 */
 	public static final char Board_SEPARATOR = '|';
 	/**
 	 * @param MAX_BOARD_SIZE tamaño maximo del board
@@ -34,6 +37,7 @@ public abstract class Board {
 	 * @param MIN_BOARD_SIZE tamaño minimo del board
 	 */
 	public static final int MIN_BOARD_SIZE = 5;
+	
 	/**
 	 * @param size tamaño del board
 	 */
@@ -83,6 +87,7 @@ public abstract class Board {
 	 * @param c Coordenada
 	 * @return Estado de la coordenada
 	 * Devuelve true si la coordenada entra en el Board, o false si no entra
+	 * checkCoordinate(Coordinate) dependerá de la dimensión del board
 	 */
 	public abstract boolean checkCoordinate(Coordinate c);
 	
@@ -90,9 +95,11 @@ public abstract class Board {
 	 * @param craft que se añade 
 	 * @param position donde se añade su shape
 	 * @return true si se añade faslse si no
+	 * @throws InvalidCoordinateException cuando una coordenada esté fuera del board
+	 * @throws OccupiedCoordinateException cuando se intente colocar un craft en una posición ya ocupada anteriormente
+	 * @throws NextToAnotherCraftException cuando se intente colocar un craft en una posición colindante con otro craft
 	 * Recibe un Craft y un Coordinate, si cumple los requisitos se añade el Find en dicha Coordinate y devuelve true, si no lo
 	 * cumple devuelve false y no se añade
-	 * @throws BattleshipException 
 	 */
 	public boolean addCraft(Craft craft, Coordinate position) throws InvalidCoordinateException, OccupiedCoordinateException, NextToAnotherCraftException {
 		for(Coordinate c1 : craft.getAbsolutePositions(position))
@@ -137,7 +144,9 @@ public abstract class Board {
 	
 	/**
 	 * @param c Coordenada a la que se dispara
-	 * @return Estado del sitio
+	 * @return Estado en el que queda la coordenada
+	 * @throws InvalidCoordinateException cuando la coordenada no se encuentre dentro del board
+	 * @throws CoordinateAlreadyHitException cuando la coordenada ya haya sido alcanzada anteriormente
 	 * Se dispara a 1 coordenada, si no hay ningún barco se devuelve WATER, si hay un barco se devuelve HIT, y si era la
 	 * ultima casilla sin alcanzar del barco se devuelve DESTROYED
 	 */
@@ -188,6 +197,8 @@ public abstract class Board {
 	 * vecinas al barco, eliminando las del propio barco
 	 */
 	public Set<Coordinate> getNeighborhood(Craft craft, Coordinate position){
+		Objects.requireNonNull(craft);
+		
 		Set<Coordinate> s = new HashSet<Coordinate>();
 		Set<Coordinate> c = new HashSet<Coordinate>();
 		
@@ -235,6 +246,7 @@ public abstract class Board {
 	 * Recibe el parametro que indica si se ve como el dueño o el adversario, y segun ese parametro se muestran
 	 * todas las posiciones del board o solo las que ha visto el adversario y tapando las que no ha visto con
 	 * NOTSEEN_SYMBOL que equivale a "?"
+	 * el show dependerá de si es es un Board2D o un Board3D
 	 */
 	public abstract String show(boolean unveil);
 	
