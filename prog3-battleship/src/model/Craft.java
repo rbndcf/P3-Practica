@@ -2,6 +2,8 @@ package model;
 
 import java.util.*;
 import model.exceptions.*;
+import model.ship.*;
+import model.aircraft.*;
 
 public abstract class Craft {
 	/**
@@ -126,7 +128,10 @@ public abstract class Craft {
 				int insideShapeX = i % BOUNDING_SQUARE_SIZE;
 				int insideShapeY = i / BOUNDING_SQUARE_SIZE;
 				
-				absPositions.add(CoordinateFactory.createCoordinate(insideShapeX + c.get(0), insideShapeY + c.get(1)));
+				if(c instanceof Coordinate2D)
+					absPositions.add(CoordinateFactory.createCoordinate(insideShapeX + c.get(0), insideShapeY + c.get(1)));
+				else if(c instanceof Coordinate3D)
+					absPositions.add(CoordinateFactory.createCoordinate(insideShapeX + c.get(0), insideShapeY + c.get(1), c.get(2)));
 			}
 		}
 		
