@@ -39,7 +39,8 @@ public class Board3D extends Board{
 	 * @param unveil
 	 * @return estado de la coordenada
 	 * Recibe si se quieren mostrar todas las casillas o no, en caso de que si se quieran ver se mostrarán todas las coordenadas del board, en caso
-	 * de que no se quieran ver todas solo se mostraran las casillas que hayan sido vistas anteriormente
+	 * de que no se quieran ver todas solo se mostraran las casillas que hayan sido vistas anteriormente. Cada altura del board se separa de las
+	 * demás utilizando Board_SEPARATOR de la superclase
 	 */
 	@Override
 	public String show(boolean unveil) {
