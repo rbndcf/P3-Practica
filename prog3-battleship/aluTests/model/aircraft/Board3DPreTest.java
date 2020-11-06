@@ -18,12 +18,7 @@ import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
 import model.exceptions.NextToAnotherCraftException;
 import model.exceptions.OccupiedCoordinateException;
-import model.ship.Battleship;
-import model.ship.Board2D;
-import model.ship.Carrier;
 import model.ship.Coordinate2D;
-import model.ship.Destroyer;
-import model.ship.Ship;
 
 public class Board3DPreTest {
 	Aircraft bomberE, bomberS,fighterW,fighter1S, fighter2S, transportN;
