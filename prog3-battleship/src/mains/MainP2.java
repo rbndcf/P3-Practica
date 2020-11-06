@@ -6,7 +6,7 @@ import model.Orientation;
 import model.Craft;
 
 public class MainP2 {
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
 		Coordinate c1 = new Coordinate(7,5);
 		Coordinate c2 = new Coordinate(-6,3);
@@ -30,5 +30,5 @@ public class MainP2 {
 		
 		System.out.println(b);
 		System.out.println(portaaviones);
-	}
+	}*/
 }

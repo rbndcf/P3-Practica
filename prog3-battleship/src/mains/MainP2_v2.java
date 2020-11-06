@@ -8,7 +8,7 @@ import model.Craft;
 public class MainP2_v2 {
 	public static void main(String[] args) {
 				
-		Board bplayer1 = new Board(10);
+		/*Board bplayer1 = new Board(10);
 		Craft s1p1 = new Craft(Orientation.EAST,'P',"Dijkstra");
 		Craft s2p1 = new Craft(Orientation.NORTH,'s',"Boole");
 		Craft s3p1 = new Craft(Orientation.EAST,'d',"Knuth");
@@ -58,6 +58,6 @@ public class MainP2_v2 {
 		
 		System.out.println("-------------------");
 		System.out.println(s3p1);
-		System.out.println(s1p2);
+		System.out.println(s1p2);*/
 	}
 }

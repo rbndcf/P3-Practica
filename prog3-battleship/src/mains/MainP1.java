@@ -6,8 +6,7 @@ import model.ship.*;
 import model.*;
 
 public class MainP1 {
-
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
         Coordinate c1 = new Coordinate(0,0);
 	    Coordinate c2 = new Coordinate(10,10);
@@ -41,5 +40,5 @@ public class MainP1 {
 	                v2.add(new Coordinate(i, i));
 	                System.out.println(v2.get(i));
 	    }
-	}
+	}*/
 }
