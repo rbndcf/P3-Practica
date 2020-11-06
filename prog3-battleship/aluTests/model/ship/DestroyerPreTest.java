@@ -3,6 +3,7 @@ package model.ship;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -107,7 +108,10 @@ public class DestroyerPreTest {
 	 */
 	@Test
 	public void testGetOrientation() {
-		fail("Realiza el test");
+		assertEquals(Orientation.NORTH, destroyerN.getOrientation());
+		assertEquals(Orientation.EAST, destroyerE.getOrientation());
+		assertEquals(Orientation.SOUTH, destroyerS.getOrientation());
+		assertEquals(Orientation.WEST, destroyerW.getOrientation());
 	}
 
 	@Test
@@ -121,7 +125,11 @@ public class DestroyerPreTest {
 	 */
 	@Test
 	public void testGetAbsolutePositionsNorth() {
-		fail("Realiza el test");
+		Set<Coordinate> absPos = new HashSet<Coordinate>();
+		absPos = destroyerN.getAbsolutePositions(new Coordinate2D(0,0));
+		
+		assertTrue(absPos.contains(new Coordinate2D(2,1)));
+		assertTrue(absPos.contains(new Coordinate2D(2,2)));
 	}
 
 
@@ -131,7 +139,10 @@ public class DestroyerPreTest {
 	 */
 	@Test
 	public void testToString() {
-		fail("Realiza el test");
+		assertEquals(destroyerN.toString(), sNorth);
+		assertEquals(destroyerE.toString(), sEast);
+		assertEquals(destroyerS.toString(), sSouth);
+		assertEquals(destroyerW.toString(), sWest);
 	}
 
 }
