@@ -24,28 +24,52 @@ public class CoordinatePreTest {
 
 	/* Comprueba set y get modificando algunas de las Coordinates creadas en setUp() 
 	 */
-	//TODO
 	@Test
 	public void testSetGet() {
-		fail("Realiza la comprobación del correcto funcionamiento de set y get");
+		Coordinate c2 = new Coordinate2D((Coordinate2D)cd2);
+		Coordinate c3 = new Coordinate3D((Coordinate3D)cd3);
+		
+		cd2.set(0, 15);
+		cd2.set(1, 25);
+		assertTrue(cd2.get(0) == 15);
+		assertTrue(cd2.get(1) == 25);
+		assertNotEquals(cd2, c2);
+		
+		cd3.set(0, 15);
+		cd3.set(1, 25);
+		cd3.set(2, 35);
+		assertTrue(cd3.get(0) == 15);
+		assertTrue(cd3.get(1) == 25);
+		assertTrue(cd3.get(2) == 35);
+		assertNotEquals(cd3, c3);
 	}
 	
-	//TODO
 	/* Comprueba que set lanza IllegalArgumentException cuando el componente
 	 * no es correcto
 	 */
-	@Test
+	@Test(expected=IllegalArgumentException.class)
 	public void testSetIllegalArgumentException() {
-		fail("Realiza el test SetIllegalArgumentException");
+		try {
+			cd2.set(9, 5);
+			fail("Error: No se lanzó IllegalArgumentException");
+		}
+		catch(IllegalArgumentException e) {
+			cd3.set(-3, 5);
+		}
 	}
 	
-	//TODO
 	/* Comprueba que get lanza IllegalArgumentException cuando el componente
 	 * no es correcto
 	 */
-	@Test
+	@Test(expected=IllegalArgumentException.class)
 	public void testGetIllegalArgumentException() {
-		fail("Realiza el test SetIllegalArgumentException");
+		try {
+			cd2.get(9);
+			fail("Error: No se lanzó IllegalArgumentException");
+		}
+		catch(IllegalArgumentException e) {
+			cd3.get(-3);
+		}
 	}
 	
 	/* Comprobación de la sumas entre coordenadas de dimensiones distintas*/
@@ -69,21 +93,27 @@ public class CoordinatePreTest {
 		}
 	}
 	
-	//TODO
 	/* Comprueba la correcta resta entre Coordinates de distinta dimensión */
 	@Test
 	public void testsubtract2Dand3D() {
-		fail("Realiza el test");
+		Coordinate aux2d = new Coordinate2D (-25,-1);
+		Coordinate aux3d = new Coordinate3D (25,1,-2);
+		assertEquals ("c2+c3", aux2d, cd2.subtract(cd3));
+		assertEquals ("c3+c2", aux3d, cd3.subtract(cd2));
+		assertNotEquals ("aux2d!=cd2", aux2d, cd2);
+		assertNotEquals ("aux3d!=cd3", aux2d, cd3);
 	}
 
-	//TODO
 	/* Comprueba que al intentar restar a una Coordinate el valor null, se lanza
 	 * la excepción NullPointerException 
 	 */
-	@Test
+	@Test(expected=NullPointerException.class)
 	public void testSubtractNullPointerException() {
-		fail("Realiza el test");
+		try {
+			cd2.subtract(null);
+			fail ("Error: No se lanzó la excepción NullPointerException");
+		} catch (NullPointerException e) {
+			cd3.subtract(null);
+		}
 	}
-
-
 }
