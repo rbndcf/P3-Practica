@@ -7,7 +7,7 @@ import java.util.*;
  * 
  * Esta clase la utilizaremos para poder controlar las coordenadas de la practica que llevaremos a cabo en la asignatura,
  * que es un Battleship o Hundir la flota en español, se pueden crear nuevas coordenadas, modificar uno de sus parametros
- * ('y' o 'x') comparar si dos coordenadas son las mimsmas, sumar y restar coordenadas y obtener el hashCode.
+ * ('y', 'x' o 'z') comparar si dos coordenadas son las mimsmas, sumar y restar coordenadas y obtener el hashCode.
  */
 public abstract class Coordinate {
 	/**
@@ -17,7 +17,6 @@ public abstract class Coordinate {
 
 	/**
 	 * @param dim Dimensión de la Coordenada
-	 * @param coords Coordenadas
 	 * Constructor por parámetros
 	 */
 	protected Coordinate(int dim){
@@ -37,6 +36,7 @@ public abstract class Coordinate {
 	/**
 	 * @param component posición del valor a cambiar
 	 * @param value valor a cambiar
+	 * @throws IllegalArgumentException si la componente que se quiere modificar no está dentro de la coordenada 2d o 3d
 	 * Establecemos una de las coordenadas, la que indica el parámetro component, al valor recibido mediante
 	 * el parámetro value
 	 */
@@ -51,6 +51,7 @@ public abstract class Coordinate {
 	/**
 	 * @param component posicion del valor que queremos obtener
 	 * @return el valor de la coordenada indicada (component)
+	 * @throws IllegalArgumentException cuando la componente que se quiere modificar no esta dentro de la coordinate 2d o 3d
 	 * Recibimos la posicion en la que se encuentra el valor que queremos obtener, y en caso de estar en
 	 * rango, nos lo devuelve con el return
 	 */
@@ -65,6 +66,7 @@ public abstract class Coordinate {
 	/**
 	 * @param c objeto Coordinate a sumar
 	 * @return la suma del objeto Coordinate que llama a la función más el que recibe
+	 * @throws NullPointerException si la coordenada que recibe es nula
 	 * Recibe un Coordinate, y lo suma al objeto Coordinate que llama a la función add();
 	 */
 	public Coordinate add(Coordinate c){
@@ -81,6 +83,7 @@ public abstract class Coordinate {
 	/**
 	 * @param c objeto Coordinate a restar
 	 * @return la resta del objeto Coordinate que llama a la función add() menos el que recibe
+	 * @throws NullPointerException si la coordenada que recibe es nula
 	 * Recibe un Coordinate, y se lo resta al objeto Coordinate que llama a la función subtract();
 	 */
 	public Coordinate subtract(Coordinate c){
@@ -97,12 +100,14 @@ public abstract class Coordinate {
 	/**
 	 * @return copia del Coordinate
 	 * Devuelve la copia del coordinate que ha llamado a la función copy()
+	 * la función copy() dependerá de la dimensión de la coordenada
 	 */
 	public abstract Coordinate copy();
 
 	/**
 	 * @return Set de Coordinate
 	 * Devuelve todas las Coordinate adyacentes de la Coordinate que llama a la función adjacentCoordinates()
+	 * la funcion adjacentCoordinates dependerá de la dimensión de la coordenada
 	 */
 	public abstract Set<Coordinate> adjacentCoordinates();
 
