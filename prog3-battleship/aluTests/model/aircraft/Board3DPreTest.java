@@ -2,6 +2,7 @@ package model.aircraft;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Before;
@@ -10,6 +11,8 @@ import org.junit.Test;
 
 import model.Board;
 import model.Coordinate;
+import model.CoordinateFactory;
+import model.Craft;
 import model.Orientation;
 import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
@@ -24,11 +27,12 @@ import model.ship.Ship;
 
 public class Board3DPreTest {
 	Aircraft bomberE, bomberS,fighterW,fighter1S, fighter2S, transportN;
-	Board board;
-	final int TAM=7;
+	//Board2D board2D;
+	Board board3D;
+	final int TAM = 7;
 	final int MAX_BOARD_SIZE = 20;
 	final int MIN_BOARD_SIZE = 5;
-	static String sboard00,sboard01, sboard02;
+	static String sboard00,sboard01, sboard02, sboard03, sboard04;
 	
 	Coordinate3D b1, f2;
 	
@@ -58,11 +62,28 @@ public class Board3DPreTest {
 				   "???? ??|???????|???? ??| ??????|???? ??|???????|???????\n" + 
 				   "       |???????|????? ?| ??????|???? ??|???????|???????\n" + 
 				   "?????? |???????|?????? | ??????|???? ??|???????|???????";
+		
+		sboard03 = "???? ⇄ |????   |???????|???????|???????|???????|???????\n" + 
+				   "???  ⇄ |???    |???????|???????|???????|???????|???????\n" + 
+			       "??? ⇄⇄⇄|??•    |???????|???????|???????|???????|???????\n" + 
+				   "???  ⇄ |??•    |???????|???????|???????|???????|???????\n" + 
+				   "????   |??•?   |???????|???????|???????|???????|???????\n" + 
+				   "???????|??•????|???????|???????|???????|???????|???????\n" + 
+				   "???????|??•????|???????|???????|???????|???????|???????";
+		
+		sboard04 = "     • |       |       |       | ⇄     |       | ⇄     \n" + 
+				   "     • |       |       |       |⇄⇄⇄⇄   |       | ⇄     \n" + 
+				   "    •••| ⇶•    |       |       | ⇄     |       |⇄⇄⇄ ⇋  \n" + 
+				   "     • |  •    |       |   ⇶   |       |       | ⇄  ⇋  \n" + 
+				   "       |⇶⇶•⇶   |       | ⇶ ⇶ ⇶ |       |       |   ⇋⇋⇋ \n" + 
+				   "       |  •    |       | ⇶⇶⇶⇶⇶ |       |       |  ⇋ ⇋ ⇋\n" + 
+				   "       | ⇶•    |       |   ⇶   |       |       |    ⇋  ";
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		board = new Board3D(TAM);
+		//board2D = new Board3D(TAM);
+		board3D = new Board3D(TAM);
 		bomberE = new Bomber(Orientation.EAST);
 		bomberS = new Bomber(Orientation.SOUTH);
 		fighterW = new Fighter(Orientation.WEST);
@@ -73,7 +94,6 @@ public class Board3DPreTest {
 		
 	}
 
-	//TODO
 	/* Comprueba que al crear un Board3D con tamaño en los límites no produce excepción. 
 	 * Y que si sales fuera de ellos se produce la excepción IllegalArgumentException.
 	 */
@@ -84,47 +104,62 @@ public class Board3DPreTest {
 		assertEquals (MAX_BOARD_SIZE, board.getSize());
 		board = new Board3D(MIN_BOARD_SIZE);
 		assertEquals (MIN_BOARD_SIZE, board.getSize());
-		fail ("Comprueba que lanza la excepción IllegalArgumentException con tamaño fuera de los límites");
+		try {
+			board = new Board3D(50);
+		} catch (Exception e) {
+			System.err.println(e.toString());
+		}
+		try {
+			board = new Board3D(-50);
+		} catch (Exception e) {
+			System.err.println(e.toString());
+		}
+		//fail ("Comprueba que lanza la excepción IllegalArgumentException con tamaño fuera de los límites");
 	}
 	
 	/* Se comprueba getSize() */
 	@Test
 	public void testGetSize( ) {
-		 assertEquals(7,board.getSize());
-		 board = new Board3D(17);
-		 assertEquals(17, board.getSize());
+		 assertEquals(7,board3D.getSize());
+		 board3D = new Board3D(17);
+		 assertEquals(17, board3D.getSize());
 	}
 	
 	/* Se comprueba checkCoordinate para Coordinate3D en los límites devuelve true */
 	@Test
 	public void testCheckCoordinateOk() {
-		assertTrue(board.checkCoordinate(new Coordinate3D(0,0,0)));
-		assertTrue(board.checkCoordinate(new Coordinate3D(0,0,TAM-1)));
-		assertTrue(board.checkCoordinate(new Coordinate3D(0,TAM-1,0)));
-		assertTrue(board.checkCoordinate(new Coordinate3D(0,TAM-1,TAM-1)));
-		assertTrue(board.checkCoordinate(new Coordinate3D(TAM-1,0,0)));
-		assertTrue(board.checkCoordinate(new Coordinate3D(TAM-1,0,TAM-1)));
-		assertTrue(board.checkCoordinate(new Coordinate3D(TAM-1,TAM-1,0)));
-		assertTrue(board.checkCoordinate(new Coordinate3D(TAM-1,TAM-1,TAM-1)));
+		assertTrue(board3D.checkCoordinate(new Coordinate3D(	0,		0,		0)));
+		assertTrue(board3D.checkCoordinate(new Coordinate3D(	0,		0,	TAM-1)));
+		assertTrue(board3D.checkCoordinate(new Coordinate3D(	0,	TAM-1,		0)));
+		assertTrue(board3D.checkCoordinate(new Coordinate3D(	0,	TAM-1,	TAM-1)));
+		assertTrue(board3D.checkCoordinate(new Coordinate3D(TAM-1,		0,		0)));
+		assertTrue(board3D.checkCoordinate(new Coordinate3D(TAM-1,		0,	TAM-1)));
+		assertTrue(board3D.checkCoordinate(new Coordinate3D(TAM-1,	TAM-1,		0)));
+		assertTrue(board3D.checkCoordinate(new Coordinate3D(TAM-1,	TAM-1,	TAM-1)));
 	}
 	
-	//TODO
 	/* Comprueba que checkCoordinate(Coordinate) para Coordinate fuera de los límites
 	 * devuelve false.
 	 */
 	@Test
 	public void testCheckCoordinateOutOfLimits() {
-		fail("Realiza el test");
+		assertFalse(board3D.checkCoordinate(new Coordinate3D(0-TAM,	0-TAM,	0-TAM)));
+		assertFalse(board3D.checkCoordinate(new Coordinate3D(0-TAM,	0-TAM,	TAM+1)));
+		assertFalse(board3D.checkCoordinate(new Coordinate3D(0-TAM,	TAM+1,	0-TAM)));
+		assertFalse(board3D.checkCoordinate(new Coordinate3D(0-TAM,	TAM+1,	TAM+1)));
+		assertFalse(board3D.checkCoordinate(new Coordinate3D(TAM+1,	0-TAM,	0-TAM)));
+		assertFalse(board3D.checkCoordinate(new Coordinate3D(TAM+1,	0-TAM,	TAM+1)));
+		assertFalse(board3D.checkCoordinate(new Coordinate3D(TAM+1,	TAM+1,	0-TAM)));
+		assertFalse(board3D.checkCoordinate(new Coordinate3D(TAM+1,	TAM+1,	TAM+1)));
 		
 	}
 	
 	/* checkCoordinate para una Coordinate2D en un Board3D */
 	@Test(expected=IllegalArgumentException.class)
 	public void testCheckCoordinateException() {
-		assertTrue(board.checkCoordinate(new Coordinate2D(3,4)));
+		assertTrue(board3D.checkCoordinate(new Coordinate2D(3, 4)));
 	}
 	
-	//TODO
 	/* Añade los Aircraft correctamente en el board, tal como aparecen a continuación:
 	 *|     ⇄ |       |       |       | ⇄     |       | ⇄     |
      *|     ⇄ |       |       |       |⇄⇄⇄⇄   |       | ⇄     |
@@ -133,34 +168,40 @@ public class Board3DPreTest {
      *|       |⇶⇶⇶⇶   |       | ⇶ ⇶ ⇶ |       |       |   ⇋⇋⇋ |
      *|       |  ⇶    |       | ⇶⇶⇶⇶⇶ |       |       |  ⇋ ⇋ ⇋|
      *|       | ⇶⇶    |       |   ⇶   |       |       |    ⇋  |
-     *
-     *IMPORTANTE: REALIZA PRIMERO ESTE TEST PARA QUE TE VAYAN LOS RESTANTES test 
-     *addCraft
 	 */
 	@Test
 	public void testAddCraftOk() {
-		f2 = new Coordinate3D(3,0,0);
-		b1 = new Coordinate3D(0,2,1);
+		Coordinate f1 = new Coordinate3D(-1, 0, 6);
+		f2 = new Coordinate3D(3, 0, 0);
+		Coordinate fW = new Coordinate3D(-1, -1, 4);
+		b1 = new Coordinate3D(0, 2, 1);
+		Coordinate b2 = new Coordinate3D(1, 3, 3);
+		Coordinate tN = new Coordinate3D(2, 2, 6);
+		
 		try {
-			board.addCraft(fighter1S, f2);
-			board.addCraft(bomberE, b1);
-			fail("Completa el test añadiendo el resto de Aircrafts");
+			board3D.addCraft(fighter1S, f2);
+			board3D.addCraft(bomberE, b1);
+			board3D.addCraft(fighterW, fW);
+			board3D.addCraft(fighter2S, f1);
+			board3D.addCraft(bomberS, b2);
+			board3D.addCraft(transportN, tN);
 		} catch (InvalidCoordinateException | NextToAnotherCraftException | OccupiedCoordinateException e) {
-			fail ("Error. Se produjo la excepcion "+(e.getClass()).getName());
+			fail ("Error. Se produjo la excepcion " + (e.getClass()).getName());
 		}
-		
-		
+		//System.out.println(board3D.show(true));
+		assertEquals("E1 en testAddCraftOk", sboard01, board3D.show(true));
 	}
 	
-
-	//TODO
 	/* Tras poner los Craft como se indica en testAddCraftOk(), comprueba que Board.show para true y false
 	 * coincide con los String sboard01 y sboard00 respectivamente.
 	 */
 	@Test
 	public void testShow1() {
-		
-		fail("Completa el test");
+		testAddCraftOk();
+		System.out.println(this.board3D.show(true));
+		System.out.println(this.board3D.show(false));
+		assertEquals("E1 en testShow1", sboard01, board3D.show(true));
+		assertEquals("E2 en testShow1", sboard00, board3D.show(false));
 	}
 
 
@@ -186,25 +227,41 @@ public class Board3DPreTest {
 	 */
 	@Test
 	public void testAddCraftOutOccupied() {
-		Coordinate3D c=new Coordinate3D(3,-3, 0); 
+		Coordinate3D c = new Coordinate3D(3, -3, 0); 
 		Aircraft transportN = new Transport(Orientation.NORTH);
 		testAddCraftOk();
+		Set<Craft> nausDelTaulerOriginal = new HashSet<Craft> ();
+		String oShow = board3D.show(true);
+		
+		for(int i = 0; i < TAM; i++)
+			for(int j = 0; j < TAM; j++)
+				for(int k = 0; k < TAM; k++)
+					nausDelTaulerOriginal.add(board3D.getCraft(CoordinateFactory.createCoordinate(i, j, k)));
+		
 		try {		
-			board.addCraft(transportN, c);
+			board3D.addCraft(transportN, c);
 			fail("Error: no se produjo la excepción InvalidCoordinateException ");
 		} catch (InvalidCoordinateException e) {
 			//Comprobamos que todo sigue igual
-			assertNotNull (board.getCraft(new Coordinate3D(5,0,0)));
-			assertNotNull (board.getCraft(new Coordinate3D(5,1,0)));
-			assertTrue(board.getCraft(new Coordinate3D(5,0,0)).getClass().getName()=="model.aircraft.Fighter");
-			assertEquals(f2,board.getCraft(new Coordinate3D(5,0,0)).getPosition());
-			assertEquals(f2,board.getCraft(new Coordinate3D(5,1,0)).getPosition());
-			assertNull(transportN.getPosition());
-			assertNull(board.getCraft(new Coordinate3D(3,0,0)));
+			Set<Craft> nausDelTaulerException = new HashSet<Craft> ();
+			
+			for(int i = 0; i < TAM; i++)
+				for(int j = 0; j < TAM; j++)
+					for(int k = 0; k < TAM; k++)
+						nausDelTaulerException.add(board3D.getCraft(CoordinateFactory.createCoordinate(i, j, k)));
+			
+			assertEquals(nausDelTaulerOriginal, nausDelTaulerException);
+			assertEquals(oShow, board3D.show(true));
+			
 		} catch (NextToAnotherCraftException | OccupiedCoordinateException e) {
 			fail ("Error. Se esperaba InvalidCoordinateException "
-					+ "pero se produjo la excepcion "+e.getClass().getName());
+					+ "pero se produjo la excepcion " + e.getClass().getName());
 		} 
+		
+		/*
+		 * Per a la pròxima:
+		 * show(true) del original ha de ser igual que el del final
+		 */
 	}
 
 	/* Posiciona los Aircraft en el board tal como se indica en testAddCraftOk().
@@ -214,10 +271,31 @@ public class Board3DPreTest {
 	 * 1- se lanza la excepción InvalidCoordinateException y no otra
 	 * 2- que no se ha puesto el Aircraft 
 	 */
+	/* Añade los Aircraft correctamente en el board, tal como aparecen a continuación:
+	 *|     ⇄ |       |       |       | ⇄     |       | ⇄     |
+     *|     ⇄ |       |       |       |⇄⇄⇄⇄   |       | ⇄     |
+     *|    ⇄⇄⇄| ⇶⇶    |       |       | ⇄     |       |⇄⇄⇄ ⇋  |
+     *|     ⇄ |  ⇶    |       |   ⇶   |       |       | ⇄  ⇋  |
+     *|       |⇶⇶⇶⇶   |       | ⇶ ⇶ ⇶ |       |       |   ⇋⇋⇋ |
+     *|       |  ⇶    |       | ⇶⇶⇶⇶⇶ |       |       |  ⇋ ⇋ ⇋|
+     *|       | ⇶⇶    |       |   ⇶   |       |       |    ⇋  |
+	 */
 	@Test
-	public void testAddCraftOutNextTo() {
+	public void testAddCraftOutNextTo() throws InvalidCoordinateException, OccupiedCoordinateException, NextToAnotherCraftException {
 		testAddCraftOk();
-		fail ("Completa el test");
+		// Añadir uno como el de k 0 a k 3 pero una j más arriba.
+		// Fighter1S
+		Craft av = new Fighter(Orientation.SOUTH);
+		String oBoard = board3D.show(true);
+		try {
+			board3D.addCraft(av, new Coordinate3D(3, -1, 3));
+		} catch (InvalidCoordinateException e) {
+			System.err.println(e.toString());
+		} catch (OccupiedCoordinateException | NextToAnotherCraftException e) {
+			System.err.println(e.toString());
+		}
+		assertEquals(oBoard, board3D.show(true));
+		//fail ("Completa el test");
 	}
 	
 		
@@ -230,9 +308,19 @@ public class Board3DPreTest {
 	 * 2- que no se ha puesto el Aircraft
 	 * 3- que sigue existiendo el Aircraft con el que colisionaba.*/
 	@Test
-	public void testAddCraftColisionNextTo() {
+	public void testAddCraftColisionNextTo() throws InvalidCoordinateException, NextToAnotherCraftException {
 		testAddCraftOk();
-		fail("Completa el test");
+		String oShow = board3D.show(true);
+		Craft fighterEast = new Fighter(Orientation.EAST);
+		
+		try {
+			board3D.addCraft(fighterEast, CoordinateFactory.createCoordinate(2, -1, 6));
+		} catch (OccupiedCoordinateException e) {
+			assertEquals(oShow, board3D.show(true));
+		} catch (InvalidCoordinateException | NextToAnotherCraftException e) {
+			fail("Llançament de exepcions incorrecte");
+		}
+		//fail("Completa el test");
 	}
 	
 	
@@ -260,22 +348,20 @@ public class Board3DPreTest {
 		testAddCraftOk();
 		Aircraft transportN = new Transport(Orientation.NORTH);
 		try {
-			board.addCraft(transportN, new Coordinate3D(-1,-1, 0));
+			board3D.addCraft(transportN, new Coordinate3D(-1, -1, 0));
 			fail("Error: no se produjo la excepción InvalidCoordinateException ");
 		} catch (InvalidCoordinateException e1) {
-			assertNotNull (board.getCraft(new Coordinate3D(1,2,1)));
-			assertTrue(board.getCraft(new Coordinate3D(1,2,1)).getClass().getName()=="model.aircraft.Bomber");
-			assertEquals(b1,board.getCraft(new Coordinate3D(1,2,1)).getPosition());
+			assertNotNull (board3D.getCraft(new Coordinate3D(1, 2, 1)));
+			assertTrue(board3D.getCraft(new Coordinate3D(1, 2, 1)).getClass().getName() == "model.aircraft.Bomber");
+			assertEquals(b1, board3D.getCraft(new Coordinate3D(1, 2, 1)).getPosition());
 			assertNull(transportN.getPosition());
-			assertNull(board.getCraft(new Coordinate3D(1,0,1)));
+			assertNull(board3D.getCraft(new Coordinate3D(1,0,1)));
 		} catch (NextToAnotherCraftException | OccupiedCoordinateException e2) {
 			fail ("Error. Se esperaba OccupiedCoordinateException "
 					+ "pero se produjo la excepcion "+e2.getClass().getName());
 		} 
 	}
 	
-	
-	//TODO
 	/* Se añaden los Aircraft en el board tal como se indica en testAddCraftOk().
 	 * Comprueba para un Aicraft cualquiera del board que getCraft(Coordinate), en todas sus Coordinates, 
 	 * devuelve dicho Aircraft. Dispara en todas sus posiciones hundiéndolo y vuelve a comprobar que
@@ -284,8 +370,31 @@ public class Board3DPreTest {
 	@Test
 	public void testGetCraft() throws InvalidCoordinateException, CoordinateAlreadyHitException {
 		testAddCraftOk();
-		fail("Realiza el test");
+		Set<Coordinate> possicionsCraft = new HashSet<Coordinate> ();
+		possicionsCraft.add(new Coordinate3D(5, 0, 0));
+		possicionsCraft.add(new Coordinate3D(5, 1, 0));
+		possicionsCraft.add(new Coordinate3D(5, 2, 0));
+		possicionsCraft.add(new Coordinate3D(5, 3, 0));
+		possicionsCraft.add(new Coordinate3D(4, 2, 0));
+		possicionsCraft.add(new Coordinate3D(6, 2, 0));
 		
+		Craft craftAnt = board3D.getCraft(new Coordinate3D(5, 0, 0));
+		
+		assertEquals(fighter1S, craftAnt);
+		for(Coordinate it : possicionsCraft) {
+			assertSame(craftAnt, board3D.getCraft(it));
+			assertNotNull(craftAnt);
+			craftAnt = board3D.getCraft(it);
+		}
+		
+		for(Coordinate it : possicionsCraft) board3D.hit(it);
+		
+		craftAnt = board3D.getCraft(new Coordinate3D(5, 0, 0));
+		for(Coordinate it : possicionsCraft) {
+			assertSame(craftAnt, board3D.getCraft(it));
+			craftAnt = board3D.getCraft(it);
+		}
+		//fail("Realiza el test");
 	}
 
 	/* Se añaden los Aircraft en el board tal como se indica en testAddCraftOk().
@@ -296,12 +405,10 @@ public class Board3DPreTest {
 	public void testIsSeenHits() throws InvalidCoordinateException, CoordinateAlreadyHitException {
 		testAddCraftOk();
 		for (int i=2; i<7; i++) 
-			assertFalse(board.isSeen(new Coordinate3D(2,i,1)));
+			assertFalse(board3D.isSeen(new Coordinate3D(2, i, 1)));
 		shotsAtBomberZ1();
 		for (int i=2; i<7; i++) 
-			assertTrue(board.isSeen(new Coordinate3D(2,i,1)));
-		
-		
+			assertTrue(board3D.isSeen(new Coordinate3D(2, i, 1)));
 	}
 	
 	
@@ -311,23 +418,25 @@ public class Board3DPreTest {
 	 */
 	@Test
 	public void testGetNeighborhoodCraftCoordinate1() throws InvalidCoordinateException, NextToAnotherCraftException, OccupiedCoordinateException {
-		Board board = new Board3D(10);
-		Set<Coordinate> neighborhood = board.getNeighborhood(bomberE, new Coordinate3D(1,2,1));
+		Board board2D = new Board3D(10);
+		Set<Coordinate> neighborhood = board2D.getNeighborhood(bomberE, new Coordinate3D(1, 2, 1));
 		assertEquals(92, neighborhood.size());
-		neighborhood = board.getNeighborhood(fighter1S, new Coordinate3D(1,2,1));
+		neighborhood = board2D.getNeighborhood(fighter1S, new Coordinate3D(1, 2, 1));
 		assertEquals(66, neighborhood.size());
-		neighborhood = board.getNeighborhood(transportN, new Coordinate3D(1,2,1));
+		neighborhood = board2D.getNeighborhood(transportN, new Coordinate3D(1, 2, 1));
 		assertEquals(96, neighborhood.size());
 	}
-	
-	//TODO
 	/* Comprueba que poniendo distintos Aircrafts en otras posiciones limítrofes, incluso fuera del tablero, getNeigborhood devuelve
 	 * sets con un número de Coordinates correctas.
 	 * Ten en cuenta que las posiciones fuera del tablero no se deben añadir al set.
 	 */
 	@Test
 	public void testGetNeighborhoodCraftCoordinate2() throws InvalidCoordinateException, NextToAnotherCraftException, OccupiedCoordinateException {
-		fail("Realiza el test");
+		Craft tran = new Transport(Orientation.NORTH);
+		board3D.addCraft(tran, CoordinateFactory.createCoordinate(new int[] {0, 0, 0}));
+		System.out.println(board3D.show(true));
+		assertEquals("E1 en testGetNeighborhoodCraftCoordinate2", 49, board3D.getNeighborhood(tran).size());
+		//fail("Realiza el test");
 	}
 	
 	
@@ -338,45 +447,81 @@ public class Board3DPreTest {
 	@Test
 	public void testHit1() throws InvalidCoordinateException, CoordinateAlreadyHitException {
 		testAddCraftOk();
-		assertEquals(sboard00,board.show(false));
+		assertEquals(sboard00,board3D.show(false));
 		shotsIntoWater();
-		assertEquals(sboard01,board.show(true));
-		assertEquals(sboard02,board.show(false));
-		System.out.println(board.show(true));
-		System.out.println(board.show(false));
+		assertEquals(sboard01,board3D.show(true));
+		assertEquals(sboard02,board3D.show(false));
+		System.out.println(board3D.show(true));
+		System.out.println(board3D.show(false));
 	}
 	
-	//TODO
 	/* Añade los Aircraft en el board tal como se indica en testAddCraftOk().
 	 * Dispara sobre algunos de los Aircraft, destruyendo alguno; y comprueba que show(true) muestra los disparos 
-	 * realizados a los Aircraft y que show(false) también los muestra excepto los desruídos que muestra el Aircraft
+	 * realizados a los Aircraft y que show(false) también los muestra excepto los destruídos que muestra el Aircraft
 	 * y además marca como vistos sus coordenadas vecinas.
 	 */
 	@Test
-	public void testHit2()  {
+	public void testHit2() throws InvalidCoordinateException, CoordinateAlreadyHitException  {
 		testAddCraftOk();
-		fail("Realiza el test");
+		Set<Coordinate> possicionsCraft = new HashSet<Coordinate> ();
+		possicionsCraft.add(new Coordinate3D(5, 0, 0));
+		possicionsCraft.add(new Coordinate3D(5, 1, 0));
+		possicionsCraft.add(new Coordinate3D(5, 2, 0));
+		possicionsCraft.add(new Coordinate3D(5, 3, 0));
+		possicionsCraft.add(new Coordinate3D(4, 2, 0));
+		possicionsCraft.add(new Coordinate3D(6, 2, 0));
 		
+		for(Coordinate it : possicionsCraft) board3D.hit(it);
+		
+		shotsAtBomberZ1();
+		
+		assertEquals("E1 en testHit2", sboard03, board3D.show(false));
+		assertEquals("E2 en testHit2", sboard04, board3D.show(true));
+		
+		/*
+		 * Si peta ací, possiblement serà per una errata en el hit. Quan disparem a un avió, 
+		 * s'han de mostrar les possicions que hi ha al seu voltant. També estan al voltant d'ell les possicions que hi ha sobre i sota d'ell.
+		 */
 	}
 	
-	//TODO
 	/* Realiza disparos fuera del Board y comprueba que se lanza la excepción InvalidCoordinateException
 	 * 
 	 */
 	@Test
-	public void testHitOutOfBoard() {
-		
-		fail("Realiza el test");
+	public void testHitOutOfBoard() throws InvalidCoordinateException, CoordinateAlreadyHitException {
+		try {
+			board3D.hit(CoordinateFactory.createCoordinate(new int[] {TAM + 1, TAM + 1, TAM + 1}));
+			fail("Error: debería haber lanzado la excepción InvalidCoordinateException");
+		} catch (InvalidCoordinateException e) {
+			System.err.println(e.toString());
+		}
+		//fail("Realiza el test");
 	}
-	
-	//TODO
+
 	/* Realiza disparos repetidos a los Aircrafts y comprueba que se lanza la excepción CoordinateAlreadyHitException
 	 * 
 	 */
 	@Test
-	public void testCoodinateAlreadyHitOnBoard() {
+	public void testCoodinateAlreadyHitOnBoard() throws InvalidCoordinateException, CoordinateAlreadyHitException {
 		testAddCraftOk();
-		fail("Realiza el test");
+		Set<Coordinate> possicionsCraft = new HashSet<Coordinate> ();
+		possicionsCraft.add(new Coordinate3D(5, 0, 0));
+		possicionsCraft.add(new Coordinate3D(5, 1, 0));
+		possicionsCraft.add(new Coordinate3D(5, 2, 0));
+		possicionsCraft.add(new Coordinate3D(5, 3, 0));
+		possicionsCraft.add(new Coordinate3D(4, 2, 0));
+		possicionsCraft.add(new Coordinate3D(6, 2, 0));
+		
+		for(Coordinate it : possicionsCraft) board3D.hit(it);
+		
+		try {
+			for(Coordinate it : possicionsCraft) board3D.hit(it);
+			fail("No ha saltat la excepció");
+		} catch (CoordinateAlreadyHitException e) {
+			System.err.println(e.toString());
+		}
+		
+		//fail("Realiza el test");
 	}
 	
 	
@@ -388,16 +533,16 @@ public class Board3DPreTest {
 	void shotsAtBomberZ1() throws InvalidCoordinateException, CoordinateAlreadyHitException{
 		//Tocado
 		for (int i=2; i<7; i++) 
-			board.hit(new Coordinate3D(2,i,1));
+			board3D.hit(new Coordinate3D(2, i, 1));
 	}
 	
 	void shotsIntoWater() throws InvalidCoordinateException, CoordinateAlreadyHitException{
 		for (int i=0; i<7; i++) {
-			board.hit(new Coordinate3D(i,i,2));
-			board.hit(new Coordinate3D(i,i,0));
-			board.hit(new Coordinate3D(i,5,0));
-			board.hit(new Coordinate3D(0,i,3));
-			board.hit(new Coordinate3D(4,i,4));
+			board3D.hit(new Coordinate3D(i,i,2));
+			board3D.hit(new Coordinate3D(i,i,0));
+			board3D.hit(new Coordinate3D(i,5,0));
+			board3D.hit(new Coordinate3D(0,i,3));
+			board3D.hit(new Coordinate3D(4,i,4));
 		}
 	}
 	
