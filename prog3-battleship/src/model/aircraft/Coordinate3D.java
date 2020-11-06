@@ -51,7 +51,7 @@ public class Coordinate3D extends Coordinate{
 			for(int y = -1 ; y < 2 ; y++)
 				for(int z = -1 ; z < 2 ; z++)
 					if(x != 0 || y != 0 || z != 0)
-						coords.add(CoordinateFactory.createCoordinate(x, y, z));
+						coords.add(CoordinateFactory.createCoordinate(this.get(0)+x, this.get(1)+y, this.get(2)+z));
 		
 		return coords;
 	}
