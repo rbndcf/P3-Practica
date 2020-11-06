@@ -19,26 +19,28 @@ public class CoordinateFactoryPreTest {
 	public void setUp() throws Exception {
 	}
 
-	//TODO
 	/* Crea coordenadas correctas con el método createCoordinate y comprueba 
 	 * que se han creado bien
 	 */
 	@Test
 	public void testCreateCoordinateOk() {
-		fail ("Realiza el test createCoordinateOk");
+		Coordinate c2d = CoordinateFactory.createCoordinate(4, 5);
+		Coordinate c3d = CoordinateFactory.createCoordinate(3,4,5);
+		
+		assertTrue(c2d instanceof Coordinate2D);
+		assertTrue(c3d instanceof Coordinate3D);
 	}
 	
-	//TODO
 	/* Comprueba que en los distintos casos de creación de coordenadas incorrectas
 	 * createCoordinateException lanza la excepción IllegalArgument exception
 	 */
-	@Test
+	@Test(expected=IllegalArgumentException.class)
 	public void testCreateCoordinateException() {
 		try {
 		   CoordinateFactory.createCoordinate(-1);
 		   fail("Error: debió lanzarse la excepción IllegalArgumentException");
 		} catch (IllegalArgumentException e1) {
-			fail ("comprueba otro caso más");
+			CoordinateFactory.createCoordinate(5, 7, 8, 3);
 		}
 	}
 
