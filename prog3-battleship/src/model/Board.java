@@ -231,7 +231,7 @@ public abstract class Board {
 	}
 	
 	/**
-	 * @param s1 Barco del que queremos el neighborhood
+	 * @param craft Barco del que queremos el neighborhood
 	 * @return neighborhood
 	 * Recibe un barco sin Coordiangte y llama a neighborhood con el mismo barco pero usando como posición la del propio barco
 	 */

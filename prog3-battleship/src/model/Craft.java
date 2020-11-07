@@ -5,6 +5,13 @@ import model.exceptions.*;
 import model.ship.*;
 import model.aircraft.*;
 
+/**
+ * 
+ * @author Rubén Del Castillo Fuentes 48786827D
+ *
+ * Esta clase la utilizaremos como la antigua clase Ship, para poder crear Crafts y controlar tanto su nombre, simbolo y orientación, además de su
+ * posición, además esta clase será refinada por sus dos subclases Ship y Aircraft, los cuales manejaran el shape y demás.
+ */
 public abstract class Craft {
 	/**
 	 * @param BOUNDING_SQUARE_SIZE tamaño de la caja de colisiones del ship
@@ -155,12 +162,12 @@ public abstract class Craft {
 	/**
 	 * @param c Coordenada absoluta
 	 * @return true si es hit, false si no
-	 * @throws CoordinateAlreadyHitException si la posicion del barco ha sido disparada anteriormente
 	 * @throws NullPointerException si el barco no ha sido posicionado
+	 * @throws CoordinateAlreadyHitException cuando la coordenada ya ha sido alcanzada anteriormente
 	 * Recibe una coordenada absoluta, si en ella se encuentra un barco que no ha sido alcanzado antes en esa posicion, 
 	 * actualiza su estado y devuelve true, si ya fue alcanzado o no hay barco devuelve false.
 	 */
-	public boolean hit(Coordinate c) throws CoordinateAlreadyHitException {
+	public boolean hit(Coordinate c) throws CoordinateAlreadyHitException{
 		Objects.requireNonNull(this.getPosition());
 		
 		Set<Coordinate> Coords = new HashSet<Coordinate>();
