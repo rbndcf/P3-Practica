@@ -9,7 +9,7 @@ import model.*;
  * una posición que no esté dentro de este.
  */
 @SuppressWarnings("serial")
-public class InvalidCoordinateException extends BattleshipException{
+public class InvalidCoordinateException extends CoordinateException{
 	/**
 	 * @param c Coordenada que causa el problema
 	 * Recibe la coordenada que causa el problema y la guarda en BattleshipException
