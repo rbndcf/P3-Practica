@@ -9,7 +9,7 @@ import model.*;
  * previamente ocupada por otra nave
  */
 @SuppressWarnings("serial")
-public class OccupiedCoordinateException extends BattleshipException{
+public class OccupiedCoordinateException extends CoordinateException{
 	/**
 	 * @param c Coordenada que causa el problema
 	 * Recibe la coordenada que causa el problema y la guarda en BattleshipException
