@@ -4,7 +4,7 @@ import model.aircraft.*;
 import model.ship.*;
 
 public class CraftFactory {
-	Craft createCraft(String type, Orientation orientation) {
+	public static Craft createCraft(String type, Orientation orientation) {
 		switch(type) {
 			case "Bomber": 		return new Bomber(orientation);
 			case "Fighter":		return new Fighter(orientation);
