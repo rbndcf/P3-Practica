@@ -9,7 +9,7 @@ import model.*;
  * disparada anteriormente.
  */
 @SuppressWarnings("serial")
-public class CoordinateAlreadyHitException extends BattleshipException {
+public class CoordinateAlreadyHitException extends CoordinateException {
 	/**
 	 * @param c Coordenada que causa el problema
 	 * Recibe la coordenada que causa el problema y la guarda en BattleshipException
