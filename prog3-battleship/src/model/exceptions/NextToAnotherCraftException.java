@@ -9,7 +9,7 @@ import model.*;
  * al lado de una nave ya colocada
  */
 @SuppressWarnings("serial")
-public class NextToAnotherCraftException extends BattleshipException{
+public class NextToAnotherCraftException extends CoordinateException{
 	/**
 	 * @param c Coordenada que causa el problema
 	 * Recibe la coordenada que causa el problema y la guarda en BattleshipException
