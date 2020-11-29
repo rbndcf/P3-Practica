@@ -2,6 +2,7 @@ package model.exceptions.io;
 
 import model.exceptions.*;
 
+@SuppressWarnings("serial")
 public class BattleshipIOException extends BattleshipException{
 	private String message;
 	
