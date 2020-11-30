@@ -14,10 +14,6 @@ import model.aircraft.*;
  */
 public abstract class Craft {
 	/**
-	 * @param BOUNDING_SQUARE_SIZE tamaño de la caja de colisiones del ship
-	 */
-	private static final int BOUNDING_SQUARE_SIZE = 5;
-	/**
 	 * @param HIT_VALUE valor cuando el ship es alcanzado
 	 */
 	private static final int HIT_VALUE = -1;
@@ -46,6 +42,11 @@ public abstract class Craft {
 	 * @param shape distintas formas que puede tener el barco
 	 */
 	protected int shape[][];
+	
+	/**
+	 * @param BOUNDING_SQUARE_SIZE tamaño de la caja de colisiones del ship
+	 */
+	public static final int BOUNDING_SQUARE_SIZE = 5;
 
 	/**
 	 * @param o Orientación
