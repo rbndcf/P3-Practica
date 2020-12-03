@@ -1,5 +1,7 @@
 package model.io;
 
+import model.*;
+
 public class VisualiserFactory {
 	public IVisualiser createVisualiser(String n, Game g) {
 		if(n == "Console")
