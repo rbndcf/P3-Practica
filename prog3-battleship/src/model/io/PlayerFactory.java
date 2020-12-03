@@ -1,11 +1,18 @@
 package model.io;
 
 import java.io.*;
+import model.exceptions.io.*;
 
 public class PlayerFactory {
-	public IPlayer createPlayer(String name, String s) {
+	public static IPlayer createPlayer(String name, String s) throws BattleshipIOException {
 		if(s.contains(".") || s.contains("\\") || s.contains("/")){
-			return new PlayerFile(name, new BufferedReader(new StringReader(s)));
+			try {
+				BufferedReader br = new BufferedReader(new StringReader(s));
+				return new PlayerFile(name, br);
+			}
+			catch(Exception e) {
+				throw new BattleshipIOException("No se ha podido leer el fichero " + s);
+			}
 		}
 		
 		else if(isLong(s)) {
@@ -15,7 +22,7 @@ public class PlayerFactory {
 		else return null;
 	}
 	
-	private boolean isLong(String s) {
+	private static boolean isLong(String s) {
 		try {
 			Long.parseLong(s);
 			return true;
