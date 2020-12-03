@@ -152,7 +152,7 @@ public abstract class Board {
 	 */
 	public CellStatus hit(Coordinate c) throws InvalidCoordinateException, CoordinateAlreadyHitException{
 		if(this.checkCoordinate(c)) {
-			seen.add(c);
+			seen.add(c.copy());
 			
 			if(board.containsKey(c)) {
 				
@@ -166,7 +166,7 @@ public abstract class Board {
 						destroyedCrafts++;
 						
 						for(Coordinate c1 : this.getNeighborhood(board.get(c)))
-							seen.add(c1);
+							seen.add(c1.copy());
 						
 						return CellStatus.DESTROYED;
 					}
