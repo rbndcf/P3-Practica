@@ -3,7 +3,7 @@ package model.io;
 import model.*;
 
 public class VisualiserFactory {
-	public IVisualiser createVisualiser(String n, Game g) {
+	public static IVisualiser createVisualiser(String n, Game g) {
 		if(n == "Console")
 			return new VisualiserConsole(g);
 		else if(n == "GIF")
