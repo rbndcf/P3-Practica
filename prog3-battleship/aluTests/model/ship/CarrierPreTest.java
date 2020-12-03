@@ -3,7 +3,6 @@ package model.ship;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.Coordinate;
+import model.CoordinateFactory;
 import model.Orientation;
 
 public class CarrierPreTest {
@@ -98,16 +98,15 @@ public class CarrierPreTest {
 				assertEquals(shape[i][j],shapeAux[i][j]);
 	}
 
-	//TODO
 	/* Comprueba que las orientaciones de los Carrier creados en el setUp son 
 	 * correctas.
 	 */
 	@Test
 	public void testGetOrientation() {
-		assertEquals(Orientation.NORTH, carrierN.getOrientation());
-		assertEquals(Orientation.EAST, carrierE.getOrientation());
-		assertEquals(Orientation.SOUTH, carrierS.getOrientation());
-		assertEquals(Orientation.WEST, carrierW.getOrientation());
+		assertEquals("E1 en testGetOrientation", Orientation.NORTH, carrierN.getOrientation());
+		assertEquals("E2 en testGetOrientation", Orientation.EAST, carrierE.getOrientation());
+		assertEquals("E3 en testGetOrientation", Orientation.SOUTH, carrierS.getOrientation());
+		assertEquals("E4 en testGetOrientation", Orientation.WEST, carrierW.getOrientation());
 	}
 
 	@Test
@@ -115,20 +114,15 @@ public class CarrierPreTest {
 		assertEquals('®', carrierN.getSymbol());
 	}
 
-	//TODO
 	/* Comprueba que las posiciones absolutas para la orientación NORTH a partir de
 	 * una Coordinate son correctas.
 	 */
 	@Test
 	public void testGetAbsolutePositionsNorth() {
-		Set<Coordinate> absPos = new HashSet<Coordinate>();
-		absPos = carrierN.getAbsolutePositions(new Coordinate2D(0,0));
-
-		assertTrue(absPos.contains(new Coordinate2D(2,0)));
-		assertTrue(absPos.contains(new Coordinate2D(2,1)));
-		assertTrue(absPos.contains(new Coordinate2D(2,2)));
-		assertTrue(absPos.contains(new Coordinate2D(2,3)));
-		assertTrue(absPos.contains(new Coordinate2D(2,4)));
+		Coordinate c1 = CoordinateFactory.createCoordinate(13, 27);
+		Set<Coordinate> pos = carrierN.getAbsolutePositions(c1);
+		for (Coordinate c : north)
+			assertTrue("Valores Absolutos posiciones c1+" + c, pos.contains(c.add(c1)));	
 	}
 		
 
@@ -138,10 +132,10 @@ public class CarrierPreTest {
 	 */
 	@Test
 	public void testToString() {
-		assertEquals(carrierN.toString(), sNorth);
-		assertEquals(carrierE.toString(), sEast);
-		assertEquals(carrierS.toString(), sSouth);
-		assertEquals(carrierW.toString(), sWest);
+		assertEquals(sNorth, carrierN.toString());
+		assertEquals(sSouth, carrierS.toString());
+		assertEquals(sEast, carrierE.toString());
+		assertEquals(sWest, carrierW.toString());
 	}
 
 }

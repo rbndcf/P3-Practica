@@ -1,5 +1,7 @@
 package model;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,23 +17,38 @@ public class CraftPreTest {
 		carrier = new Carrier(Orientation.EAST);
 		bomber = new Bomber(Orientation.SOUTH);
 	}
-
-	/* Realiza los tests en los que se comprueba el lanzamiento de
-	 * la excepción NullPointerException en los métodos getShapeIndex,
-	 * getAbsolutePositions(Coordinate) y getAbsolutePositions
-	 */
-	@Test(expected=NullPointerException.class)
-	public void nullPointerExceptionGetShapeAbsoluteTest() {
+	
+	@Test
+	public void testGetShapeIndex() {
 		try {
-			carrier.getAbsolutePositions(null);
-		}
-		catch(NullPointerException e1) {
-			try {
-				carrier.getAbsolutePositions();
-			}
-			catch(NullPointerException e2) {
-				carrier.getShapeIndex(null);
-			}
+			carrier.getShapeIndex(null);
+		} catch (NullPointerException e) {
+			System.err.println(e.toString());
+		} catch (Exception e) {
+			fail("Excepcio incorrecta");
 		}
 	}
+	
+	@Test
+	public void testGetAbsolutePositionsCoor() {
+		try {
+			carrier.getAbsolutePositions(null);
+		} catch (NullPointerException e) {
+			System.err.println(e.toString());
+		} catch (Exception e) {
+			fail("Excepcio incorrecta");
+		}
+	}
+	
+	@Test
+	public void testGetAbsolutePositions() {
+		try {
+			carrier.getAbsolutePositions();
+		} catch (NullPointerException e) {
+			System.err.println(e.toString());
+		} catch (Exception e) {
+			fail("Excepcio incorrecta");
+		}
+	}
+
 }

@@ -3,7 +3,6 @@ package model.ship;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.Coordinate;
+import model.CoordinateFactory;
 import model.Orientation;
 
 public class DestroyerPreTest {
@@ -102,16 +102,15 @@ public class DestroyerPreTest {
 				assertEquals(shape[i][j],shapeAux[i][j]);
 	}
 
-	//TODO
 	/* Comprueba que las orientaciones de los Destroyer creados en el setUp son 
 	 * correctas.
 	 */
 	@Test
 	public void testGetOrientation() {
-		assertEquals(Orientation.NORTH, destroyerN.getOrientation());
-		assertEquals(Orientation.EAST, destroyerE.getOrientation());
-		assertEquals(Orientation.SOUTH, destroyerS.getOrientation());
-		assertEquals(Orientation.WEST, destroyerW.getOrientation());
+		assertEquals("E1 en testGetOrientation", Orientation.NORTH, destroyerN.getOrientation());
+		assertEquals("E2 en testGetOrientation", Orientation.EAST, destroyerE.getOrientation());
+		assertEquals("E3 en testGetOrientation", Orientation.SOUTH, destroyerS.getOrientation());
+		assertEquals("E4 en testGetOrientation", Orientation.WEST, destroyerW.getOrientation());
 	}
 
 	@Test
@@ -119,30 +118,26 @@ public class DestroyerPreTest {
 		assertEquals('Ω', destroyerN.getSymbol());
 	}
 
-	//TODO
 	/* Comprueba que las posiciones absolutas para la orientación NORTH a partir de
 	 * una Coordinate son correctas.
 	 */
 	@Test
 	public void testGetAbsolutePositionsNorth() {
-		Set<Coordinate> absPos = new HashSet<Coordinate>();
-		absPos = destroyerN.getAbsolutePositions(new Coordinate2D(0,0));
-		
-		assertTrue(absPos.contains(new Coordinate2D(2,1)));
-		assertTrue(absPos.contains(new Coordinate2D(2,2)));
+		Coordinate c1 = CoordinateFactory.createCoordinate(13, 27);
+		Set<Coordinate> pos = destroyerN.getAbsolutePositions(c1);
+		for (Coordinate c : north)
+			assertTrue("Valores Absolutos posiciones c1+" + c, pos.contains(c.add(c1)));
 	}
 
-
-	//TODO
 	/* Comprueba que toString() para cada Destroyer creado en el setUp coincide con 
 	 * los correspondientes String creados en setUpBeforeClass()
 	 */
 	@Test
 	public void testToString() {
-		assertEquals(destroyerN.toString(), sNorth);
-		assertEquals(destroyerE.toString(), sEast);
-		assertEquals(destroyerS.toString(), sSouth);
-		assertEquals(destroyerW.toString(), sWest);
+		assertEquals(sNorth, destroyerN.toString());
+		assertEquals(sSouth, destroyerS.toString());
+		assertEquals(sEast, destroyerE.toString());
+		assertEquals(sWest, destroyerW.toString());
 	}
 
 }

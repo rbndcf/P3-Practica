@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Coordinate;
+import model.ship.Coordinate2D;
 
 public class Coordinate3DPreTest{
 	
@@ -26,7 +28,7 @@ public class Coordinate3DPreTest{
 		lcoor = new ArrayList<Coordinate>();
 		//Se crean las Coordinate (0,0,-70),(0,-70, -2), (-70,-2,20),(-2,20,75);
 				for (int i=0; i<DIM-2; i++) {
-					lcoor.add(new Coordinate3D(vcoor[i],vcoor[i+1],vcoor[i+2]));
+					lcoor.add(new Coordinate3D(vcoor[i], vcoor[i+1], vcoor[i+2]));
 				}
 		
 	}
@@ -35,7 +37,11 @@ public class Coordinate3DPreTest{
 	@Test
 	public void testHashCode() {
 		Coordinate c1 = lcoor.get(2);
-		Coordinate c2 = new Coordinate3D(c1);
+		Coordinate c2 = c1.copy();
+		/* Se comprueba que cuando dos Coordinate son iguales, el resultado 
+		 * del hash ha de ser el mismo.
+		 * Si los Coordinate son distintos el hash puede ser igual o no.
+		 */
 		assertEquals (c1,c2);
 		assertEquals (c1.hashCode(), c2.hashCode());
 	}
@@ -48,9 +54,9 @@ public class Coordinate3DPreTest{
 	public void testCoordinateConstructor() {
 		int j=0;
 		for (int i=0; i<DIM-2; i++) {			
-			assertEquals("x",vcoor[i],lcoor.get(j).get(0));
-			assertEquals("y",vcoor[i+1],lcoor.get(j).get(1));
-			assertEquals("z",vcoor[i+2],lcoor.get(j).get(2));
+			assertEquals("x", vcoor[i], lcoor.get(j).get(0));
+			assertEquals("y", vcoor[i+1], lcoor.get(j).get(1));
+			assertEquals("z", vcoor[i+2], lcoor.get(j).get(2));
 			j++;
 		}
 	}
@@ -63,10 +69,9 @@ public class Coordinate3DPreTest{
 	public void testCoordinateConstructorCopy() {
 		Coordinate ccopy;
 		for (Coordinate caux: lcoor) {
-			ccopy= new Coordinate3D((Coordinate3D)caux);
-			assertEquals(caux.get(0), ccopy.get(0));
-			assertEquals(caux.get(1), ccopy.get(1));	
-			assertEquals(caux.get(2), ccopy.get(2));
+			ccopy= caux.copy();
+			assertEquals(caux.get(0),ccopy.get(0));
+			assertEquals(caux.get(1),ccopy.get(1));	
 		}
 	}
 
@@ -83,13 +88,14 @@ public class Coordinate3DPreTest{
 	public void testGetSet() {
 		Coordinate3DAux c = new Coordinate3DAux((Coordinate3D)lcoor.get(2));
 		assertEquals("x==-70", -70, c.get(0));
-		assertEquals("y==-2", -2, c.get(1));
-		assertEquals("z==20", 20, c.get(2));
+		assertEquals("x==-2", -2, c.get(1));
+		assertEquals("x==20", 20, c.get(2));
 		
-		c.set(0, 33); c.set(1,-11); c.set(2,14);
+		
+		c.set(1, -11); c.set(0, 33); c.set(2, 25);
 		assertEquals("x==33", 33, c.get(0));
-		assertEquals("y==-11", -11, c.get(1));
-		assertEquals("z==14", 14, c.get(2));
+		assertEquals("x==-11", -11, c.get(1));
+		assertEquals("x==25", 25, c.get(2));
 	}
 
 	/* Se suman las Coordinate creadas en el setUp() y se comprueba, conforme 
@@ -101,21 +107,18 @@ public class Coordinate3DPreTest{
 	public void testAdd() {
 		Coordinate caux1 = lcoor.get(0);
 		Coordinate caux2;
-	
+		
 		int sumx = caux1.get(0);
 		int sumy = caux1.get(1);
-		int sumz = caux1.get(2);
 		for (int i=0; i<DIM-3; i++) {	
-			caux2 = caux1;
-			caux1 = caux1.add(lcoor.get(i+1));	  
-			sumx += (vcoor[i+1]);
-			sumy += (vcoor[i+2]);
-			sumz += (vcoor[i+3]);
-	   
-			assertEquals(sumx,caux1.get(0)); 
-			assertEquals(sumy,caux1.get(1));
-			assertEquals(sumz,caux1.get(2));
-			assertNotSame(caux2, caux1);
+		   caux2 = caux1;
+		   caux1 = caux1.add(lcoor.get(i+1));	  
+		   sumx += (vcoor[i+1]);
+		   sumy += (vcoor[i+2]);
+		   
+		   assertEquals(sumx,caux1.get(0)); 
+		   assertEquals(sumy,caux1.get(1));
+		   assertNotSame(caux2, caux1);
 		}
 	}
 
@@ -128,33 +131,30 @@ public class Coordinate3DPreTest{
 	public void testSubtract() {
 		Coordinate caux1 = lcoor.get(0);
 		Coordinate caux2;
-		
 		int subx = caux1.get(0);
 		int suby = caux1.get(1);
-		int subz = caux1.get(2);
-		
 		for (int i=0; i<DIM-3; i++) {
-			caux2 = caux1;
-			caux1 = caux1.subtract(lcoor.get(i+1));
-			subx -= (vcoor[i+1]);
-			suby -= (vcoor[i+2]);
-			subz -= (vcoor[i+3]);
-			assertEquals(subx,caux1.get(0)); 
-			assertEquals(suby,caux1.get(1));
-			assertEquals(subz,caux1.get(2));
-			assertNotSame(caux2, caux1);
+		   caux2 = caux1;
+		   caux1 = caux1.subtract(lcoor.get(i+1));
+		   subx -= (vcoor[i+1]);
+		   suby -= (vcoor[i+2]);
+		   assertEquals(subx,caux1.get(0)); 
+		   assertEquals(suby,caux1.get(1));
+		   assertNotSame(caux2, caux1);
 		}
 	}
 	
 	/* Se comprueba, para el método toString(), que las Coordinate creadas en el setUp() 
 	 * tienen el formato correcto.
 	 */
+	//Se crean las Coordinate (0, 0, -70), (0, -70, -2), (-70, -2, 20), (-2, 20, 75);
 	@Test
 	public void testToString() {
-		assertEquals ("(0, 0, -70)",lcoor.get(0).toString());
-		assertEquals ("(0, -70, -2)",lcoor.get(1).toString());
-		assertEquals ("(-70, -2, 20)",lcoor.get(2).toString());
-		assertEquals ("(-2, 20, 75)",lcoor.get(3).toString());
+		assertEquals ("(0, 0, -70)", lcoor.get(0).toString());
+		assertEquals ("(0, -70, -2)", lcoor.get(1).toString());
+		assertEquals ("(-70, -2, 20)", lcoor.get(2).toString());
+		assertEquals ("(-2, 20, 75)", lcoor.get(3).toString());
+		
 	}
 	
 	/* Creamos copias de las Coordinates3D creadas en el setUp() y comprobamos que:
@@ -169,8 +169,7 @@ public class Coordinate3DPreTest{
 			ccopy= caux.copy();
 			assertNotSame(caux, ccopy);
 			assertEquals(caux.get(0),ccopy.get(0));
-			assertEquals(caux.get(1),ccopy.get(1));
-			assertEquals(caux.get(2),ccopy.get(2));
+			assertEquals(caux.get(1),ccopy.get(1));	
 		}
 	}
 
@@ -193,11 +192,11 @@ public class Coordinate3DPreTest{
 					else
 						assertTrue(setcoord.contains(new Coordinate3D(c.get(0)+i, c.get(1)+j, c.get(2)+k)));
 	}
-
-	//TODO
+	
 	/* Se toma una Coordinate3D y se comprueba todas las posibles condiciones bajo 
 	 * las cuales nuestra función equals() devuelve true o false
 	 */
+	//Se crean las Coordinate (0, 0, -70), (0, -70, -2), (-70, -2, 20), (-2, 20, 75);
 	@Test
 	public void testEqualsObject() {
 		Object obj = new String("(0, 0, -70)");
@@ -205,9 +204,9 @@ public class Coordinate3DPreTest{
 		assertFalse(c.equals(null));
 		assertFalse(c.equals(obj));
 		assertFalse(c.equals(lcoor.get(1)));
-		assertFalse(c.equals(new Coordinate3D(24, 0, 7)));
+		assertFalse(c.equals(new Coordinate3D(24, 0, 0)));
 		assertTrue (c.equals(c));
-		Coordinate d = new Coordinate3D(0,0,-70);
+		Coordinate d = new Coordinate3D(0, 0, -70);
 		assertTrue((c.equals(d)));
 	}
 	
@@ -230,7 +229,7 @@ public class Coordinate3DPreTest{
 		}
 		
 		public void set(int component, int value) {
-			super.set(component,value);
+			super.set(component, value);
 		}
 		
 		public int get(int component) {

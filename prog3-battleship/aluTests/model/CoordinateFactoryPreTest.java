@@ -10,6 +10,7 @@ import model.aircraft.Coordinate3D;
 import model.ship.Coordinate2D;
 
 public class CoordinateFactoryPreTest {
+	Coordinate coor2D, coor3D;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -17,6 +18,8 @@ public class CoordinateFactoryPreTest {
 
 	@Before
 	public void setUp() throws Exception {
+		coor2D = new Coordinate2D(3, 2);
+		coor3D = new Coordinate3D(3, 2, 1);
 	}
 
 	/* Crea coordenadas correctas con el método createCoordinate y comprueba 
@@ -24,23 +27,27 @@ public class CoordinateFactoryPreTest {
 	 */
 	@Test
 	public void testCreateCoordinateOk() {
-		Coordinate c2d = CoordinateFactory.createCoordinate(4, 5);
-		Coordinate c3d = CoordinateFactory.createCoordinate(3,4,5);
-		
-		assertTrue(c2d instanceof Coordinate2D);
-		assertTrue(c3d instanceof Coordinate3D);
+		assertEquals("Error 1 en testCreateCoordinateOk", coor2D, CoordinateFactory.createCoordinate(new int[] {3, 2}));
+		assertEquals("Error 2 en testCreateCoordinateOk", coor3D, CoordinateFactory.createCoordinate(new int[] {3, 2, 1}));
 	}
 	
 	/* Comprueba que en los distintos casos de creación de coordenadas incorrectas
 	 * createCoordinateException lanza la excepción IllegalArgument exception
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void testCreateCoordinateException() {
 		try {
-		   CoordinateFactory.createCoordinate(-1);
-		   fail("Error: debió lanzarse la excepción IllegalArgumentException");
+			CoordinateFactory.createCoordinate(-1);
+			fail("Error: debió lanzarse la excepción IllegalArgumentException");
 		} catch (IllegalArgumentException e1) {
-			CoordinateFactory.createCoordinate(5, 7, 8, 3);
+			System.err.println(e1.toString());
+		}
+		
+		try {
+			CoordinateFactory.createCoordinate(new int[] {0, 0, 0, 0, 0});
+			fail("Error: debió lanzarse la excepción IllegalArgumentException");
+		} catch (IllegalArgumentException e2) {
+			System.err.println(e2.toString());
 		}
 	}
 

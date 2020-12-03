@@ -119,6 +119,7 @@ public class BomberPreTest {
 		assertEquals("Error 2 en testGetOrientation", Orientation.EAST, bomberE.getOrientation());
 		assertEquals("Error 3 en testGetOrientation", Orientation.SOUTH, bomberS.getOrientation());
 		assertEquals("Error 4 en testGetOrientation", Orientation.WEST, bomberW.getOrientation());
+		//fail("Realiza el test");
 	}
 
 	@Test
@@ -146,17 +147,18 @@ public class BomberPreTest {
 		assertEquals("Error 1 en testGetAbsolutePositionNorth", esperades00, bomberN.getAbsolutePositions(CoordinateFactory.createCoordinate(new int[] {0, 0, 5})));
 		
 		Set<Coordinate> esperades55 = new HashSet<Coordinate>();
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 6}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {5, 7}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {6, 7}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 7}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {8, 7}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {9, 7}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {5, 8}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 8}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {9, 8}));
-		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 9}));
-		assertEquals("Error 2 en testGetAbsolutePositionsNorth", esperades55, bomberN.getAbsolutePositions(CoordinateFactory.createCoordinate(new int[] {5, 5})));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 6, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {5, 7, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {6, 7, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 7, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {8, 7, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {9, 7, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {5, 8, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 8, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {9, 8, 10}));
+		esperades55.add(CoordinateFactory.createCoordinate(new int[] {7, 9, 10}));
+		assertEquals("Error 2 en testGetAbsolutePositionsNorth", esperades55, bomberN.getAbsolutePositions(CoordinateFactory.createCoordinate(new int[] {5, 5, 10})));
+		//fail("Realiza el test");
 	}
 		
 	/* Comprueba que toString() para cada Bomber creado en el setUp coincide con 
@@ -168,6 +170,7 @@ public class BomberPreTest {
 		assertEquals("E2 en testToString", sEast, bomberE.toString());
 		assertEquals("E3 en testToString", sSouth, bomberS.toString());
 		assertEquals("E4 en testToString", sWest, bomberW.toString());
+		//fail("Realiza el test");
 	}
 
 }
