@@ -16,7 +16,7 @@ public class PlayerFile implements IPlayer{
 	public PlayerFile(String name, BufferedReader reader) {
 		Objects.requireNonNull(reader);
 		
-		br = new BufferedReader(reader);
+		br = reader;
 		this.name = name;
 	}
 	
@@ -35,9 +35,9 @@ public class PlayerFile implements IPlayer{
 				Craft craft;
 				int[] coords;
 				
-				if(line == "endput" || line == "exit")
+				if(line.equals("endput") || line.equals("exit"))
 					break;
-				else if(tokens[0] != "put")
+				else if(!tokens[0].equals("put"))
 					throw new BattleshipIOException("Comando diferente de put, endput o exit");
 				
 				if(tokens.length == 5 || tokens.length == 6) {
@@ -81,16 +81,14 @@ public class PlayerFile implements IPlayer{
 		
 		try {
 			if((line = br.readLine()) != null) {
-				line = br.readLine();
-				
 				String[] tokens = line.split("\\s+");
 				
-				if(line == "exit")
+				if(line.equals("exit"))
 					return null;
-				else if(tokens[0] != "shoot")
+				else if(!tokens[0].equals("shoot"))
 					throw new BattleshipIOException("Comando diferente a shoot o exit");
 
-				if(tokens.length == 4 && tokens.length == 3) {
+				if(tokens.length == 4 || tokens.length == 3) {
 					int[] coords = new int[tokens.length - 1];
 					
 					for(int i = 1 ; i < tokens.length ; i++) {
