@@ -8,7 +8,7 @@ import model.exceptions.io.BattleshipIOException;
 
 public class PlayerFactoryPreTest {
 
-	final String DIRFILES = "mytest/model/files/";
+	final String DIRFILES = "aluTests/model/files/";
 	
 	/* Se crea un player a partir de un fichero y se comprueba que createPlayer ha creado
 	 * un PlayerFile.
