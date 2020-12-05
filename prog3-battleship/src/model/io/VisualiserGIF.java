@@ -43,7 +43,9 @@ public class VisualiserGIF implements IVisualiser{
 													break;
 						case Board.Board_SEPARATOR:	frame.printSquare(width, heigh, Color.ORANGE);
 													break;
-					}
+						default:					frame.printSquare(width, heigh, Color.RED);
+													break;
+					}		
 					switch(s2[heigh].charAt(width)) {
 						case Board.NOTSEEN_SYMBOL: 	frame.printSquare(width, heigh + h + 1, Color.LIGHT_GRAY);
 													break;
@@ -52,6 +54,8 @@ public class VisualiserGIF implements IVisualiser{
 						case Board.HIT_SYMBOL:		frame.printSquare(width, heigh + h + 1, Color.RED);
 													break;
 						case Board.Board_SEPARATOR:	frame.printSquare(width, heigh + h + 1, Color.ORANGE);
+													break;
+						default:					frame.printSquare(width, heigh + h + 1, Color.RED);
 													break;
 					}
 				}
