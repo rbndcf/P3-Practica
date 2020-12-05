@@ -24,7 +24,7 @@ public class VisualiserGIF implements IVisualiser{
 	//TODO
 	public void show() {
 		String[] s1 = game.getBoard1().show(false).split("\n");
-		String[] s2 = game.getBoard2().show(false).split("\\s+");
+		String[] s2 = game.getBoard2().show(false).split("\n");
 		
 		h = s1.length;
 		w =	s1[0].length();
@@ -44,7 +44,6 @@ public class VisualiserGIF implements IVisualiser{
 						case Board.Board_SEPARATOR:	frame.printSquare(width, heigh, Color.ORANGE);
 													break;
 					}
-					
 					switch(s2[heigh].charAt(width)) {
 						case Board.NOTSEEN_SYMBOL: 	frame.printSquare(width, heigh + h + 1, Color.LIGHT_GRAY);
 													break;
