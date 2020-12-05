@@ -1,0 +1,6 @@
+put Battleship NORTH 0 0
+asdfasdf
+shoot
+shoot 1
+shoot 1 2 3 4
+exit
