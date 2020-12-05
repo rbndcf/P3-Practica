@@ -6,8 +6,14 @@ import model.exceptions.io.*;
 public class PlayerFactory {
 	public static IPlayer createPlayer(String name, String s) throws BattleshipIOException {
 		if(s.contains(".") || s.contains("\\") || s.contains("/")){
-				BufferedReader br = new BufferedReader(new StringReader(s));
-				return new PlayerFile(name, br);
+			BufferedReader br;
+			try {
+				br = new BufferedReader(new FileReader(s));
+				return new PlayerFile(name, br);	
+			}
+			catch(FileNotFoundException e) {
+				throw new BattleshipIOException("El fichero " + s + " no existe");
+			}
 		}
 		
 		else if(isLong(s)) {
