@@ -150,31 +150,30 @@ public class Game {
 		StringBuilder sb = new StringBuilder();
 		
 		if(!this.gameStarted)
-			return("=== GAME NOT STARTED ===");
-		else if(this.gameEnded()) {
-			sb.append("=== GAME ENDED ===");
+			sb.append("=== GAME NOT STARTED ===\n");
+		else if(this.gameEnded())
+			sb.append("=== GAME ENDED ===\n");
+		else
+			sb.append("=== ONGOING GAME ===\n");
 			
+		sb.append("==================================\n");
+		sb.append(player1.getName() + "\n");
+		sb.append("==================================\n");
+		sb.append(board1.show(false) + "\n");
+		sb.append("==================================\n");
+		sb.append(player2.getName() + "\n");
+		sb.append("==================================\n");
+		sb.append(board2.show(false) + "\n");
+		sb.append("==================================\n");
+		sb.append("Number of shots: " + this.shootCounter + "\n");
+		
+		if(this.gameEnded()) {
 			if(board1.areAllCraftsDestroyed())
 				sb.append(player2.getName() + " wins\n");
 			else if(board2.areAllCraftsDestroyed())
 				sb.append(player1.getName() + " wins\n");
-			
-			return sb.toString();
 		}
-		else {
-			sb.append("=== ONGOING GAME ===\n");
-			sb.append("==================================\n");
-			sb.append(player1.getName());
-			sb.append("==================================\n");
-			sb.append(board1.toString());
-			sb.append("==================================\n");
-			sb.append(player2.getName());
-			sb.append("==================================\n");
-			sb.append(board2.toString());
-			sb.append("==================================\n");
-			sb.append("Number of shots: " + this.shootCounter);
-			
-			return sb.toString();
-		}
+		
+		return sb.toString();
 	}
 }
