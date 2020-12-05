@@ -23,50 +23,48 @@ public class VisualiserGIF implements IVisualiser{
 	
 	//TODO
 	public void show() {
-		String s1 = game.getBoard1().show(false);
-		String s2 = game.getBoard2().show(false);
+		String[] s1 = game.getBoard1().show(false).split("\n");
+		String[] s2 = game.getBoard2().show(false).split("\\s+");
 		
-		h = s1.length() / game.getBoard1().getSize();
-		w = s1.length() % game.getBoard1().getSize();
+		h = s1.length;
+		w =	s1[0].length();
 		
 		FrameGIF frame = new FrameGIF(w, h*2+1);
 		
-		for(int row = 0 ; row < h*2+1 ; row++) {
-			for(int column = 0 ; column < w ; column++) {
-				try {
-					if(row < h) {
-						switch(s1.charAt(row+column)){
-							case Board.NOTSEEN_SYMBOL: 	frame.printSquare(column, row, Color.LIGHT_GRAY);
-														break;
-							case Board.WATER_SYMBOL:	frame.printSquare(column, row, Color.BLUE);
-														break;
-							case Board.HIT_SYMBOL:	frame.printSquare(column, row, Color.RED);
+		try {
+			for(int heigh = 0 ; heigh < h ; heigh ++) {
+				for(int width = 0 ; width < w ; width++) {
+					switch(s1[heigh].charAt(width)) {
+						case Board.NOTSEEN_SYMBOL: 	frame.printSquare(width, heigh, Color.LIGHT_GRAY);
 													break;
-							case Board.Board_SEPARATOR:	frame.printSquare(column,  row, Color.YELLOW);
-														break;
-						}
+						case Board.WATER_SYMBOL:	frame.printSquare(width, heigh, Color.BLUE);
+													break;
+						case Board.HIT_SYMBOL:		frame.printSquare(width, heigh, Color.RED);
+													break;
+						case Board.Board_SEPARATOR:	frame.printSquare(width, heigh, Color.ORANGE);
+													break;
 					}
 					
-					else if(row == h)
-						frame.printSquare(column, row, Color.DARK_GRAY);
-					
-					else
-						switch(s2.charAt((row+column)-(h+1))){
-							case Board.NOTSEEN_SYMBOL: 	frame.printSquare(column, row, Color.LIGHT_GRAY);
-														break;
-							case Board.WATER_SYMBOL:	frame.printSquare(column, row, Color.BLUE);
-														break;
-							case Board.HIT_SYMBOL:	frame.printSquare(column, row, Color.RED);
+					switch(s2[heigh].charAt(width)) {
+						case Board.NOTSEEN_SYMBOL: 	frame.printSquare(width, heigh + h + 1, Color.LIGHT_GRAY);
 													break;
-							case Board.Board_SEPARATOR:	frame.printSquare(column,  row, Color.YELLOW);
-														break;
-						}
-					agif.addFrame(frame);
-				}
-				catch(BattleshipIOException e) {
-					throw new RuntimeException();
+						case Board.WATER_SYMBOL:	frame.printSquare(width, heigh + h + 1, Color.BLUE);
+													break;
+						case Board.HIT_SYMBOL:		frame.printSquare(width, heigh + h + 1, Color.RED);
+													break;
+						case Board.Board_SEPARATOR:	frame.printSquare(width, heigh + h + 1, Color.ORANGE);
+													break;
+					}
 				}
 			}
+			
+			for(int width = 0 ; width < w ; width++)
+				frame.printSquare(width, h, Color.DARK_GRAY);
+			
+			agif.addFrame(frame);
+		}
+		catch(BattleshipIOException e) {
+			throw new RuntimeException();
 		}
 	}
 	
