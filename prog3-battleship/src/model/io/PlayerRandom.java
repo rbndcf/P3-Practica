@@ -6,6 +6,7 @@ import model.*;
 import model.ship.*;
 import model.exceptions.CoordinateAlreadyHitException;
 import model.exceptions.InvalidCoordinateException;
+import model.aircraft.*;
 
 public class PlayerRandom implements IPlayer{
 	private Random random;
@@ -21,85 +22,28 @@ public class PlayerRandom implements IPlayer{
 	}
 	
 	public void putCrafts(Board b) {
-		Craft[] crafts;
+		Craft battleship = CraftFactory.createCraft("Battleship", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
+		this.setRandomPosition(battleship, b);
 		
-		if(b instanceof Board2D) {
-			crafts = new Craft[4];
+		Craft carrier = CraftFactory.createCraft("Carrier", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
+		this.setRandomPosition(carrier, b);
 
-			crafts[0] = CraftFactory.createCraft("Battleship", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			crafts[1] = CraftFactory.createCraft("Carrier", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			crafts[2] = CraftFactory.createCraft("Cruiser", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			crafts[3] = CraftFactory.createCraft("Destroyer", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-		}
-		
-		else {
-			crafts = new Craft[7];
+		Craft cruiser = CraftFactory.createCraft("Cruiser", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
+		this.setRandomPosition(cruiser, b);
 
-			crafts[0] = CraftFactory.createCraft("Battleship", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			crafts[1] = CraftFactory.createCraft("Carrier", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			crafts[2] = CraftFactory.createCraft("Cruiser", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			crafts[3] = CraftFactory.createCraft("Destroyer", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			
-			crafts[4] = CraftFactory.createCraft("Bomber", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			crafts[5] = CraftFactory.createCraft("Fighter", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			crafts[6] = CraftFactory.createCraft("Transport", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-		}
+		Craft destroyer = CraftFactory.createCraft("Destroyer", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
+		this.setRandomPosition(destroyer, b);
 		
-		for(int i = 0 ; i < crafts.length ; i++) {
-			int z = 0;
-			
-			while(z < 100) {
-				try {
-					b.addCraft(crafts[i], genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					break;
-				}
-				catch(Exception e) {
-					z++;
-				}
-			}
-		}
-		
-		/*Craft battleship = CraftFactory.createCraft("Battleship", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-		Craft carrier = CraftFactory.createCraft("Carrier", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-		Craft cruiser = CraftFactory.createCraft("Cruiser", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-		Craft destroyer = CraftFactory.createCraft("Destroyer", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			
-		if(b instanceof Board2D) {
-			int i = 0;
-			while(i < 100) {
-				try {
-					b.addCraft(battleship, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					b.addCraft(carrier, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					b.addCraft(cruiser, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					b.addCraft(destroyer, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-				}
-				catch(Exception e) {
-					i++;
-				}
-			}
-		}
-		else {
+		if(b instanceof Board3D) {
 			Craft bomber = CraftFactory.createCraft("Bomber", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			Craft fighter = CraftFactory.createCraft("Fighter", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
-			Craft transport = CraftFactory.createCraft("Transport", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
+			this.setRandomPosition(bomber, b);
 			
-			int i = 0;
-			while(i < 100) {
-				try {
-					b.addCraft(battleship, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					b.addCraft(carrier, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					b.addCraft(cruiser, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					b.addCraft(destroyer, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-
-					b.addCraft(bomber, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					b.addCraft(fighter, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-					b.addCraft(transport, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
-				}
-				catch(Exception e) {
-					i++;
-				}
-			}
-		}*/
+			Craft fighter = CraftFactory.createCraft("Fighter", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
+			this.setRandomPosition(fighter, b);
+			
+			Craft transport = CraftFactory.createCraft("Transport", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
+			this.setRandomPosition(transport, b);
+		}
 	}
 	
 	public Coordinate nextShoot(Board b) throws InvalidCoordinateException, CoordinateAlreadyHitException {
@@ -117,5 +61,20 @@ public class PlayerRandom implements IPlayer{
 			return CoordinateFactory.createCoordinate(genRandomInt(0-offset, b.getSize()), genRandomInt(0-offset, b.getSize()));
 		else
 			return CoordinateFactory.createCoordinate(genRandomInt(0-offset, b.getSize()), genRandomInt(0-offset, b.getSize()), genRandomInt(0-offset, b.getSize()));
+	}
+	
+	//Función auxiliar//
+	private void setRandomPosition(Craft c, Board b) {
+		int z = 0;
+		
+		while(z < 100) {
+			try {
+				b.addCraft(c, genRandomCoordinate(b, Craft.BOUNDING_SQUARE_SIZE));
+				break;
+			}
+			catch(Exception e) {
+				z++;
+			}
+		}
 	}
 }
