@@ -2,10 +2,15 @@ package model.exceptions;
 
 import model.Coordinate;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ *
+ * Esta clase la utilizaremos como Excepción general para los problemas que ocurran relacionado con las coordenadas
+ */
 @SuppressWarnings("serial")
 public abstract class CoordinateException extends BattleshipException{
 	/**
-	 * @param coord Coordennada donde se guardará la coordenada que causa la excepción
+	 * @param coord Coordenada donde se guardará la coordenada que causa la excepción
 	 */
 	protected Coordinate coord;
 	
