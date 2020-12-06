@@ -95,7 +95,7 @@ public class PlayerRandom implements IPlayer{
 	
 	/**
 	 * @param b Tablero del que queremos la coordenada
-	 * @param offset
+	 * @param offset para crear coordenadas negativas
 	 * @return Coordenada (2D o 3D) aleatoria
 	 * Recibe un tablero del que se quiere una coordenada aleatoria, junto a un offset para poder colocar los barcos en el borde del tablero, y devuelve
 	 * una coordenada aleatoria

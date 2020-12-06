@@ -16,7 +16,7 @@ public interface IPlayer {
 	public String getName();
 	/**
 	 * @param b Board donde se van a colocar los barcos
-	 * @throws BattlehsipIOException cuando hay un problema con el fichero
+	 * @throws BattleshipIOException cuando ocurre una excepcion I/O
 	 * @throws InvalidCoordinateException cuando la coordenada no pertenece al tablero
 	 * @throws OccupiedCoordinateException cuando la coordenada ya está ocupada
 	 * @throws NextToAnotherCraftException cuando la coordenada se encuentra al lado de otro craft
@@ -24,7 +24,7 @@ public interface IPlayer {
 	public void putCrafts(Board b) throws BattleshipIOException, InvalidCoordinateException, OccupiedCoordinateException, NextToAnotherCraftException;
 	/**
 	 * @param b Board en el que se va a disparar
-	 * @throws BattleshipIOException cuando hay un problema con el fichero
+	 * @throws BattleshipIOException cuando ocurre una excepcion I/O
 	 * @throws InvalidCoordinateException cuando la coordenada no pertenece al tablero
 	 * @throws CoordinateAlreadyHitException cuando la coordenada ya ha sido alcanzada anteriormente
 	 * @return coordenada a la que se dispara

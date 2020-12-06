@@ -46,7 +46,7 @@ public class PlayerFile implements IPlayer{
 	
 	/**
 	 * @param b Board donde se van a colocar los barcos
-	 * @throws BattlehsipIOException cuando hay un problema con el fichero
+	 * @throws BattleshipIOException cuando ocurre una excepcion I/O
 	 * @throws InvalidCoordinateException cuando la coordenada no pertenece al tablero
 	 * @throws OccupiedCoordinateException cuando la coordenada ya está ocupada
 	 * @throws NextToAnotherCraftException cuando la coordenada se encuentra al lado de otro craft

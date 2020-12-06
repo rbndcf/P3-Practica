@@ -14,8 +14,14 @@ import model.exceptions.io.BattleshipIOException;
  * @author drizo
  */
 public class AnimatedGIF {
+	/**
+	 * @param gifImage imagen
+	 */
 	private GifImage gifImage; //GIF4J
 
+	/**
+	 * Constructor
+	 */
 	public AnimatedGIF() {
 		gifImage = new GifImage();
 		gifImage.setDefaultDelay(50);

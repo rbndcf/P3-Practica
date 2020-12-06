@@ -163,7 +163,6 @@ public abstract class Craft {
 	/**
 	 * @param c Coordenada absoluta
 	 * @return true si es hit, false si no
-	 * @throws NullPointerException si el barco no ha sido posicionado
 	 * @throws CoordinateAlreadyHitException cuando la coordenada ya ha sido alcanzada anteriormente
 	 * Recibe una coordenada absoluta, si en ella se encuentra un barco que no ha sido alcanzado antes en esa posicion, 
 	 * actualiza su estado y devuelve true, si ya fue alcanzado o no hay barco devuelve false.
