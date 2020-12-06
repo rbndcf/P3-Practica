@@ -106,7 +106,7 @@ public class Game {
 			try {
 				c = player2.nextShoot(board1);
 				if(!Objects.isNull(c)) {
-					nextToShoot = 2;
+					nextToShoot = 1;
 					shootCounter++;
 					
 					return true;
@@ -117,7 +117,7 @@ public class Game {
 				throw new RuntimeException();
 			}
 			catch(CoordinateAlreadyHitException e) {
-				nextToShoot = 2;
+				nextToShoot = 1;
 				shootCounter++;
 				
 				System.out.println("Action by " + player2.getName() + e.getMessage());
@@ -128,22 +128,18 @@ public class Game {
 	}
 	
 	public void playGame(IVisualiser visualiser) {
-		boolean go = true;
-		
 		this.start();
 		visualiser.show();
 		
-		do {
-			go = this.playNext();
-			
-			if(go)
+		while(!this.gameEnded()) {
+			if(this.playNext()) {
 				visualiser.show();
+			}
 			else {
 				visualiser.close();
 				break;
 			}
-				
-		}while(go);
+		}
 	}
 	
 	public String toString() {
@@ -165,13 +161,13 @@ public class Game {
 		sb.append("==================================\n");
 		sb.append(board2.show(false) + "\n");
 		sb.append("==================================\n");
-		sb.append("Number of shots: " + this.shootCounter + "\n");
+		sb.append("Number of shots: " + this.shootCounter);
 		
 		if(this.gameEnded()) {
 			if(board1.areAllCraftsDestroyed())
-				sb.append(player2.getName() + " wins\n");
+				sb.append("\n" + player2.getName() + " wins");
 			else if(board2.areAllCraftsDestroyed())
-				sb.append(player1.getName() + " wins\n");
+				sb.append("\n" + player1.getName() + " wins");
 		}
 		
 		return sb.toString();
