@@ -6,16 +6,50 @@ import model.io.*;
 import model.exceptions.*;
 import model.exceptions.io.*;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ * 
+ * Esta clase la utilizaremos para controlar las diferentes partes del juego, tanto su constructor como los getters, además del inicializador (start()), la
+ * función para saber si el juego a acabado, la siguiente jugada, para pasarlo a texto o la función para que el programa juegue (playGame()).
+ */
 public class Game {
+	/**
+	 * @param gameStarted estado del inicio de la partida
+	 */
 	private boolean gameStarted;
+	/**
+	 * @param nextToShoot jugador que debe disparar después
+	 */
 	private int nextToShoot;
+	/**
+	 * @param shootCounter cantidad de disparos realizados
+	 */
 	private int shootCounter;
 	
+	/**
+	 * @param player1 jugador 1
+	 */
 	private IPlayer player1;
+	/**
+	 * @param player2 jugador 2
+	 */
 	private IPlayer player2;
+	/**
+	 * @param board1 tablero del jugador 1
+	 */
 	private Board board1;
+	/**
+	 * @param board2 tablero del jugador 2
+	 */
 	private Board board2;
 	
+	/**
+	 * @param b1 tablero del jugador 1
+	 * @param b2 tablero del jugador 2
+	 * @param p1 jugador 1
+	 * @param p2 jugador 2
+	 * Constructor por parámetros
+	 */
 	public Game(Board b1, Board b2, IPlayer p1, IPlayer p2) {
 		Objects.requireNonNull(b1);
 		Objects.requireNonNull(b2);
@@ -30,14 +64,26 @@ public class Game {
 		gameStarted = false;
 	}
 	
+	/**
+	 * @return player1
+	 * Devuelve el jugador 1
+	 */
 	public IPlayer getPlayer1() {
 		return player1;
 	}
 	
+	/**
+	 * @return player2
+	 * Devuelve el jugador 2
+	 */
 	public IPlayer getPlayer2() {
 		return player2;
 	}
 	
+	/**
+	 * @return player1, player2 or null
+	 * Devuelve el ultimo jugador que ha disparado, o null si nadie ha disparado
+	 */
 	public IPlayer getPlayerLastShoot() {
 		if(nextToShoot == 0)
 			return null;
@@ -47,14 +93,25 @@ public class Game {
 			return player1;
 	}
 	
+	/**
+	 * @return board1
+	 * Devuelve el tablero del jugador 1
+	 */
 	public Board getBoard1() {
 		return board1;
 	}
 	
+	/**
+	 * @return board2
+	 * Devuelve el tablero del jugador 2
+	 */
 	public Board getBoard2() {
 		return board2;
 	}
 	
+	/**
+	 * Inicia la partida posicionando los barcos de cada jugador en su tablero, además de iniciar gameStarted, shootCounter y nextToShoot
+	 */
 	public void start() {
 		try {
 			player1.putCrafts(board1);
@@ -69,12 +126,20 @@ public class Game {
 		nextToShoot = 0;
 	}
 	
+	/**
+	 * @return estado de la partida
+	 * Devuelve true si la partida a acabado y false si no ha acabado o no ha empezado
+	 */
 	public boolean gameEnded() {
 		if((board1.areAllCraftsDestroyed() || board2.areAllCraftsDestroyed()) && gameStarted)
 			return true;
 		else return false;
 	}
 	
+	/**
+	 * @return estado de la jugada
+	 * Devuelve falso si el jugador no ha podido disparar, si ha disparado, aunque la coordenada fuera alcanzada anteriormente, devuelve true
+	 */
 	public boolean playNext() {
 		Coordinate c;
 
@@ -127,6 +192,10 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * @param visualiser IVisualiser que utiliza
+	 * Inicia la partida, y queda llamando a playNext() hasta que devuelva false o el juego haya acabado
+	 */
 	public void playGame(IVisualiser visualiser) {
 		this.start();
 		visualiser.show();
@@ -142,6 +211,10 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * @return String del estado de la partida
+	 * Convierte a una String la partida mostrando el estado, los tableros y el nombre de cada juador
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
