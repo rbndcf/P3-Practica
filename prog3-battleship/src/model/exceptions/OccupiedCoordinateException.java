@@ -12,7 +12,7 @@ import model.*;
 public class OccupiedCoordinateException extends CoordinateException{
 	/**
 	 * @param c Coordenada que causa el problema
-	 * Recibe la coordenada que causa el problema y la guarda en BattleshipException
+	 * Recibe la coordenada que causa el problema y la guarda en CoordinateException
 	 */
 	public OccupiedCoordinateException(Coordinate c) {
 		super(c);
