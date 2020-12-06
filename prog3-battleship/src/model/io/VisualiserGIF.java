@@ -8,12 +8,34 @@ import java.io.*;
 import model.*;
 import model.exceptions.io.*;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ * 
+ * Esta clase la utilizaremos para crear GIFs con el estado de la partida que estemos utilizando, ya sea con el constructor, creando nuevos frames
+ * con la funcion show() o cerrando y guardando el gif con la funcion close()
+ */
 public class VisualiserGIF implements IVisualiser{
+	/**
+	 * @param game Juego que utiliza el Visualiser
+	 */
 	private Game game;
+	/**
+	 * @param agif fichero GIF que guardará el Visualiser
+	 */
 	private AnimatedGIF agif;
+	/**
+	 * @param w ancho del fichero
+	 */
 	private int w;
+	/**
+	 * @param h altura de cada board
+	 */
 	private int h;
 	
+	/**
+	 * @param g juego que recibe
+	 * Constructor por parámetros
+	 */
 	public VisualiserGIF(Game g) {
 		Objects.requireNonNull(g);
 		
@@ -21,7 +43,10 @@ public class VisualiserGIF implements IVisualiser{
 		agif = new AnimatedGIF();
 	}
 	
-	//TODO
+	/**
+	 * Esta funcion coge el estado actual de game, y añade un nuevo frame con ese estado a agif, pintando un cuadro de diferente color segun si
+	 * hay un NOTSEEN_SYMBOL (Light Gray), WATER_SYMBOL (Blue), Board_SEPARATOR (Orange) y el resto (Craft symbol y hit symbol) de color rojo
+	 */
 	public void show() {
 		String[] s1 = game.getBoard1().show(false).split("\n");
 		String[] s2 = game.getBoard2().show(false).split("\n");
@@ -67,6 +92,9 @@ public class VisualiserGIF implements IVisualiser{
 		}
 	}
 	
+	/**
+	 * Esta funcion cierra y guarda el fichero generado con agif
+	 */
 	public void close() {
 		try {
 			agif.saveFile(new File("files/output.gif"));
