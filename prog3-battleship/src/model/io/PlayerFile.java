@@ -9,10 +9,26 @@ import model.exceptions.NextToAnotherCraftException;
 import model.exceptions.OccupiedCoordinateException;
 import model.exceptions.io.*;
 
+/**
+ * @author Rubén Del Castillo Fuentes 48786827D
+ * 
+ * Esta clase la utilizaremos para controlar los Jugadores que funcionen por fichero, para poner sus barcos y los disparos
+ */
 public class PlayerFile implements IPlayer{
+	/**
+	 * @param br BufferedReader desde el que se leera el fichero
+	 */
 	private BufferedReader br;
+	/**
+	 * @param name nombre del jugador
+	 */
 	private String name;
 	
+	/**
+	 * @param name nombre del jugador
+	 * @param reader BufferedReader que se utilizará
+	 * Constructor por parámetros
+	 */
 	public PlayerFile(String name, BufferedReader reader) {
 		Objects.requireNonNull(reader);
 		
@@ -20,10 +36,23 @@ public class PlayerFile implements IPlayer{
 		this.name = name;
 	}
 	
+	/**
+	 * @return name
+	 * Devuelve el nombre del jugador
+	 */
 	public String getName() {
 		return name + " (PlayerFile)";
 	}
 	
+	/**
+	 * @param b Board donde se van a colocar los barcos
+	 * @throws BattlehsipIOException cuando hay un problema con el fichero
+	 * @throws InvalidCoordinateException cuando la coordenada no pertenece al tablero
+	 * @throws OccupiedCoordinateException cuando la coordenada ya está ocupada
+	 * @throws NextToAnotherCraftException cuando la coordenada se encuentra al lado de otro craft
+	 * Lee el BufferedReader buscando todos los comandos put para intentar colocar los barcos hasta que salga endput o exit. En caso de que lea
+	 * algun comando diferente de put antes de el endput o exit, lanzará una excepcion
+	 */
 	public void putCrafts(Board b) throws BattleshipIOException, InvalidCoordinateException, OccupiedCoordinateException, NextToAnotherCraftException{
 		String line;
 		
@@ -74,6 +103,15 @@ public class PlayerFile implements IPlayer{
 		}
 	}
 	
+	/**
+	 * @param b Board en el que se va a disparar
+	 * @throws BattleshipIOException cuando hay un problema con el fichero
+	 * @throws InvalidCoordinateException cuando la coordenada no pertenece al tablero
+	 * @throws CoordinateAlreadyHitException cuando la coordenada ya ha sido alcanzada anteriormente
+	 * @return coordenada a la que se dispara
+	 * Lee el fichero buscando todos los comandos shoot para disparar al tablero y devolver esa coordenada, en caso de que no dispare a ninguna coordenada
+	 * devolverá null, además de lanzar una excepcion cuando ocurra algun problema con el fichero o con alguna coordenada
+	 */
 	public Coordinate nextShoot(Board b) throws BattleshipIOException, InvalidCoordinateException, CoordinateAlreadyHitException{
 		String line;
 		
