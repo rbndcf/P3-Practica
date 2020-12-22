@@ -46,6 +46,8 @@ public class PlayerRandom implements IPlayer{
 	 * los aviones
 	 */
 	public void putCrafts(Board b) {
+		Objects.requireNonNull(b);
+		
 		Craft battleship = CraftFactory.createCraft("Battleship", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
 		this.setRandomPosition(battleship, b);
 		
