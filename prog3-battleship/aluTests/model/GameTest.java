@@ -25,7 +25,7 @@ import model.ship.Board2D;
 
 public class GameTest {
 
-	final String DIRFILES = "test/files/";
+	final String DIRFILES = "aluTests/files/";
 	Game game;
 	IPlayer player1, player2; 
 	Board board1, board2;
@@ -219,8 +219,8 @@ public class GameTest {
 		else fail("Error: no se pudo crear el fichero "+outFile);
 		
 		//Se compara salida del alumno con la solución
-		StringBuilder sbSolution=readFromFile("test/files/testPlayGame1.sol");
-		StringBuilder sbStudent=readFromFile("test/files/testPlayGame1.alu");
+		StringBuilder sbSolution=readFromFile("aluTests/files/testPlayGame1.sol");
+		StringBuilder sbStudent=readFromFile("aluTests/files/testPlayGame1.alu");
 		compareLines(sbSolution.toString(),sbStudent.toString());
 		
 	}
@@ -233,7 +233,7 @@ public class GameTest {
 	public void testPlayGame2() throws BattleshipIOException {
 		final String outFile = DIRFILES+"testPlayGame2.alu";
 		player1= PlayerFactory.createPlayer("Lorena", "1");
-		player2= PlayerFactory.createPlayer("Paul", "test/files/testPlayGame2.in");
+		player2= PlayerFactory.createPlayer("Paul", "aluTests/files/testPlayGame2.in");
 		board1 = new Board3D(7);
 		board2 = new Board3D(7);
 		game = new Game(board1, board2, player1, player2);

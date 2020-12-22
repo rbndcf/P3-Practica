@@ -27,7 +27,7 @@ import model.ship.Board2D;
 import model.ship.Coordinate2D;
 
 public class PlayerFileTest {
-	final static String DIRFILES = "test/files/";
+	final static String DIRFILES = "aluTests/files/";
 	final int SIZE = 6;
 	static String sboard0, sboard00, sboard01, sboard1, sboard2;
 	Board board2d, board3d;

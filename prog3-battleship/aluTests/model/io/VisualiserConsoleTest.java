@@ -20,7 +20,7 @@ import model.ship.Board2D;
 
 public class VisualiserConsoleTest {
 
-	final String DIRFILES = "test/files/";
+	final String DIRFILES = "aluTests/files/";
 	Game game,gamerr1, gamerr2;
 	IPlayer player1, player2; 
 	Board board1, board2;
