@@ -201,9 +201,10 @@ public class Game {
 		visualiser.show();
 		
 		while(!this.gameEnded()) {
-			if(this.playNext()) {
+			if(this.playNext())
 				visualiser.show();
-			}
+			else if(this.gameEnded())
+				visualiser.close();
 			else {
 				visualiser.close();
 				break;
