@@ -1,0 +1,3 @@
+put Bomber NORTH 0 0 0
+put Destroyer EAST 1 3
+put Carrier SOUTH 3 0

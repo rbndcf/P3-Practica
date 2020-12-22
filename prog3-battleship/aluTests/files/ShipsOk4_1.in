@@ -1,0 +1,7 @@
+put Carrier NORTH 1 1 0
+put Destroyer EAST 3 -2 3
+put Fighter SOUTH 0 1 2
+put Bomber WEST -1 1 5
+endput
+put Destroyer SOUTH 3 3 3
+exit
