@@ -1,6 +1,7 @@
 package model.io;
 
 import model.*;
+import java.lang.reflect.*;
 
 /**
  * @author Rubén Del Castillo Fuentes 48786827D
@@ -16,11 +17,22 @@ public class VisualiserFactory {
 	 * no sea ninguno de esos dos tipos de visualiser devuelve null.
 	 */
 	public static IVisualiser createVisualiser(String n, Game g) {
-		if(n == "Console")
+		try {
+			Class<?> clazz = Class.forName("model.io.Visualiser" + n);
+			Class<?>[] paramTypes = new Class[] {Game.class};
+			Constructor<?> cons = clazz.getConstructor(paramTypes);	
+			
+			return (IVisualiser)cons.newInstance(g);
+		}
+		catch(ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+			return null;
+		}
+		
+		/*if(n == "Console")
 			return new VisualiserConsole(g);
 		else if(n == "GIF")
 			return new VisualiserGIF(g);
 		else
-			return null;
+			return null;*/
 	}
 }
