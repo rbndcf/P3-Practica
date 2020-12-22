@@ -19,19 +19,19 @@ public class CraftFactoryTest {
 	public void testCreateCraftOk() {
 		Craft craft;
 		for (Orientation orient : Orientation.values()) {
-			craft = CraftFactory.createCraft("Battleship", orient);
+			craft = CraftFactory.createCraft("ship.Battleship", orient);
 			assertTrue (craft instanceof Battleship );
-			craft = CraftFactory.createCraft("Carrier", orient);
+			craft = CraftFactory.createCraft("ship.Carrier", orient);
 			assertTrue (craft instanceof Carrier );
-			craft = CraftFactory.createCraft("Cruiser", orient);
+			craft = CraftFactory.createCraft("ship.Cruiser", orient);
 			assertTrue (craft instanceof Cruiser );
-			craft = CraftFactory.createCraft("Destroyer", orient);
+			craft = CraftFactory.createCraft("ship.Destroyer", orient);
 			assertTrue (craft instanceof Destroyer );
-			craft = CraftFactory.createCraft("Bomber", orient);
+			craft = CraftFactory.createCraft("aircraft.Bomber", orient);
 			assertTrue (craft instanceof Bomber );
-			craft = CraftFactory.createCraft("Fighter", orient);
+			craft = CraftFactory.createCraft("aircraft.Fighter", orient);
 			assertTrue (craft instanceof Fighter );
-			craft = CraftFactory.createCraft("Transport", orient);
+			craft = CraftFactory.createCraft("aircraft.Transport", orient);
 			assertTrue (craft instanceof Transport );
 		}
 	}
@@ -41,13 +41,13 @@ public class CraftFactoryTest {
 	public void testCreateCraftWrong() {
 		
 		 for (Orientation orient : Orientation.values()) {
-			assertNull( CraftFactory.createCraft("BATTLESHIP", orient));
-			assertNull (CraftFactory.createCraft("CarrieR", orient));
-			assertNull (CraftFactory.createCraft("Cruisera", orient));
-			assertNull (CraftFactory.createCraft("Destroyered", orient));
-			assertNull (CraftFactory.createCraft("Bomberd", orient));
-			assertNull (CraftFactory.createCraft("Fightery", orient));
-			assertNull (CraftFactory.createCraft("Transporter", orient));
+			assertNull( CraftFactory.createCraft("ship.BATTLESHIP", orient));
+			assertNull (CraftFactory.createCraft("ship.CarrieR", orient));
+			assertNull (CraftFactory.createCraft("ship.Cruisera", orient));
+			assertNull (CraftFactory.createCraft("ship.Destroyered", orient));
+			assertNull (CraftFactory.createCraft("aircraft.Bomberd", orient));
+			assertNull (CraftFactory.createCraft("aircraft.Fightery", orient));
+			assertNull (CraftFactory.createCraft("aircraft.Transporter", orient));
 		 }
 	}
 }
