@@ -23,6 +23,10 @@ public class PlayerFile implements IPlayer{
 	 * @param name nombre del jugador
 	 */
 	private String name;
+	/**
+	 * @param lastShotStatus estado del ultimo disparo
+	 */
+	private CellStatus lastShotStatus;
 	
 	/**
 	 * @param name nombre del jugador
@@ -121,8 +125,10 @@ public class PlayerFile implements IPlayer{
 			if((line = br.readLine()) != null) {
 				String[] tokens = line.split("\\s+");
 				
-				if(line.equals("exit"))
+				if(line.equals("exit")) {
+					lastShotStatus = null;
 					return null;
+				}
 				else if(!tokens[0].equals("shoot"))
 					throw new BattleshipIOException("Comando diferente a shoot o exit");
 
@@ -136,7 +142,7 @@ public class PlayerFile implements IPlayer{
 						}
 					}
 					
-					b.hit(CoordinateFactory.createCoordinate(coords));
+					lastShotStatus = b.hit(CoordinateFactory.createCoordinate(coords));
 					return CoordinateFactory.createCoordinate(coords);
 				}
 				else
@@ -147,5 +153,13 @@ public class PlayerFile implements IPlayer{
 		catch(IOException e) {
 			throw new BattleshipIOException("IOException al leer una línea de br");
 		}
+	}
+	
+	/**
+	 * @return lastShotStatus estado del ultimo disparo
+	 * Getter de lastShotStatus
+	 */
+	public CellStatus getLastShotStatus() {
+		return lastShotStatus;
 	}
 }
