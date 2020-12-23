@@ -22,6 +22,7 @@ public class PlayerRandom implements IPlayer{
 	 * @param name nombre del jugador
 	 */
 	private String name;
+	private CellStatus lastShotStatus;
 	
 	/**
 	 * @param name nombre del jugador
@@ -81,7 +82,7 @@ public class PlayerRandom implements IPlayer{
 	 */
 	public Coordinate nextShoot(Board b) throws InvalidCoordinateException, CoordinateAlreadyHitException {
 		Coordinate c = genRandomCoordinate(b, 0);
-		b.hit(c);
+		lastShotStatus = b.hit(c);
 		return c;
 	}
 	
@@ -107,6 +108,14 @@ public class PlayerRandom implements IPlayer{
 			return CoordinateFactory.createCoordinate(genRandomInt(0-offset, b.getSize()), genRandomInt(0-offset, b.getSize()));
 		else
 			return CoordinateFactory.createCoordinate(genRandomInt(0-offset, b.getSize()), genRandomInt(0-offset, b.getSize()), genRandomInt(0-offset, b.getSize()));
+	}
+	
+	/**
+	 * @return Estado del ultimo disparo
+	 * Getter de lastShotStatus
+	 */
+	public CellStatus getLastShotStatus() {
+		return lastShotStatus;
 	}
 	
 	// Función Auxiliar \\
