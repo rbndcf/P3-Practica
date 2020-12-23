@@ -23,6 +23,6 @@ public class HitScore extends Score<CellStatus> {
 	 */
 	public void score(CellStatus sc) {
 		if(sc == CellStatus.DESTROYED || sc == CellStatus.HIT)
-			super.score++;
+			super.score = super.score + 1;
 	}
 }
