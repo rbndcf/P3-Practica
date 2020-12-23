@@ -24,7 +24,7 @@ public class VisualiserFactory {
 			
 			return (IVisualiser)cons.newInstance(g);
 		}
-		catch(ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+		catch(ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException e) {
 			return null;
 		}
 		
