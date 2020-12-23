@@ -22,6 +22,6 @@ public class CraftScore extends Score<Craft>{
 	 * Aumenta el valor del parámetro score con el valor del Craft recibido
 	 */
 	public void score(Craft sc) {
-		score += sc.getValue();
+		score = score + sc.getValue();
 	}
 }
