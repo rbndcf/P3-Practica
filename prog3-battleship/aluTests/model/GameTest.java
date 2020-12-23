@@ -389,6 +389,7 @@ public class GameTest {
 		String exp[]=expected.split("\n");
 		String res[]=result.split("\n");
 		boolean iguales = true;
+		
 		if (exp.length!=res.length) 
 			fail("Cadena esperada de tamaño ("+exp.length+") distinto a la resultante ("+res.length+")");
 		for (int i=0; i<exp.length && iguales; i++) {
