@@ -38,4 +38,12 @@ public class Carrier extends Ship{
 				0, 0, 0, 0, 0}
 		};
 	}
+	
+	/**
+	 * @return valor del Craft
+	 * getter de Value
+	 */
+	public int getValue() {
+		return 8;
+	}
 }
