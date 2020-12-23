@@ -44,7 +44,7 @@ public class Ranking<ScoreType extends Score<?>> {
 	 * 
 	 * Lanza una excepcion si el scoreSet está vacio, en caso de que no esté vacio devuelve el primer valor de scoreSet
 	 */
-	public ScoreType getWinner() {
+	public ScoreType getWinner() throws EmptyRankingException {
 		if(scoreSet.isEmpty())
 			throw new EmptyRankingException();
 		else
