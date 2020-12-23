@@ -12,6 +12,10 @@ import model.aircraft.*;
  * Esta clase la utilizaremos como la antigua clase Ship, para poder crear Crafts y controlar tanto su nombre, simbolo y orientación, además de su
  * posición, además esta clase será refinada por sus dos subclases Ship y Aircraft, los cuales manejaran el shape y demás.
  */
+/**
+ * @author ruben
+ *
+ */
 public abstract class Craft {
 	/**
 	 * @param HIT_VALUE valor cuando el ship es alcanzado
@@ -261,4 +265,9 @@ public abstract class Craft {
 		return sb.toString();
 	}
 
+	/**
+	 * @return valor del Craft
+	 * getter de Value
+	 */
+	public abstract int getValue();
 }
