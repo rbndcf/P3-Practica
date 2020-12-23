@@ -57,5 +57,9 @@ public abstract class Score<T> implements Comparable<Score<T>> {
 		return player.getName() + ": " + score;
 	}
 	
+	/**
+	 * @param sc tipo de valor
+	 * Aumenta el atributo score segun el tipo de variable que reciba su subclase
+	 */
 	public abstract void score(T sc);
 }
