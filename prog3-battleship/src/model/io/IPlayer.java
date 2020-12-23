@@ -30,4 +30,9 @@ public interface IPlayer {
 	 * @return coordenada a la que se dispara
 	 */
 	public Coordinate nextShoot(Board b) throws BattleshipIOException, InvalidCoordinateException, CoordinateAlreadyHitException;
+	
+	/**
+	 * @return estado del ultimo disparo
+	 */
+	public CellStatus getLastShotStatus();
 }
