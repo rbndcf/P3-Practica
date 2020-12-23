@@ -136,7 +136,7 @@ public class PlayerFileTest {
 	/* Aparece al final el comando shoot sin que aparezca un endput antes*/
 	@Test
 	public void testPutCraftsWrong1() throws BattleshipIOException, InvalidCoordinateException, NextToAnotherCraftException, OccupiedCoordinateException {
-		IPlayer ip = PlayerFactory.createPlayer("Saul",DIRFILES+"ShipsWrong1.in");
+		IPlayer ip = PlayerFactory.createPlayer("Saul", DIRFILES + "ShipsWrong1.in");
 		try {
 		   ip.putCrafts(board2d);
 		   fail("Error: se debió lanzar BattleshipIOException");

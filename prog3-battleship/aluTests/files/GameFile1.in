@@ -1,5 +1,5 @@
-put Carrier NORTH 4 0
-put Destroyer NORTH -1 4
+put ship.Carrier NORTH 4 0
+put ship.Destroyer NORTH -1 4
 endput
 shoot 2 1
 shoot 2 2

@@ -1,5 +1,5 @@
-put    Destroyer    EAST    1    3
-put    Carrier    SOUTH		 3 			0
-put 							Battleship 			NORTH 	-2				 -1 
-put Battleship NORTH 3 2
+put    ship.Destroyer    EAST    1    3
+put    ship.Carrier    SOUTH		 3 			0
+put 							ship.Battleship 			NORTH 	-2				 -1 
+put ship.Battleship NORTH 3 2
 endput

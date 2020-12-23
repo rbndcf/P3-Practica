@@ -81,7 +81,7 @@ public class GameTest {
 		assertNull(game.getPlayerLastShoot());
 		assertFalse(game.gameEnded());
 		game.playNext();
-		assertSame(player1,game.getPlayerLastShoot());
+		assertSame(player1, game.getPlayerLastShoot());
 		assertFalse(game.gameEnded());
 		game.playNext();
 		assertSame(player2,game.getPlayerLastShoot());
@@ -167,6 +167,7 @@ public class GameTest {
 		player1= PlayerFactory.createPlayer("Julia", DIRFILES+"GameFile1.in");
 		player2= PlayerFactory.createPlayer("Raul", DIRFILES+"GameFile2.in");
 		game = new Game(board1, board2, player1, player2);
+		@SuppressWarnings("unused")
 		IVisualiser iv = VisualiserFactory.createVisualiser("Console", game);
 		compareLines (readFromFile(DIRFILES+"GameNotStarted.sol").toString(),game.toString());
 		game.start();
@@ -184,9 +185,10 @@ public class GameTest {
 	 */
 	@Test
 	public void testPlayGameNotEnded() throws BattleshipIOException {
+		@SuppressWarnings("unused")
 		final String outFile = "test/files/testPlayGame0.alu";
 		player1= PlayerFactory.createPlayer("Lorena", "1");
-		player2= PlayerFactory.createPlayer("Paul", DIRFILES+"testPlayGameNotEnded.in");
+		player2= PlayerFactory.createPlayer("Paul", DIRFILES + "testPlayGameNotEnded.in");
 		board1 = new Board3D(7);
 		board2 = new Board3D(7);
 		game = new Game(board1, board2, player1, player2);
@@ -202,7 +204,7 @@ public class GameTest {
 	 */
 	@Test
 	public void testPlayGame1() throws BattleshipIOException {
-		final String outFile = DIRFILES+"testPlayGame1.alu";
+		final String outFile = DIRFILES + "testPlayGame1.alu";
 		player1= PlayerFactory.createPlayer("Mary", "15");
 		player2= PlayerFactory.createPlayer("Raul", "15");
 		board1 = new Board2D(5);
@@ -219,8 +221,8 @@ public class GameTest {
 		else fail("Error: no se pudo crear el fichero "+outFile);
 		
 		//Se compara salida del alumno con la solución
-		StringBuilder sbSolution=readFromFile("aluTests/files/testPlayGame1.sol");
-		StringBuilder sbStudent=readFromFile("aluTests/files/testPlayGame1.alu");
+		StringBuilder sbSolution=readFromFile("test/files/testPlayGame1.sol");
+		StringBuilder sbStudent=readFromFile("test/files/testPlayGame1.alu");
 		compareLines(sbSolution.toString(),sbStudent.toString());
 		
 	}
@@ -233,7 +235,7 @@ public class GameTest {
 	public void testPlayGame2() throws BattleshipIOException {
 		final String outFile = DIRFILES+"testPlayGame2.alu";
 		player1= PlayerFactory.createPlayer("Lorena", "1");
-		player2= PlayerFactory.createPlayer("Paul", "aluTests/files/testPlayGame2.in");
+		player2= PlayerFactory.createPlayer("Paul", "test/files/testPlayGame2.in");
 		board1 = new Board3D(7);
 		board2 = new Board3D(7);
 		game = new Game(board1, board2, player1, player2);
@@ -333,6 +335,7 @@ public class GameTest {
 	 */
 	@Test
 	public void testPlayGame5() throws BattleshipIOException, IOException {
+		@SuppressWarnings("unused")
 		final String outFile = DIRFILES+"testPlayGame5.alu";
 		player1= PlayerFactory.createPlayer("Silvia", "7");
 		player2= PlayerFactory.createPlayer("Alex", DIRFILES+"GameFile3.in");
@@ -342,7 +345,7 @@ public class GameTest {
 		IVisualiser iv = VisualiserFactory.createVisualiser("GIF", game);
 		game.playGame(iv);
 		//Se compara salida del alumno con la solución
-		assertTrue(compareFiles(DIRFILES+"testPlayGame5.gif","files/output.gif"));
+		assertTrue(compareFiles(DIRFILES + "testPlayGame5.gif", "files/output.gif"));
 	}
 	/*************************
 	 * FUNCIONES AUXILIARES

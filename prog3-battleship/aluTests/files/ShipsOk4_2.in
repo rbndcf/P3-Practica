@@ -1,2 +1,2 @@
 exit
-put Destroyer SOUTH 3 3 3
+put ship.Destroyer SOUTH 3 3 3

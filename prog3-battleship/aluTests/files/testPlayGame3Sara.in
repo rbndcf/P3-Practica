@@ -1,17 +1,17 @@
-put Carrier NORTH 9 0
-put Carrier WEST 1 4
-put Battleship EAST 0 -1
-put Battleship NORTH 12 0
-put Battleship SOUTH 5 9
-put Cruiser NORTH 4 0
-put Cruiser SOUTH 11 6
-put Cruiser EAST 0 6
-put Cruiser WEST 10 12
-put Destroyer EAST 2 2
-put Destroyer NORTH 8 5
-put Destroyer WEST 0 8
-put Destroyer SOUTH 10 10
-put Destroyer WEST -1 11
+put ship.Carrier NORTH 9 0
+put ship.Carrier WEST 1 4
+put ship.Battleship EAST 0 -1
+put ship.Battleship NORTH 12 0
+put ship.Battleship SOUTH 5 9
+put ship.Cruiser NORTH 4 0
+put ship.Cruiser SOUTH 11 6
+put ship.Cruiser EAST 0 6
+put ship.Cruiser WEST 10 12
+put ship.Destroyer EAST 2 2
+put ship.Destroyer NORTH 8 5
+put ship.Destroyer WEST 0 8
+put ship.Destroyer SOUTH 10 10
+put ship.Destroyer WEST -1 11
 endput
 shoot 4 0 
 shoot 5 0
