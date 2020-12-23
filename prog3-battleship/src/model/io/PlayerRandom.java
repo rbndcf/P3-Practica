@@ -22,6 +22,9 @@ public class PlayerRandom implements IPlayer{
 	 * @param name nombre del jugador
 	 */
 	private String name;
+	/**
+	 * @param lastShotStatus estado del ult
+	 */
 	private CellStatus lastShotStatus;
 	
 	/**
