@@ -48,26 +48,26 @@ public class PlayerRandom implements IPlayer{
 	public void putCrafts(Board b) {
 		Objects.requireNonNull(b);
 		
-		Craft battleship = CraftFactory.createCraft("Battleship", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
+		Craft battleship = CraftFactory.createCraft("ship.Battleship", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
 		this.setRandomPosition(battleship, b);
 		
-		Craft carrier = CraftFactory.createCraft("Carrier", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
+		Craft carrier = CraftFactory.createCraft("ship.Carrier", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
 		this.setRandomPosition(carrier, b);
 
-		Craft cruiser = CraftFactory.createCraft("Cruiser", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
+		Craft cruiser = CraftFactory.createCraft("ship.Cruiser", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
 		this.setRandomPosition(cruiser, b);
 
-		Craft destroyer = CraftFactory.createCraft("Destroyer", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
+		Craft destroyer = CraftFactory.createCraft("ship.Destroyer", Orientation.values()[genRandomInt(0, Orientation.values().length)]);
 		this.setRandomPosition(destroyer, b);
 		
 		if(b instanceof Board3D) {
-			Craft bomber = CraftFactory.createCraft("Bomber", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
+			Craft bomber = CraftFactory.createCraft("aircraft.Bomber", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
 			this.setRandomPosition(bomber, b);
 			
-			Craft fighter = CraftFactory.createCraft("Fighter", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
+			Craft fighter = CraftFactory.createCraft("aircraft.Fighter", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
 			this.setRandomPosition(fighter, b);
 			
-			Craft transport = CraftFactory.createCraft("Transport", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
+			Craft transport = CraftFactory.createCraft("aircraft.Transport", Orientation.values()[genRandomInt(0,Orientation.values().length)]);
 			this.setRandomPosition(transport, b);
 		}
 	}
