@@ -3,6 +3,8 @@ package model;
 import java.util.*;
 
 import model.io.*;
+import model.score.CraftScore;
+import model.score.HitScore;
 import model.exceptions.*;
 import model.exceptions.io.*;
 
@@ -42,6 +44,22 @@ public class Game {
 	 * @param board2 tablero del jugador 2
 	 */
 	private Board board2;
+	/**
+	 * @param hitScore1 score de hits del jugador 1
+	 */
+	private HitScore hitScore1;
+	/**
+	 * @param hitScore2 score de hits del jugador 2
+	 */
+	private HitScore hitScore2;
+	/**
+	 * @param craftScore1 score de los crafts del jugador 1
+	 */
+	private CraftScore craftScore1;
+	/**
+	 * @param craftScore2 score de los crafts del jugador 2
+	 */
+	private CraftScore craftScore2;
 	
 	/**
 	 * @param b1 tablero del jugador 1
@@ -62,6 +80,12 @@ public class Game {
 		board2 = b2;
 		
 		gameStarted = false;
+		
+		hitScore1 = new HitScore(player1);
+		hitScore2 = new HitScore(player2);
+		
+		craftScore1 = new CraftScore(player1);
+		craftScore2 = new CraftScore(player2);
 	}
 	
 	/**
@@ -147,6 +171,11 @@ public class Game {
 			try {
 				c = player1.nextShoot(board2);
 				if(!Objects.isNull(c)) {
+					hitScore1.score(player1.getLastShotStatus());
+					
+					if(player1.getLastShotStatus() == CellStatus.DESTROYED)
+						craftScore1.score(board2.getCraft(c));
+					
 					nextToShoot = 2;
 					shootCounter++;
 					
@@ -170,7 +199,13 @@ public class Game {
 		else {
 			try {
 				c = player2.nextShoot(board1);
+				
 				if(!Objects.isNull(c)) {
+					hitScore2.score(player2.getLastShotStatus());
+				
+					if(player2.getLastShotStatus() == CellStatus.DESTROYED)
+						craftScore2.score(board1.getCraft(c));
+				
 					nextToShoot = 1;
 					shootCounter++;
 					
@@ -246,5 +281,55 @@ public class Game {
 		}
 		
 		return sb.toString();
+	}
+	
+	/**
+	 * @return String con la informacion de los score
+	 * Devuelve un sgtring con la informacion de los diferentes scores de ambos jugadores
+	 */
+	public String getScoreInfo() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Player 1\n");
+		sb.append("HitScore: " + hitScore1.toString() + "\n");
+		sb.append("CraftScore: " + craftScore1.toString() + "\n");
+		sb.append("--------------\n");
+		sb.append("Player 2\n");
+		sb.append("HitScore: " + hitScore2.toString() + "\n");
+		sb.append("CraftScore: " + craftScore2.toString() + "\n");
+		
+		return sb.toString();
+	}
+	
+	/**
+	 * @return hitScore1 score del jugador 1
+	 * Getter de hitScore1
+	 */
+	public HitScore getHitScorePlayer1() {
+		return hitScore1;
+	}
+	
+	/**
+	 * @return hitScore2 score del jugador 2
+	 * Getter de hitScore2
+	 */
+	public HitScore getHitScorePlayer2() {
+		return hitScore2;
+	}
+	
+	/**
+	 * @return craftScore1 score del jugador 1
+	 * Getter de craftScore1
+	 */
+	public CraftScore getCraftScorePlayer1() {
+		return craftScore1;
+	}
+	
+	/**
+	 * @return craftScore2 score del jugador 2
+	 * Getter de craftScore2
+	 */
+	public CraftScore getCraftScorePlayer2() {
+		return craftScore2;
 	}
 }
