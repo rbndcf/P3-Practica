@@ -1,9 +1,9 @@
-put Battleship NORTH -1 0 0
-put Carrier EAST 0 3 5
-put Cruiser SOUTH 2 -1 5
-put Destroyer WEST 3 -2 2
-put Bomber NORTH 0 0 3
-put Fighter SOUTH -1 0 5
+put ship.Battleship NORTH -1 0 0
+put ship.Carrier EAST 0 3 5
+put ship.Cruiser SOUTH 2 -1 5
+put ship.Destroyer WEST 3 -2 2
+put aircraft.Bomber NORTH 0 0 3
+put aircraft.Fighter SOUTH -1 0 5
 endput
 shoot 1 1 0
 shoot 2 2 0
