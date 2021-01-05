@@ -10,6 +10,8 @@ import model.aircraft.*;
 
 public class CraftFactoryTest {
 
+	String[] badNames = { "Battleship", "Carrier", "Cruiser", "Destroyer", "Bomber", "Fighter", "Transport" };
+
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -36,18 +38,61 @@ public class CraftFactoryTest {
 		}
 	}
 
-	/* Se comprueba que createCraft devuelve null si el Craft es desconocido o null */
+	/* Se comprueba que la factoría es capaz de crear tipos de barcos desconocidos en tiempo de compilación */
 	@Test
-	public void testCreateCraftWrong() {
-		
-		 for (Orientation orient : Orientation.values()) {
-			assertNull( CraftFactory.createCraft("ship.BATTLESHIP", orient));
-			assertNull (CraftFactory.createCraft("ship.CarrieR", orient));
-			assertNull (CraftFactory.createCraft("ship.Cruisera", orient));
-			assertNull (CraftFactory.createCraft("ship.Destroyered", orient));
-			assertNull (CraftFactory.createCraft("aircraft.Bomberd", orient));
-			assertNull (CraftFactory.createCraft("aircraft.Fightery", orient));
-			assertNull (CraftFactory.createCraft("aircraft.Transporter", orient));
-		 }
+	public void testCreateNewShip() {
+		Craft craft;
+		for (Orientation orient : Orientation.values()) {
+			craft = CraftFactory.createCraft("ship.Carabela", orient);
+			assertTrue (craft instanceof Carabela );
+		}		
 	}
+	
+	/* Se comprueba que la factoría es capaz de crear tipos de aviones desconocidos en tiempo de compilación */
+	@Test
+	public void testCreateNewAircraft() {
+		Craft craft;
+		for (Orientation orient : Orientation.values()) {
+			craft = CraftFactory.createCraft("aircraft.Jumbo", orient);
+			assertTrue (craft instanceof Jumbo );
+		}		
+	}
+
+	
+	/* Se comprueba que no se crean Craft sin prefijo ship/aircraft */
+	@Test
+	public void testCreateCraftNoOk1() {
+		Craft craft;
+		Orientation orient = Orientation.EAST;
+		for (String name : badNames) {
+			try {
+				craft = CraftFactory.createCraft(name, orient);
+				assertNull (craft );
+			} catch(NoClassDefFoundError error) {
+			  // en algunos casos, puede que Class.forName lance este error y no la de ClassNotFoundException
+			  // lo capturamos aquí y damos por bueno el test si es el caso.			
+			}
+		}
+	}
+
+	
+	/* Se comprueba que createCraft devuelve null si el Craft es desconocido en tiempo de ejecución */
+	@Test
+	public void testCreateCraftWrong1() {
+		try {
+			assertNull( CraftFactory.createCraft("ship.BATTLESHIP", Orientation.EAST));
+		} catch(NoClassDefFoundError error) {
+			  // en algunos casos, puede que Class.forName lance este error y no la de ClassNotFoundException
+			  // lo capturamos aquí y damos por bueno el test si es el caso.			
+		}
+		try {			
+			assertNull (CraftFactory.createCraft("aircraft.Bomberd", Orientation.EAST));		 
+		} catch(NoClassDefFoundError error) {
+			  // en algunos casos, puede que Class.forName lance este error y no la de ClassNotFoundException
+			  // lo capturamos aquí y damos por bueno el test si es el caso.			
+		}
+	}
+
 }
+
+

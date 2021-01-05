@@ -1,0 +1,12 @@
+put ship.Destroyer EAST 1 3
+put ship.Carrier SOUTH 3 0
+put ship.Battleship NORTH -2 -1
+put ship.Battleship NORTH 0 -1
+endput
+shoot 1 4
+shoot 2 3
+shoot 1 1
+shoot 0 3
+shoot 2 5
+shoot 3 5
+exit

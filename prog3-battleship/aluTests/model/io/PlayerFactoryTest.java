@@ -10,7 +10,7 @@ import model.exceptions.io.BattleshipIOException;
 
 public class PlayerFactoryTest {
 
-	final String DIRFILES = "aluTests/files/";
+	final String DIRFILES = "test/files/";
 	
 	/* En los tests siguientes se crea un PlayerFile a partir de un fichero y se comprueba que createPlayer ha creado
 	 * un PlayerFile.

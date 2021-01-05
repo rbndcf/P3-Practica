@@ -28,16 +28,5 @@ public class CraftFactory {
 		catch(ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
 			return null;
 		}
-		
-		/*switch(type) {
-			case "Bomber": 		return new Bomber(orientation);
-			case "Fighter":		return new Fighter(orientation);
-			case "Transport":	return new Transport(orientation);
-			case "Battleship":	return new Battleship(orientation);
-			case "Carrier":		return new Carrier(orientation);
-			case "Cruiser": 	return new Cruiser(orientation);
-			case "Destroyer":	return new Destroyer(orientation);
-			default: 			return null;
-		}*/
 	}
 }

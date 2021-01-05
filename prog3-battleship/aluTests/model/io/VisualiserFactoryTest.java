@@ -26,23 +26,36 @@ public class VisualiserFactoryTest {
 
 	
 	@Test
-	public void testCreateVisualiserConsole() throws BattleshipIOException {
+	public void testCreateVisualiserConsole()  {
 		IVisualiser iv=VisualiserFactory.createVisualiser("Console", game);
 		assertEquals("VisualiserConsole",iv.getClass().getSimpleName());	
 	}
 
 	@Test
-	public void testCreateVisualiserGIF() throws BattleshipIOException {
+	public void testCreateVisualiserGIF()  {
 		IVisualiser iv=VisualiserFactory.createVisualiser("GIF", game);
 		assertEquals("VisualiserGIF",iv.getClass().getSimpleName());
 	}
-	
+
+	/* Comprueba que se crean visualizadores desconocidos en tiempo de compilación pero conocidos en tiempo de ejecución */
 	@Test
-	public void testCreateVisualiserError() throws BattleshipIOException {
-		
-		assertNull (VisualiserFactory.createVisualiser("GIFs", game));
-		assertNull (VisualiserFactory.createVisualiser("gif", game));
-		assertNull (VisualiserFactory.createVisualiser("console", game));
-		assertNull (VisualiserFactory.createVisualiser("CONSOLE", game));
+	public void testCreateVisualiserQT()  {
+		IVisualiser iv=VisualiserFactory.createVisualiser("QT", game);
+		assertTrue(iv instanceof VisualiserQT);
 	}
+
+
+
+	@Test
+	public void testCreateVisualiserError2()  {
+	  try {
+		assertNull (VisualiserFactory.createVisualiser("gif", game));
+	  }
+	  catch(NoClassDefFoundError error) {
+		  // en algunos casos, puede que Class.forName lance este error y no la de ClassNotFoundException
+		  // lo capturamos aquí y damos por bueno el test si es el caso.
+	  }
+	}
+
+
 }

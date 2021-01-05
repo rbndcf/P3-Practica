@@ -27,12 +27,5 @@ public class VisualiserFactory {
 		catch(ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException e) {
 			return null;
 		}
-		
-		/*if(n == "Console")
-			return new VisualiserConsole(g);
-		else if(n == "GIF")
-			return new VisualiserGIF(g);
-		else
-			return null;*/
 	}
 }

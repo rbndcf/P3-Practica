@@ -2,17 +2,10 @@ package model;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.aircraft.Board3D;
@@ -25,423 +18,276 @@ import model.ship.Board2D;
 
 public class GameTest {
 
-	final String DIRFILES = "aluTests/files/";
-	Game game;
-	IPlayer player1, player2; 
-	Board board1, board2;
+	final String DIRFILES = "test/files/";
 	
+	static String sGetScoreInfo00 = "Player 1\n" + 
+			"HitScore: Belén (PlayerFile): 0\n" + 
+			"CraftScore: Belén (PlayerFile): 0\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Sergio (PlayerFile): 0\n" + 
+			"CraftScore: Sergio (PlayerFile): 0";
+	static String sGetScoreInfo01 = "Player 1\n" + 
+			"HitScore: Belén (PlayerFile): 7\n" + 
+			"CraftScore: Belén (PlayerFile): 9\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Sergio (PlayerFile): 6\n" + 
+			"CraftScore: Sergio (PlayerFile): 3";
+	static String sGetScoreInfo02 = "Player 1\n" + 
+			"HitScore: Belén (PlayerFile): 12\n" + 
+			"CraftScore: Belén (PlayerFile): 17\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Sergio (PlayerFile): 12\n" + 
+			"CraftScore: Sergio (PlayerFile): 17";
+	
+	static String sGetScoreInfo10 = "Player 1\n" + 
+			"HitScore: Julia (PlayerRandom): 0\n" + 
+			"CraftScore: Julia (PlayerRandom): 0\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Raul (PlayerRandom): 0\n" + 
+			"CraftScore: Raul (PlayerRandom): 0";
+	static String sGetScoreInfo11 = "Player 1\n" + 
+			"HitScore: Julia (PlayerRandom): 18\n" + 
+			"CraftScore: Julia (PlayerRandom): 3\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Raul (PlayerRandom): 10\n" + 
+			"CraftScore: Raul (PlayerRandom): 9";
+	
+	static String sGetScoreInfo12 = "Player 1\n" + 
+			"HitScore: Julia (PlayerRandom): 24\n" + 
+			"CraftScore: Julia (PlayerRandom): 37\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Raul (PlayerRandom): 11\n" + 
+			"CraftScore: Raul (PlayerRandom): 17";
+	
+	static String sGame00 = "Player 1\n" + 
+			"HitScore: Belén (PlayerFile): 0\n" + 
+			"CraftScore: Belén (PlayerFile): 0\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Laura (PlayerRandom): 0\n" + 
+			"CraftScore: Laura (PlayerRandom): 0";
+	
+	static String sGame01 = "Player 1\n" + 
+			"HitScore: Belén (PlayerFile): 20\n" + 
+			"CraftScore: Belén (PlayerFile): 32\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Laura (PlayerRandom): 9\n" + 
+			"CraftScore: Laura (PlayerRandom): 0";
+	
+	static String sGame1 ="Player 1\n" + 
+			"HitScore: Sara (PlayerFile): 44\n" + 
+			"CraftScore: Sara (PlayerFile): 69\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Laura (PlayerFile): 42\n" + 
+			"CraftScore: Laura (PlayerFile): 56";
+	static String sGame2 = "Player 1\n" + 
+			"HitScore: Sara (PlayerRandom): 39\n" + 
+			"CraftScore: Sara (PlayerRandom): 65\n" + 
+			"--------------\n" + 
+			"Player 2\n" + 
+			"HitScore: Laura (PlayerRandom): 35\n" + 
+			"CraftScore: Laura (PlayerRandom): 37";
+	
+	IPlayer player1, player2;
+	Board board1, board2;
+	Game game;
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		player1= PlayerFactory.createPlayer("Julia", DIRFILES+"ShipsFile1.in");
-		player2= PlayerFactory.createPlayer("Raul", "21");
+		player1= PlayerFactory.createPlayer("Belén", DIRFILES+"ShipsFile3.in");
+		player2= PlayerFactory.createPlayer("Sergio",  DIRFILES+"ShipsFile3.in");
 		board1 = new Board2D(7);
 		board2 = new Board2D(7);
 		game = new Game(board1, board2, player1, player2);
 	}
 
-	@Test(expected=NullPointerException.class)
-	public void testGameNullPointerException() throws BattleshipIOException {
-		try {
-		  new Game(null, board2, player1, player2);
-		  fail ("Error: se debió lanzar NullPointerException");
-		} catch (NullPointerException e) {
-		}
-		try {
-			  new Game(board1, null, player1, player2);
-			  fail ("Error: se debió lanzar NullPointerException");
-		} catch (NullPointerException e) {
-		}
-		try {
-			  new Game(board1, board2, null, player2);
-			  fail ("Error: se debió lanzar NullPointerException");
-		} catch (NullPointerException e) {
-		}
-		new Game(board1, board2, player1, null);
-		fail ("Error: se debió lanzar NullPointerException");
-	}
-
-	/*Prueba de los getPlayers y su relación de asociación con Game */
-	@Test
-	public void testGetPlayers() {
-		assertSame(player1,game.getPlayer1());
-		assertSame(player2,game.getPlayer2());
-	}
-
-	/*Prueba de los getBoards y su relación de asociación con Game */
-	@Test
-	public void testGetBoards() {
-		assertSame(board1, game.getBoard1());
-		assertSame(board2, game.getBoard2());
-	}
-
-	@Test
-	public void testStartGetPlayerLastShoot() {
-		assertNull(game.getPlayerLastShoot());
-		game.start();
-		assertNull(game.getPlayerLastShoot());
-		assertFalse(game.gameEnded());
-		game.playNext();
-		assertSame(player1, game.getPlayerLastShoot());
-		assertFalse(game.gameEnded());
-		game.playNext();
-		assertSame(player2,game.getPlayerLastShoot());
-		assertFalse(game.gameEnded());
-		game.playNext();
-		assertSame(player1,game.getPlayerLastShoot());
-		assertFalse(game.gameEnded());
-	}
-
-	/* Se inicia la partida con Game.start usando ficheros que ponen Crafts de forma incorrecta.
-	 * También con ficheros con órdenes incorrectas. En todos los casos se debe lanzar la excepción
-	 * RuntimeException
-	 */
-	@Test
-	public void testStartWithExceptions() throws BattleshipIOException {
-		//Pone Craft en posición ocupada
-		player1= PlayerFactory.createPlayer("Julia", DIRFILES+"ShipsWrong11_occupied.in");
-		player2= PlayerFactory.createPlayer("Raul", "21");
-		game = new Game(board1, board2, player1, player2);
-		try {
-			game.start();
-			fail("Error, se debío lanzar RuntimeException");
-		} catch (RuntimeException e) { }
-		
-		//Pone Craft en posición próxima a otro Craft
-		board1 = new Board2D(7);
-		board2 = new Board2D(7);
-		player1= PlayerFactory.createPlayer("Julia", DIRFILES+"ShipsWrong11_next.in");
-		game = new Game(board1, board2, player1, player2);
-		try {
-			game.start();
-			fail("Error, se debío lanzar RuntimeException");
-		} catch (RuntimeException e) { }
-		
-		//Pone Craft en posición fuera de tablero.
-		board1 = new Board2D(7);
-		board2 = new Board2D(7);
-		player1= PlayerFactory.createPlayer("Julia", DIRFILES+"ShipsWrong11_out.in");
-		game = new Game(board1, board2, player1, player2);
-		try {
-			game.start();
-			fail("Error, se debío lanzar RuntimeException");
-		} catch (RuntimeException e) { }
-		
-		//Fichero con una orden incorrecta
-		board1 = new Board2D(7);
-		board2 = new Board2D(7);
-		player1= PlayerFactory.createPlayer("Julia", DIRFILES+"ShipsWrong4.in");
-		game = new Game(board1, board2, player1, player2);
-		try {
-			game.start();
-			fail("Error, se debío lanzar RuntimeException");
-		} catch (RuntimeException e) { }
-		
-	}
-	
-	
-	/* Se crea un PlayerFile con una orden de disparo incorrecta y otra con disparo a una coordenada 
-	 * fuera del tablero. En los dos casos se debe lanzar la excepción RuntimeException
-	 */
-	@Test(expected=RuntimeException.class)
-	public void testPlayNextWithExceptions() throws BattleshipIOException {
-		//Pone Craft en posición ocupada
-		player1= PlayerFactory.createPlayer("Julia", DIRFILES+"ShootOk3.in");
-		player2= PlayerFactory.createPlayer("Raul", DIRFILES+"ShootWrong5.in");
-		game = new Game(board1, board2, player1, player2);
-
-		try {
-		  game.start();
-		  game.playNext();
-		  game.playNext();
-		  fail("Error, se debío lanzar RuntimeException");
-		} catch (RuntimeException e) {
-		  	  game.playNext();
-		}
-	}
-
-	/* Se imprime el game en sus tres estados: Not Started, Ongoing, Ended
+	/* Se comprueba que se han iniciado los distintos scores en el constructor de Game
 	 * 
 	 */
 	@Test
-	public void testToString() throws BattleshipIOException {
-		player1= PlayerFactory.createPlayer("Julia", DIRFILES+"GameFile1.in");
-		player2= PlayerFactory.createPlayer("Raul", DIRFILES+"GameFile2.in");
-		game = new Game(board1, board2, player1, player2);
-		@SuppressWarnings("unused")
-		IVisualiser iv = VisualiserFactory.createVisualiser("Console", game);
-		compareLines (readFromFile(DIRFILES+"GameNotStarted.sol").toString(),game.toString());
-		game.start();
-		game.playNext();
-		game.playNext();
-		compareLines (readFromFile(DIRFILES+"OngoingGame.sol").toString(),game.toString());
-		for (int i=0; i<13; i++) game.playNext();
-		compareLines (readFromFile(DIRFILES+"GameEnded.sol").toString(),game.toString());
-		assertTrue(game.gameEnded());
-	}
-	
-	/* Partida 0. Un jugador es aleatorio y otro a través de fichero. Tablero 3D
-	 * de tamaño 7. Antes del último disparo que le daría el triunfo a Paul hay un exit. Se comprueba que la partida
-	 * no ha acabado.
-	 */
-	@Test
-	public void testPlayGameNotEnded() throws BattleshipIOException {
-		@SuppressWarnings("unused")
-		final String outFile = "test/files/testPlayGame0.alu";
-		player1= PlayerFactory.createPlayer("Lorena", "1");
-		player2= PlayerFactory.createPlayer("Paul", DIRFILES + "testPlayGameNotEnded.in");
-		board1 = new Board3D(7);
-		board2 = new Board3D(7);
-		game = new Game(board1, board2, player1, player2);
-		IVisualiser iv = VisualiserFactory.createVisualiser("Console", game);
-		game.playGame(iv);
-		assertFalse(game.gameEnded());
-		
-	}
-	
-	
-	/* Partida 1. Ambos jugadores colocan sus Ships a partir de la misma semilla. Deben generar tableros 2D
-	 * iguales. Partida aleatoria.
-	 */
-	@Test
-	public void testPlayGame1() throws BattleshipIOException {
-		final String outFile = DIRFILES + "testPlayGame1.alu";
-		player1= PlayerFactory.createPlayer("Mary", "15");
-		player2= PlayerFactory.createPlayer("Raul", "15");
-		board1 = new Board2D(5);
-		board2 = new Board2D(5);
-		game = new Game(board1, board2, player1, player2);
-		IVisualiser iv = VisualiserFactory.createVisualiser("Console", game);
-		PrintStream ps = standardIO2File(outFile);
-		if (ps!=null) {
-			game.playGame(iv);
-			assertTrue(game.gameEnded());
-			System.setOut(System.out); //Reestablecemos la salida standard
-			ps.close();
-		} 
-		else fail("Error: no se pudo crear el fichero "+outFile);
-		
-		//Se compara salida del alumno con la solución
-		StringBuilder sbSolution=readFromFile("aluTests/files/testPlayGame1.sol");
-		StringBuilder sbStudent=readFromFile("aluTests/files/testPlayGame1.alu");
-		compareLines(sbSolution.toString(),sbStudent.toString());
-		
-	}
-	
-	/* Partida 2. Un jugador es aleatorio y otro a través de fichero. Tablero 3D
-	 * de tamaño 7. Gana Paul y su último disparo será en la Coordinate (6, 3, 6)
-	 * A partir de ahí ya no se dispara más.
-	 */
-	@Test
-	public void testPlayGame2() throws BattleshipIOException {
-		final String outFile = DIRFILES+"testPlayGame2.alu";
-		player1= PlayerFactory.createPlayer("Lorena", "1");
-		player2= PlayerFactory.createPlayer("Paul", "aluTests/files/testPlayGame2.in");
-		board1 = new Board3D(7);
-		board2 = new Board3D(7);
-		game = new Game(board1, board2, player1, player2);
-		IVisualiser iv = VisualiserFactory.createVisualiser("Console", game);
-		PrintStream ps = standardIO2File(outFile);
-		if (ps!=null) {
-			game.playGame(iv);
-			assertTrue(game.gameEnded());
-			System.setOut(System.out); //Reestablecemos la salida standard
-			ps.close();
-		} 
-		else fail("Error: no se pudo crear el fichero "+outFile);
-		
-		//Se compara salida del alumno con la solución
-		StringBuilder sbSolution=readFromFile(DIRFILES+"testPlayGame2.sol");
-		StringBuilder sbStudent=readFromFile(DIRFILES+"testPlayGame2.alu");
-		compareLines(sbSolution.toString(),sbStudent.toString());
+	public void testGame() {
+		assertNotNull(game.getHitScorePlayer1());
+		assertNotNull(game.getCraftScorePlayer1());
+		assertNotNull(game.getHitScorePlayer1());
+		assertNotNull(game.getCraftScorePlayer1());
 	}
 
-	/* Partida 3. Dos jugadores a través de ficheros. Tableros 2D
-	 * de tamaño 15. Gana Sara y su último disparo será en la Coordinate (14, 7)
-	 * A partir de ahí ya no se dispara más.
-	 * TABLEROS INICIALES
-	 *      SARA    			LAURA
-	 *  ---------------   --------------- 
-	 * |           ®   | | ΩΩ           Ø|
- 	   | OOOO Ø    ®  O| |              Ø|
-       | 	  Ø    ®  O| |     ®  ΩΩ    Ø|
-       |	  Ø    ®  O| |ØØØ  ®         |
-   	   |   ΩΩ      ®  O| |     ®    ØØØ  |
-       |        	   | |     ®         |
-	   | ®®®®®    Ω    | |OOOO ®        Ω|
-       |		  Ω  Ø | |        ΩΩ    Ω|
- 	   | ØØØ         Ø | |               |
-       |			 Ø | |               |
- 	   | ΩΩ    O       | |O  Ø   ®®®®®   |
-       |	   O    Ω  | |O  Ø           |
-       |	   O    Ω  | |O  Ø  Ω        |
-	   |ΩΩ     O       | |O     Ω   OOOO |
-       |           ØØØ | |               |
-        ---------------   ---------------
+	/* Se parte de unos jugadores, del setUp(), que tienen los mismos Craft en las mismas posiciones sus
+	 * respectivos tableros2D de tamaño 7, y van a realizar disparos idénticos. Se comprueba que los scores
+	 * incialmente están a 0. 
+	 * Se realizan varios lanzamientos y se va comprobando que los resultados son los que se pasan
+	 * en el método auxiliar compareScores(int hitScoreP1, int hitScoreP2, int craftScoreP1, int craftScoreP2)
 	 */
 	@Test
-	public void testPlayGame3() throws BattleshipIOException {
-		final String outFile = DIRFILES+"testPlayGame3.alu";
-		player1= PlayerFactory.createPlayer("Sara", DIRFILES+"testPlayGame3Sara.in");
-		player2= PlayerFactory.createPlayer("Laura", DIRFILES+"testPlayGame3Laura.in");
+	public void testPlayNext1() throws BattleshipIOException {
+		player2= PlayerFactory.createPlayer("Sergio",  DIRFILES+"ShipsFile3.in");
+		game.start();
+		
+		compareScores(0,0,0,0);
+		for (int i=0; i<6; i++) game.playNext();
+		
+		compareScores(1,1,0,0);
+		for (int i=0; i<5; i++) game.playNext();
+		compareScores(4,3,3,0);
+		for (int i=0; i<6; i++) game.playNext();
+		compareScores(7,6,9,3);
+		for (int i=0; i<6; i++) game.playNext();
+		compareScores(8,7,9,9);
+		for (int i=0; i<6; i++) game.playNext();
+		compareScores(11,10,9,9);
+		for (int i=0; i<6; i++) game.playNext();
+		compareScores(12,12,17,17);
+	}
+
+	//Lo mismo que testPlayNext1() pero con Players aleatorios
+	@Test
+	public void testPlayNext2() throws BattleshipIOException {
+		player1= PlayerFactory.createPlayer("Julia", "123");
+		player2= PlayerFactory.createPlayer("Raul",  "321");
+		
+		game = new Game(board1, board2, player1, player2);
+		game.start();
+		compareScores(0,0,0,0);
+		for (int i=0; i<6; i++) game.playNext();
+		compareScores(1,1,0,0);
+		for (int i=0; i<12; i++) game.playNext();
+		compareScores(2,3,0,0);
+		for (int i=0; i<24; i++) game.playNext();
+		compareScores(7,7,0,5);
+		for (int i=0; i<48; i++) game.playNext();
+		compareScores(10,8,5,5);
+		for (int i=0; i<96; i++) game.playNext();
+		compareScores(11,12,8,14);
+		for (int i=0; i<192; i++) game.playNext();
+		compareScores(14,14,22,22);
+	}
+	
+	//Comprobación de getScoreInfo después de realizar varias jugadas con playNext()
+	@Test
+	public void testGetScoreInfo0() throws BattleshipIOException {
+		player2= PlayerFactory.createPlayer("Sergio",  DIRFILES+"ShipsFile3.in");
+		game.start();
+		compareScores(sGetScoreInfo00,game.getScoreInfo());
+		
+		for (int i=0; i<17; i++) game.playNext();
+		compareScores(sGetScoreInfo01,game.getScoreInfo());
+		
+		for (int i=0; i<18; i++) game.playNext();
+		compareScores(sGetScoreInfo02,game.getScoreInfo());
+	}
+	
+	
+	@Test
+	public void testGetScoreInfo1() throws BattleshipIOException {
+		player1= PlayerFactory.createPlayer("Julia", "123");
+		player2= PlayerFactory.createPlayer("Raul",  "321");
+		board1 = new Board3D(6);
+		board2 = new Board3D(6);
+		game = new Game(board1, board2, player1, player2);
+		game.start();
+		compareScores(sGetScoreInfo10,game.getScoreInfo());
+		for (int i=0; i<500; i++) game.playNext();
+		compareScores(sGetScoreInfo11,game.getScoreInfo());
+		for (int i=0; i<1053; i++) game.playNext();
+		compareScores(sGetScoreInfo12,game.getScoreInfo());
+	}
+
+	/* Realización de varias partidas y comprobación posterior de los resultados
+	 */
+	@Test
+	public void testPlayGame0() throws BattleshipIOException {
+		
+		final String outFile = DIRFILES+"testPlayGame2.alu";
+		player2= PlayerFactory.createPlayer("Laura", "1");
+		player1= PlayerFactory.createPlayer("Belén", DIRFILES+"testPlayGame2.in");
+		board1 = new Board3D(7);
+		board2 = new Board3D(7);
+		game = new Game(board1, board2, player1, player2);
+		IVisualiser iv = VisualiserFactory.createVisualiser("Console", game);
+		compareScores(sGame00, game.getScoreInfo());
+		game.playGame(iv);
+		compareScores(20,9,32,0);
+		compareScores(sGame01,game.getScoreInfo());	
+			
+	}
+	
+	@Test
+	public void testPlayGame1() throws BattleshipIOException {
+		player1= PlayerFactory.createPlayer("Sara", "test/files/testPlayGame3Sara.in");
+		player2= PlayerFactory.createPlayer("Laura", "test/files/testPlayGame3Laura.in");
 	
 		board1 = new Board2D(15);
 		board2 = new Board2D(15);
 		game = new Game(board1, board2, player1, player2);
 		IVisualiser iv = VisualiserFactory.createVisualiser("Console", game);
-		PrintStream ps = standardIO2File(outFile);
-		if (ps!=null) {
-			game.playGame(iv);
-			System.setOut(System.out); //Reestablecemos la salida standard
-			ps.close();
-		} 
-		else fail("Error: no se pudo crear el fichero "+outFile);
-		
-		//Se compara salida del alumno con la solución
-		StringBuilder sbSolution=readFromFile(DIRFILES+"testPlayGame3.sol");
-		StringBuilder sbStudent=readFromFile(DIRFILES+"testPlayGame3.alu");
-		compareLines(sbSolution.toString(),sbStudent.toString());
+		game.playGame(iv);
+		compareScores(sGame1,game.getScoreInfo());	
+		compareScores(44,42,69,56);	
 	}
 	
-	
-	/* Partida 4. Dos jugadores aleatorios. Tablero 3D
-	 * de tamaño 10. Se visualiza en consola.
-	 */
 	@Test
-	public void testPlayGame4() throws BattleshipIOException {
-		final String outFile = DIRFILES+"testPlayGame4.alu";
-		player1= PlayerFactory.createPlayer("Lorena", "34");
-		player2= PlayerFactory.createPlayer("Samuel", "55");
+	public void testPlayGame2() throws BattleshipIOException {
+		player1= PlayerFactory.createPlayer("Sara", "77");
+		player2= PlayerFactory.createPlayer("Laura", "98");
+	
 		board1 = new Board3D(10);
 		board2 = new Board3D(10);
 		game = new Game(board1, board2, player1, player2);
 		IVisualiser iv = VisualiserFactory.createVisualiser("Console", game);
-		PrintStream ps = standardIO2File(outFile);
-		if (ps!=null) {		
-			game.playGame(iv);
-			System.setOut(System.out); //Reestablecemos la salida standard
-			ps.close();
-		} 
-		else fail("Error: no se pudo crear el fichero "+outFile);
-		
-		//Se compara salida del alumno con la solución
-		StringBuilder sbSolution=readFromFile(DIRFILES+"testPlayGame4.sol");
-		StringBuilder sbStudent=readFromFile(DIRFILES+"testPlayGame4.alu");
-		compareLines(sbSolution.toString(),sbStudent.toString());
-	}
-	
-	
-	/* Partida 5. Un jugador aleatorio y otro a través de fichero. Tablero 3D
-	 * de tamaño 7. Se visualiza en un GIF 
-	 */
-	@Test
-	public void testPlayGame5() throws BattleshipIOException, IOException {
-		@SuppressWarnings("unused")
-		final String outFile = DIRFILES+"testPlayGame5.alu";
-		player1= PlayerFactory.createPlayer("Silvia", "7");
-		player2= PlayerFactory.createPlayer("Alex", DIRFILES+"GameFile3.in");
-		board1 = new Board3D(7);
-		board2 = new Board3D(7);
-		game = new Game(board1, board2, player1, player2);
-		IVisualiser iv = VisualiserFactory.createVisualiser("GIF", game);
 		game.playGame(iv);
-		//Se compara salida del alumno con la solución
-		assertTrue(compareFiles(DIRFILES + "testPlayGame5.gif", "files/output.gif"));
+		compareScores(sGame2,game.getScoreInfo());	
+		compareScores(39,35,65,37);	
 	}
-	/*************************
+	
+	/********************************************
 	 * FUNCIONES AUXILIARES
-	 *************************/
-	//Redirección de la salida estandard a un fichero	
-	public static PrintStream standardIO2File(String fileName){
-
-        if(fileName.equals("")){//Si viene vacío usamos este por defecto
-            fileName="C:\\javalog.txt";
-        }
-        PrintStream ps=null;
-        try {
-            //Creamos un printstream sobre el archivo.
-            ps = new PrintStream(new BufferedOutputStream(new FileOutputStream(new File(fileName))),true);
-            //Redirigimos salida estandar
-            System.setOut(ps);
-           // System.setErr(ps);
-        } catch (FileNotFoundException ex) {
-            System.err.println("Se ha producido una excepción FileNotFoundException");
-        }
-        return ps;
-    }
-
-	//Lee la solución de un fichero y la devuelve en un StringBuilder	
-	private StringBuilder readFromFile(String file) {
-		Scanner sc=null;
-		try {
-				sc = new Scanner(new File(file));
-		} catch (FileNotFoundException e) {
-				e.printStackTrace();
-		}
-		StringBuilder sb = new StringBuilder();
-		while (sc.hasNext()) 
-			sb.append(sc.nextLine()+"\n");			
-		sc.close();
-		return (sb);
+	 * ******************************************
+	 */
+	void compareScores(int hitScoreP1, int hitScoreP2, int craftScoreP1, int craftScoreP2) {
+		assertEquals(hitScoreP1,game.getHitScorePlayer1().getScore());
+		assertEquals(hitScoreP2,game.getHitScorePlayer2().getScore());
+		assertEquals(craftScoreP1,game.getCraftScorePlayer1().getScore());
+		assertEquals(craftScoreP2,game.getCraftScorePlayer2().getScore());
 	}
 	
-	//Compara dos Strings línea a línea
-	private void  compareLines(String expected, String result) {
-		String exp[]=expected.split("\n");
-		String res[]=result.split("\n");
-		boolean iguales = true;
+	/* Para las salidas game.getScoreInfo() compara los valores impresos
+	 * de los Scores hasta una precisión de 0.01
+	 * 
+	 */
+	private void compareScores(String expected, String result ) {
+		String ex[]= expected.split(":");
+		String re[]= result.split(":");
+		if (ex.length!=re.length) fail("Lineas distintas");
+		if (ex.length==2) {
+			if (removeSpaces(ex[0]).equals(removeSpaces(re[0]))) {
+				double ed = Double.parseDouble(ex[1]);
+				double rd = Double.parseDouble(re[1]);
 		
-		if (exp.length!=res.length) 
-			fail("Cadena esperada de tamaño ("+exp.length+") distinto a la resultante ("+res.length+")");
-		for (int i=0; i<exp.length && iguales; i++) {
-			 if (! exp[i].contains("Action by")) {
-				 assertEquals("linea "+i, exp[i].trim(),res[i].trim());
-			 }
+				assertEquals(ex[0],ed,rd,0.01);
+			}
+			else fail("Nombres jugadores distintos: esperado=<"+ex[0].trim()+"> obtenido=<"+re[0].trim()+">");
 		}
-	}
+		else
+			assertEquals(removeSpaces(expected),removeSpaces(result));		
+	}	
 	
-	 String getFileExtension(String name) {
-	        int extIndex = name.lastIndexOf(".");
-
-	        if (extIndex == -1) {
-	            return "";
-	        } else {
-	            return name.substring(extIndex + 1);
-	        }
-	    }
-	 
-	 //Compara dos ficheros gifs
-	 boolean compareFiles(String f1, String f2) throws IOException {
-		String comando = null;
-		if (! getFileExtension(f1).equals("gif"))
-			throw new IOException("Error: No es un fichero gif");
-		
-		if (!new File(f1).exists())  {
-			System.out.println("El fichero "+f1+ "no existe.");
-			return false;
+	private String removeSpaces (String str) {
+		String exp[]=str.split(" ");
+		String nstr=new String("");
+		for (String s: exp) {
+			if (! s.equals(" ") ) nstr+=s; 
 		}
-		if (!new File(f2).exists())  {
-			System.out.println("El fichero "+f2+ "no existe.");
-			return false;
-		}
-		try {
-			comando = new String("cmp -b "+f1+" "+f2);
-			// Ejecutamos el comando definido
-			Process p = Runtime.getRuntime().exec(comando);
-     
-			// Instanciamos un lector del buffer para mostrar resultado
-			BufferedReader resultado = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			// System.out.println("Resultado del comando:");
-			String diferencias = resultado.readLine();
-			if (diferencias!=null && diferencias.length()!=0) {
-				while (diferencias!= null){
-					System.out.println(diferencias);
-					diferencias=resultado.readLine();
-				}
-				return false;
-			} 
-			else return true;
-		} catch (IOException ex) {
-       return false;
-		}
+		return nstr;
 	}
 }

@@ -35,7 +35,7 @@ import model.ship.Destroyer;
 
 public class VisualiserGIFTest {
 
-	final String DIRFILES = "aluTests/files/";
+	final String DIRFILES = "test/files/";
 	Game game;
 	IPlayer player1, player2; 
 	Board board1, board2;
@@ -315,7 +315,6 @@ public class VisualiserGIFTest {
 	}
 	
 	//Obtiene un atributo de una clase
-		@SuppressWarnings("unchecked")
 		Object getClassField(Object obj, String atribute) throws Exception {
 		
 			// Sacamos el atributo privado (seen) de la clase (Board) 

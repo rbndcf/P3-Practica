@@ -27,7 +27,7 @@ import model.ship.Board2D;
 import model.ship.Coordinate2D;
 
 public class PlayerFileTest {
-	final static String DIRFILES = "aluTests/files/";
+	final static String DIRFILES = "test/files/";
 	final int SIZE = 6;
 	static String sboard0, sboard00, sboard01, sboard1, sboard2;
 	Board board2d, board3d;
@@ -136,7 +136,7 @@ public class PlayerFileTest {
 	/* Aparece al final el comando shoot sin que aparezca un endput antes*/
 	@Test
 	public void testPutCraftsWrong1() throws BattleshipIOException, InvalidCoordinateException, NextToAnotherCraftException, OccupiedCoordinateException {
-		IPlayer ip = PlayerFactory.createPlayer("Saul", DIRFILES + "ShipsWrong1.in");
+		IPlayer ip = PlayerFactory.createPlayer("Saul",DIRFILES+"ShipsWrong1.in");
 		try {
 		   ip.putCrafts(board2d);
 		   fail("Error: se debió lanzar BattleshipIOException");
