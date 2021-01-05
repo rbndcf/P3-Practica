@@ -25,7 +25,7 @@ import model.ship.Board2D;
 
 public class GameTestP4 {
 
-	final String DIRFILES = "test/files/";
+	final String DIRFILES = "aluTests/files/";
 	Game game;
 	IPlayer player1, player2; 
 	Board board1, board2;
@@ -231,7 +231,7 @@ public class GameTestP4 {
 	 */
 	@Test
 	public void testPlayGame2() throws BattleshipIOException {
-		final String outFile = "test/files/testPlayGame2.alu";
+		final String outFile = "aluTests/files/testPlayGame2.alu";
 		player1= PlayerFactory.createPlayer("Lorena", "1");
 		player2= PlayerFactory.createPlayer("Paul", DIRFILES+"testPlayGame2.in");
 		board1 = new Board3D(7);
@@ -278,7 +278,7 @@ public class GameTestP4 {
 	 */
 	@Test
 	public void testPlayGame3() throws BattleshipIOException {
-		final String outFile = "test/files/testPlayGame3.alu";
+		final String outFile = "aluTests/files/testPlayGame3.alu";
 		player1= PlayerFactory.createPlayer("Sara", DIRFILES+"testPlayGame3Sara.in");
 		player2= PlayerFactory.createPlayer("Laura", DIRFILES+"testPlayGame3Laura.in");
 	

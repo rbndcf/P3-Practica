@@ -32,7 +32,7 @@ public class RankingTest {
 
 	final String SRANKING5 = "Craft ranking = [Julia (PlayerFile): 0, Laura (PlayerRandom): 0, Raul (PlayerRandom): 0, Simon (PlayerFile): 0]\n" + 
 							 "Hit ranking = [Julia (PlayerFile): 0, Laura (PlayerRandom): 0, Raul (PlayerRandom): 0, Simon (PlayerFile): 0]";
-	final String DIRFILES = "test/files/";
+	final String DIRFILES = "aluTests/files/";
 	Ranking<CraftScore> craftRanking;
 	Ranking<HitScore> hitRanking;
 	HitScore hitScore;

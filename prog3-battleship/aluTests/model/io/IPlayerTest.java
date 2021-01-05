@@ -20,7 +20,7 @@ import model.ship.Board2D;
 
 public class IPlayerTest {
 	
-	final static String DIRFILES = "test/files/";
+	final static String DIRFILES = "aluTests/files/";
 	final int SIZE = 7;
 	Board board2d, board3d;
 	Craft craft;

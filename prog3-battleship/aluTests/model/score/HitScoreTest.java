@@ -21,7 +21,7 @@ import model.ship.Board2D;
 
 public class HitScoreTest {
 
-	final String DIRFILES = "test/files/";
+	final String DIRFILES = "aluTests/files/";
 	HitScore scLaura;
 	HitScore scPeter;
 	IPlayer playerLaura, playerPeter;

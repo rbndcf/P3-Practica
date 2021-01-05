@@ -15,7 +15,7 @@ import model.io.PlayerFactory;
 
 public class CraftScoreTest {
 	
-	final String DIRFILES = "test/files/";
+	final String DIRFILES = "aluTests/files/";
 	CraftScore scLaura;
 	CraftScore scPeter;
 	IPlayer playerLaura, playerPeter;

@@ -18,7 +18,7 @@ import model.ship.Board2D;
 
 public class GameTest {
 
-	final String DIRFILES = "test/files/";
+	final String DIRFILES = "aluTests/files/";
 	
 	static String sGetScoreInfo00 = "Player 1\n" + 
 			"HitScore: Belén (PlayerFile): 0\n" + 
@@ -224,8 +224,8 @@ public class GameTest {
 	
 	@Test
 	public void testPlayGame1() throws BattleshipIOException {
-		player1= PlayerFactory.createPlayer("Sara", "test/files/testPlayGame3Sara.in");
-		player2= PlayerFactory.createPlayer("Laura", "test/files/testPlayGame3Laura.in");
+		player1= PlayerFactory.createPlayer("Sara", "aluTests/files/testPlayGame3Sara.in");
+		player2= PlayerFactory.createPlayer("Laura", "aluTests/files/testPlayGame3Laura.in");
 	
 		board1 = new Board2D(15);
 		board2 = new Board2D(15);
