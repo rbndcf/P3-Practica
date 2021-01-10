@@ -46,7 +46,8 @@ public abstract class Score<T> implements Comparable<Score<T>> {
 	 * positivo si other es menor (Con respecto al score que llama a compareTo();)
 	 */
 	public int compareTo(Score<T> other) {
-		return other.score - this.score;
+		int returned = other.score - this.score;
+		return returned;
 	}
 	
 	/**
