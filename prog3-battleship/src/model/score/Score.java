@@ -47,7 +47,12 @@ public abstract class Score<T> implements Comparable<Score<T>> {
 	 */
 	public int compareTo(Score<T> other) {
 		int returned = other.score - this.score;
-		return returned;
+		
+		if(returned == 0) 
+			return this.player.getName().compareTo(other.player.getName());
+
+		else
+			return returned;
 	}
 	
 	/**
